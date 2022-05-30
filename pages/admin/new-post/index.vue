@@ -1,6 +1,6 @@
 <template>
   <div class="admin-new-post-page">
-    <section class="new-post-from">
+    <section class="new-post-form">
       <admin-post-form @submit="submitForm"></admin-post-form>
     </section>
   </div>

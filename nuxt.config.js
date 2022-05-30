@@ -13,15 +13,15 @@ module.exports = {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: pkg.description }
+      { hid: "description", name: "description", content: pkg.description },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css?family=Open+Sans"
-      }
-    ]
+        href: "https://fonts.googleapis.com/css?family=Open+Sans",
+      },
+    ],
   },
 
   /*
@@ -38,23 +38,34 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: ["~plugins/core-components.js", "~plugins/date-filter.js"],
-
+  // vuetify: {
+  //   theme: {
+  //     dark: true,
+  //     themes: {
+  //       dark: {
+  //         primary: "#4caf50",
+  //         secondary: "#ff8c00",
+  //         accent: "#9c27b0",
+  //       },
+  //     },
+  //   },
+  // },
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
 
   axios: {
     baseURL:
       process.env.BASE_URL ||
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
-    credentials: false
+    credentials: false,
   },
   env: {
     baseUrl:
       process.env.BASE_URL ||
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
-    fbAPIKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os"
+    fbAPIKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
   },
   /*
    ** Build configuration
@@ -63,35 +74,35 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
   },
 
   transition: {
     name: "fade",
-    mode: "out-in"
+    mode: "out-in",
   },
 
   router: {
-    middleware: "log"
+    middleware: "log",
   },
 
   serverMiddleware: [bodyParser.json(), "~/api"],
   generate: {
-    routes: function() {
+    routes: function () {
       return axios
         .get("https://nuxt-blog-b5610-default-rtdb.firebaseio.com/posts.json")
-        .then(res => {
+        .then((res) => {
           const routes = [];
           for (const key in res.data) {
             routes.push({
               route: `/posts/${key}`,
               payload: {
-                postData: res.data[key]
-              }
+                postData: res.data[key],
+              },
             });
           }
           return routes;
         });
-    }
-  }
+    },
+  },
 };

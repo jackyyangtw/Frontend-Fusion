@@ -1,9 +1,10 @@
 <template>
-  <div class="admin-post-page">
+  <div class="admin-post-page" data-app>
     <section class="update-form">
       <admin-post-form
         :post="loadedPost"
         @submit="updatePost"
+        @delete="deletePost"
       ></admin-post-form>
     </section>
   </div>
@@ -15,24 +16,32 @@ export default {
   components: { AdminPostForm },
   layout: "admin",
   middleware: ["check-auth", "auth"],
+
   asyncData(context) {
     return context.app.$axios
       .$get(`/posts/${context.params.postId}.json`)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         return {
-          loadedPost: { ...data, id: context.params.postId }
+          loadedPost: { ...data, id: context.params.postId },
+          dialog: false,
         };
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   },
   methods: {
     updatePost(updatedPost) {
       this.$store
         .dispatch("editPost", updatedPost)
         .then(() => this.$router.push("/admin"));
-    }
-  }
+    },
+    deletePost(deleteId) {
+      console.log("ondelete");
+      this.$store
+        .dispatch("deletePost", deleteId)
+        .then(() => this.$router.push("/admin"));
+    },
+  },
 };
 </script>
 
