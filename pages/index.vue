@@ -2,7 +2,7 @@
   <div class="home-page">
     <section class="intro">
       <h1>Get The Latest tech news !</h1>
-      <button @click="clearLocalStorage">clearLocalStorage</button>
+      <!-- <button @click="clearLocalStorage">clearLocalStorage</button> -->
     </section>
     <post-list :posts="loadedPosts" admin></post-list>
   </div>
@@ -10,6 +10,12 @@
 
 <script>
 export default {
+  head(){
+    return {
+      title: 'Home Page',
+      meta:[{ hid: "description", name: "description", content: 'Home Page' }],
+    }
+  },
   methods: {
     clearLocalStorage() {
       localStorage.clear();
