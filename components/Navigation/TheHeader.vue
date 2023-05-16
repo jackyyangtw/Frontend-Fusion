@@ -3,9 +3,10 @@
   <header class="the-header">
     <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
     <div class="logo">
-      <nuxt-link to="/">WD BLOG</nuxt-link>
+      <nuxt-link to="/">Frontend Fusion</nuxt-link>
     </div>
-    <div class="spacer"></div>
+    <!-- <div class="spacer"></div> -->
+    <SearchBar></SearchBar>
     <div class="navigation-items">
       <ul class="nav-list">
         <li class="nav-item"><nuxt-link to="/posts">Blog</nuxt-link></li>
@@ -19,11 +20,11 @@
 
 <script>
 import TheSideNavToggle from "@/components/Navigation/TheSideNavToggle";
-
+import SearchBar from './SearchBar.vue';
 export default {
   name: "TheHeader",
   components: {
-    TheSideNavToggle
+    TheSideNavToggle,SearchBar
   }
 };
 </script>
@@ -41,8 +42,8 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: black;
-  z-index: 100;
+  background-color: #040A17;
+  /* z-index: 100; */
   box-sizing: border-box;
   padding: 0 20px;
 }

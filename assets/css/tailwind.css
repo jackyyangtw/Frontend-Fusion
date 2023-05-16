@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    /* @apply bg-cover bg-gradient-to-bl from-black to-teal-900 min-h-[100vh] relative; */
+    @apply relative;
+    background-color: #0B1121;
+}

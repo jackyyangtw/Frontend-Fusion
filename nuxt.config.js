@@ -27,33 +27,19 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: "#3B8070" },
+  loading: { color: "#54B4D3" },
 
   /*
    ** Global CSS
    */
-  css: ["~assets/styles/main.css"],
+  css: ["@/assets/css/main.css"],
 
   /*
    ** Plugins to load before mounting the App
    */
   plugins: ["~plugins/core-components.js", "~plugins/date-filter.js"],
-  // vuetify: {
-  //   theme: {
-  //     dark: true,
-  //     themes: {
-  //       dark: {
-  //         primary: "#4caf50",
-  //         secondary: "#ff8c00",
-  //         accent: "#9c27b0",
-  //       },
-  //     },
-  //   },
-  // },
-  /*
-   ** Nuxt.js modules
-   */
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
+
+  buildModules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss'],
 
   axios: {
     baseURL:
@@ -70,12 +56,6 @@ module.exports = {
   /*
    ** Build configuration
    */
-  build: {
-    /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {},
-  },
 
   transition: {
     name: "fade",

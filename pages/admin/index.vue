@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  layout: "admin",
+  // layout: "admin",
   middleware: ["check-auth", "auth"],
   methods: {
     onLogout() {

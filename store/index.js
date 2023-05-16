@@ -4,9 +4,17 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       loadedPosts: [],
-      token: null
+      token: null,
+      searchText:'',
+      loading: false
     },
     mutations: {
+      setLoading(state, loading) {
+        state.loading = loading;
+      },
+      setSearchText(state, searchText) {
+        state.searchText = searchText;
+      },
       setPosts(state, posts) {
         state.loadedPosts = posts;
       },
@@ -33,6 +41,9 @@ const createStore = () => {
       }
     },
     actions: {
+      setLoading(vuexContext, loading) {
+        vuexContext.commit("setLoading", loading);
+      },
       nuxtServerInit(vuexContext, context) {
         return context.app.$axios
           .$get("/posts.json")
@@ -149,6 +160,12 @@ const createStore = () => {
       },
       isAuthenicated(state) {
         return state.token != null;
+      },
+      searchText(state){
+        return state.searchText;
+      },
+      loading(state) {
+        return state.loading;
       }
     }
   });
