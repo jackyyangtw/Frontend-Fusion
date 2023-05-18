@@ -1,22 +1,15 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">{{ loadedPost.title }}</h1>
-      <div class="post-details">
-        <div class="post-detail">
+      <h1 class="post-title text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
+      <p class="post-content text-white text-xl font-light">{{ loadedPost.previewText }}</p>
+      <div class="post-details mb-5">
+        <div class="post-detail text-gray-500 mr-3">
           Last updated on {{ loadedPost.updatedDate | date }}
         </div>
-        <div class="post-detail">Written by {{ loadedPost.author }}</div>
+        <div class="post-detail text-gray-500">Written by {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content">{{ loadedPost.previewText }}</p>
-    </section>
-    <section class="post-feedback">
-      <p>
-        Let me know what you think about the post, send a mail to
-        <a href="mailto:feedback@my-awesome-domain.com"
-          >feedback@my-awesome-domain.com</a
-        >.
-      </p>
+      <p class="post-content text-white">{{ loadedPost.content }}</p>
     </section>
   </div>
 </template>
@@ -92,7 +85,7 @@ export default {
 <style scoped>
 .single-post-page {
   padding: 30px;
-  text-align: center;
+  /* text-align: center; */
   box-sizing: border-box;
 }
 
@@ -112,13 +105,13 @@ export default {
 }
 
 .post-details {
-  padding: 10px;
+  padding: 10px 0;
   box-sizing: border-box;
-  border-bottom: 3px solid #ccc;
+  /* border-bottom: 3px solid #ccc; */
   display: flex;
-  justify-content: center;
+  /* justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; */
 }
 
 @media (min-width: 768px) {
@@ -128,11 +121,11 @@ export default {
 }
 
 .post-detail {
-  color: rgb(88, 88, 88);
-  margin: 0 10px;
+  /* color: rgb(88, 88, 88); */
+  /* margin: 0 10px; */
 }
 
-.post-feedback a {
+/* .post-feedback a {
   color: red;
   text-decoration: none;
 }
@@ -140,5 +133,5 @@ export default {
 .post-feedback a:hover,
 .post-feedback a:active {
   color: salmon;
-}
+} */
 </style>
