@@ -1,8 +1,27 @@
 module.exports = {
-    content: [
-      "./src/**/*.{html,js}",
-      "./node_modules/tw-elements/dist/js/**/*.js"
-    ],
-    plugins: [require("tw-elements/dist/plugin.cjs")],
-    darkMode: "class"
-  };
+  content: [
+    "./src/**/*.{html,js}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
+  ],
+  // 設定dark mode
+  // plugins: [require("tw-elements/dist/plugin.cjs"),require('tailwindcss-dark-mode')()],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          "50":"#eff6ff",
+          "100":"#dbeafe",
+          "200":"#bfdbfe",
+          "300":"#93c5fd",
+          "400":"#60a5fa",
+          "500":"#3b82f6",
+          "600":"#2563eb",
+          "700":"#1d4ed8",
+          "800":"#1e40af",
+          "900":"#1e3a8a"
+        }
+      },
+    },
+  }
+};

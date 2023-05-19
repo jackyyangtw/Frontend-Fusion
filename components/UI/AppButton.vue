@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="btnStyle" v-bind="$attrs" v-on="$listeners">
+  <button class="" :class="btnStyle" v-bind="$attrs" v-on="$listeners">
     <slot />
   </button>
 </template>
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style scoped>
-.button {
+/* .button {
   font: inherit;
   background-color: black;
   color: white;
@@ -56,5 +56,5 @@ export default {
   background-color: salmon;
   border: 1px solid transparent;
   color: white;
-}
+} */
 </style>

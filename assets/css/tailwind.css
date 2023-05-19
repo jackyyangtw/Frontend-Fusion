@@ -5,5 +5,13 @@
 body {
     /* @apply bg-cover bg-gradient-to-bl from-black to-teal-900 min-h-[100vh] relative; */
     @apply relative;
-    background-color: #0B1121;
+    /* background-color: #0B1121; */
+}
+
+html {
+    color-scheme: dark;
+}
+
+* {
+    transition: all 0.2s ease-in;
 }

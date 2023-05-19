@@ -1,17 +1,20 @@
 <template>
 <div class="header-container">
-  <header class="the-header">
+  <header class="the-header bg-white dark:bg-gray-900">
     <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
-    <div class="logo">
+    <div class="logo hidden md:block text-slate-700
+    dark:text-white
+    ">
       <nuxt-link to="/">Frontend Fusion</nuxt-link>
     </div>
     <!-- <div class="spacer"></div> -->
     <SearchBar></SearchBar>
+    <ModeSwitcher></ModeSwitcher>
     <div class="navigation-items">
       <ul class="nav-list">
-        <li class="nav-item"><nuxt-link to="/posts">Blog</nuxt-link></li>
+        <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/posts">Blog</nuxt-link></li>
         <!-- <li class="nav-item"><nuxt-link to="/about">About</nuxt-link></li> -->
-        <li class="nav-item"><nuxt-link to="/admin">Admin</nuxt-link></li>
+        <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/admin">Admin</nuxt-link></li>
       </ul>
     </div>
   </header>
@@ -21,10 +24,11 @@
 <script>
 import TheSideNavToggle from "@/components/Navigation/TheSideNavToggle";
 import SearchBar from './SearchBar.vue';
+import ModeSwitcher from "@/components/UI/ModeSwitcher";
 export default {
   name: "TheHeader",
   components: {
-    TheSideNavToggle,SearchBar
+    TheSideNavToggle,SearchBar,ModeSwitcher
   }
 };
 </script>
@@ -42,8 +46,6 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #040A17;
-  /* z-index: 100; */
   box-sizing: border-box;
   padding: 0 20px;
 }
@@ -55,7 +57,6 @@ export default {
 
 .logo a {
   text-decoration: none;
-  color: white;
 }
 
 .spacer {
@@ -85,12 +86,13 @@ export default {
 
 .nav-item a {
   text-decoration: none;
-  color: white;
+  /* color: white; */
 }
 
 .nav-item a:hover,
 .nav-item a:active,
 .nav-item a.nuxt-link-active {
-  color: red;
+  color: #38BDF8;
+  font-weight: 700;
 }
 </style>

@@ -1,31 +1,5 @@
 <template>
   <v-app>
-    <!-- <form @submit.prevent="onSave">
-      <app-control-input v-model="editedPost.author"
-        >作者名稱</app-control-input
-      >
-      <app-control-input v-model="editedPost.title">標題</app-control-input>
-      <app-control-input v-model="editedPost.thumbnail"
-        >預覽縮圖</app-control-input
-      >
-      <app-control-input
-        control-type="textarea"
-        v-model="editedPost.previewText"
-        >預覽文字</app-control-input
-      >
-      <app-control-input control-type="textarea" v-model="editedPost.content"
-        >文章內容</app-control-input
-      >
-      <app-button type="submit">儲存</app-button>
-      <app-button
-        type="button"
-        style="margin-left: 10px"
-        btn-style="cancel"
-        @click="onCancel"
-        >取消</app-button
-      >
-    </form> -->
-
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onSave">
       <v-text-field
         v-model="editedPost.author"

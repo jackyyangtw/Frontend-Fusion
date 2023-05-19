@@ -1,7 +1,14 @@
 <template>
   <div class="input-control">
-    <label><slot /></label>
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><slot /></label>
     <input
+      class="
+      bg-gray-50 border border-gray-300 text-slate-700 rounded-lg block p-2.5 
+      focus:ring-primary-600 focus:border-primary-600 
+      dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+      " 
+      placeholder="name@company.com" 
+      required=""
       v-if="controlType === 'input'"
       v-bind="$attrs"
       :value="value"
@@ -45,14 +52,14 @@ export default {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  font: inherit;
-  border: 1px solid #ccc;
+  /* font: inherit; */
+  /* border: 1px solid #ccc; */
   padding: 5px;
 }
 
 .input-control input:focus,
 .input-control textarea:focus {
-  background-color: #eee;
+  /* background-color: #eee; */
   outline: none;
 }
 </style>

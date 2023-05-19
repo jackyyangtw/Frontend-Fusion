@@ -10,9 +10,9 @@ module.exports = {
    */
   head: {
     title: pkg.name,
-    htmlAttrs: {
-      class:'dark',
-    },
+    // htmlAttrs: {
+    //   class:'dark',
+    // },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -52,11 +52,9 @@ module.exports = {
     fallback:'light',
   },
   tailwindcss: {
-    // Enable the JIT compiler.
-    // mode: 'jit',
-    // Add the darkMode configuration.
-    darkMode: 'class',
-    // Other TailwindCSS options...
+    config: {
+      darkMode: 'class',
+    }
   },
 
   axios: {

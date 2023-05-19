@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" :class="isDark ? 'dark' : 'light'">
     <the-header @sidenavToggle="displaySideNav = !displaySideNav"></the-header>
     <the-sidenav :show="displaySideNav" @close="displaySideNav = false"></the-sidenav>
     <nuxt/>
@@ -20,7 +20,19 @@ export default {
     return {
       displaySideNav: false
     }
-  }
+  },
+  head(){
+    return {
+      bodyAttrs: {
+        class: this.isDark ? 'bg-slate-950' : 'bg-slate-100'
+      }
+    }
+  },
+  computed: {
+    isDark(){
+      return this.$store.getters['ui/isDark'];
+    }
+  },
 }
 </script>
 <style>

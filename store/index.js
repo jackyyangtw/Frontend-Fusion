@@ -1,7 +1,9 @@
 import Vuex from "vuex";
 import Cookie from "js-cookie";
+import ui from "./ui";
 const createStore = () => {
   return new Vuex.Store({
+    modules: {ui},
     state: {
       loadedPosts: [],
       token: null,
