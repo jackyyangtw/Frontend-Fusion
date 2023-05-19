@@ -10,6 +10,9 @@ module.exports = {
    */
   head: {
     title: pkg.name,
+    htmlAttrs: {
+      class:'dark',
+    },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -39,7 +42,22 @@ module.exports = {
    */
   plugins: ["~plugins/core-components.js", "~plugins/date-filter.js"],
 
-  buildModules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss'],
+
+  // color-mode 設定dark mode
+  buildModules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode"],
+  modules: ['@nuxtjs/color-mode'],
+  colorMode: {
+    classSuffix: "",
+    preference:'dark',
+    fallback:'light',
+  },
+  tailwindcss: {
+    // Enable the JIT compiler.
+    // mode: 'jit',
+    // Add the darkMode configuration.
+    darkMode: 'class',
+    // Other TailwindCSS options...
+  },
 
   axios: {
     baseURL:
@@ -56,6 +74,30 @@ module.exports = {
   /*
    ** Build configuration
    */
+  build: {
+    /*
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {},
+    babel: {
+      plugins: [
+        ["@babel/plugin-proposal-class-properties", { loose: true }],
+        ["@babel/plugin-proposal-private-methods", { loose: true }],
+        ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
+      ],
+    },
+
+    // 設定dark mode
+    postcss: {
+      plugins: {
+        'postcss-import': {},
+        'postcss-nested': {},
+        'postcss-custom-properties': {},
+        'tailwindcss': {},
+        'autoprefixer': {},
+      },
+    },
+  },
 
   transition: {
     name: "fade",
