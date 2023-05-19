@@ -2,6 +2,7 @@
   <div class="" :class="isDark ? 'dark' : 'light'">
     <the-header @sidenavToggle="displaySideNav = !displaySideNav"></the-header>
     <the-sidenav :show="displaySideNav" @close="displaySideNav = false"></the-sidenav>
+    <div class="placeholder" :class="placeHolderHeight"></div>
     <nuxt/>
     <LoadingSpinner></LoadingSpinner>
   </div>
@@ -31,6 +32,12 @@ export default {
   computed: {
     isDark(){
       return this.$store.getters['ui/isDark'];
+    },
+    placeHolderHeight(){
+      // theHeader height 存到 store，在這裡取出來
+      console.log(this.$refs.theHeader)
+      // let headerHeight = document.querySelector('.the-header').offsetHeight + 'px';
+      // return `h-${headerHeight}`;
     }
   },
 }

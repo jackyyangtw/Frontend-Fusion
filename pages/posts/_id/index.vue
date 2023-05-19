@@ -1,15 +1,15 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
-      <p class="post-content text-white text-xl font-light">{{ loadedPost.previewText }}</p>
+      <h1 class="post-title text-slate-950 dark:text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
+      <p class="post-content text-slate-950 dark:text-white text-xl font-light">{{ loadedPost.previewText }}</p>
       <div class="post-details mb-5">
-        <div class="post-detail text-gray-500 mr-3">
+        <div class="post-detail text-gray-400 dark:text-gray-500 mr-3">
           Last updated on {{ loadedPost.updatedDate | date }}
         </div>
-        <div class="post-detail text-gray-500">Written by {{ loadedPost.author }}</div>
+        <div class="post-detail text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content text-white">{{ loadedPost.content }}</p>
+      <p class="post-content text-slate-950 dark:text-white">{{ loadedPost.content }}</p>
     </section>
   </div>
 </template>
@@ -83,9 +83,9 @@ export default {
 </script>
 
 <style scoped>
+
 .single-post-page {
   padding: 30px;
-  /* text-align: center; */
   box-sizing: border-box;
 }
 
@@ -107,11 +107,8 @@ export default {
 .post-details {
   padding: 10px 0;
   box-sizing: border-box;
-  /* border-bottom: 3px solid #ccc; */
   display: flex;
-  /* justify-content: center;
-  align-items: center;
-  flex-direction: column; */
+
 }
 
 @media (min-width: 768px) {
@@ -120,18 +117,4 @@ export default {
   }
 }
 
-.post-detail {
-  /* color: rgb(88, 88, 88); */
-  /* margin: 0 10px; */
-}
-
-/* .post-feedback a {
-  color: red;
-  text-decoration: none;
-}
-
-.post-feedback a:hover,
-.post-feedback a:active {
-  color: salmon;
-} */
 </style>

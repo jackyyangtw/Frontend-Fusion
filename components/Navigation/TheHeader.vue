@@ -1,6 +1,6 @@
 <template>
-<div class="header-container">
-  <header class="the-header bg-white dark:bg-gray-900">
+<div class="header-container fixed z-10">
+  <header class="the-header bg-white dark:bg-gray-900" ref="theHeader">
     <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
     <div class="logo hidden md:block text-slate-700
     dark:text-white

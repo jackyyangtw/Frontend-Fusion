@@ -1,11 +1,18 @@
 <template>
     <div>
-        <p>Key Words: {{this.searchText}}</p>
+        <div class="container mt-5">
+            <p class="text-style">
+                Key Words: 
+                <span class="text-sky-500 dark:text-pink-500">{{this.searchText}}</span>
+            </p>
+        </div>
         <div v-if="hasPosts">
             <PostList :posts="searchedPosts"></PostList>
         </div>
-        <div v-else>
-            No posts found
+        <div class="container" v-else>
+            <div class="text-style">
+                No posts found
+            </div>
         </div>
     </div>
 </template>
@@ -44,6 +51,7 @@ import PostList from '../../components/Posts/PostList.vue';
                 this.searchedPosts = this.$store.getters.loadedPosts.filter(post => {
                     return post.title.toLowerCase().includes(posts.toLowerCase()) || post.content.toLowerCase().includes(posts.toLowerCase());
                 });
+                
             }
         },
         mounted() {
@@ -56,6 +64,8 @@ import PostList from '../../components/Posts/PostList.vue';
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.text-style {
+    @apply text-slate-950 dark:text-white text-center text-2xl font-medium;
+}
 </style>

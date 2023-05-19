@@ -1,12 +1,21 @@
 <template>
     <nuxt-link class="post-preview" :to="postLink">
-        <article>
+        <!-- <article>
             <figure class="post-thumbnail" :style="{ backgroundImage: `url(${thumbnail})` }"></figure>
             <div class="post-content">
                 <h1>{{ title }}</h1>
                 <p>{{ previewText }}</p>
             </div>
-        </article>
+        </article> -->
+        <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+            <figure class="post-thumbnail" :style="{ backgroundImage: `url(${thumbnail})` }"></figure>
+            <div class="px-6 py-4">
+                <h2 class="font-bold text-xl mb-2">{{ title }}</h2>
+                <p class="text-gray-700 text-base">
+                    {{ previewText }}
+                </p>
+            </div>
+        </div>
     </nuxt-link>
 </template>
 
@@ -45,9 +54,6 @@ export default {
 
 <style scoped>
 .post-preview {
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 2px #ccc;
-    background-color: white;
     width: 90%;
 }
 
@@ -72,7 +78,7 @@ a {
   background-image: url(http://rocketai.org/wp-content/uploads/2021/06/Hi-Tech-Platforms-Information-Services.jpg);
 }
 
-.post-content {
+/* .post-content {
   padding: 10px;
   text-align: center;
 }
@@ -80,5 +86,5 @@ a {
 a:hover .post-content,
 a:active .post-content {
   background-color: #ccc;
-}
+} */
 </style>

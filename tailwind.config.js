@@ -3,7 +3,6 @@ module.exports = {
     "./src/**/*.{html,js}",
     "./node_modules/tw-elements/dist/js/**/*.js",
   ],
-  // 設定dark mode
   // plugins: [require("tw-elements/dist/plugin.cjs"),require('tailwindcss-dark-mode')()],
   darkMode: 'class',
   theme: {

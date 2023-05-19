@@ -55,9 +55,7 @@ export default {
   box-sizing: border-box;
   background-position: bottom;
   background-size: cover;
-  /* background-image: url("~assets/images/bg-pink-blue.jpg"); */
   background-repeat: no-repeat;
-  /* background: radial-gradient(rgba(255,255,255,0.3) 0%, rgba(0,0,0,1) 40%); */
   display: flex;
   justify-content: center;
   align-items: center;
