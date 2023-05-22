@@ -1,5 +1,42 @@
 <template>
-  <v-app>
+  <!-- <section class="bg-slate-100 dark:bg-slate-950 flex justify-center items-center">
+    <div class="w-full md:min-w-[600px] bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8 ">
+            <form @submit.prevent="onSave" class="space-y-4 md:space-y-6">
+              <AppControlInput type="text" v-model="editedPost.author"
+                >作者名稱</AppControlInput
+              >
+              <AppControlInput type="text" v-model="editedPost.title"
+                >文章標題</AppControlInput
+              >
+              <AppControlInput type="text" v-model="editedPost.thumbnail"
+                >預覽縮圖</AppControlInput
+              >
+              <AppControlInput type="text" v-model="editedPost.previewText"
+                >預覽文字</AppControlInput
+              >
+              <AppControlInput controlType="textarea" v-model="editedPost.content"
+                >文章內容</AppControlInput
+              >
+              <div class="flex">
+                <AppButton type="submit" 
+                :btnStyle="`
+                text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-1/2
+                dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800
+                `">
+                  確認
+                </AppButton>
+                <AppButton
+                  type="button"
+                  :btnStyle="`w-1/2 bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-1/2 ml-2`"
+                  @click="isLogin = !isLogin"
+                  >刪除</AppButton>
+              </div>
+            </form>
+        </div>
+    </div>
+  </section> -->
+  <v-app class="rounded p-5 max-w-[600px] mx-auto">
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onSave">
       <v-text-field
         v-model="editedPost.author"
@@ -29,11 +66,25 @@
         :rules="[(v) => !!v || '請填入預覽文字']"
         required
       ></v-text-field>
+      <!-- 四個checkbox:React,vue,nuxt,javascript，使用者必須至少選擇一個，否則會出錯，用vuetify實作 ，一開始不一定會有資料，需要處理這部分-->
+      <v-checkbox
+        v-model="editedPost.tags"
+        :rules="[(v) => !!v || '請至少選擇一個標籤']"
+        :label="tag"
+        :value="tag"
+        v-for="tag in ['React', 'Vue', 'Nuxt', 'Javascript']"
+        :key="tag"
+        required
+      ></v-checkbox>
+
+
+
       <v-textarea
         outlined
         name="input-7-4"
         label="文章內容"
         v-model="editedPost.content"
+        class="mt-5"
       ></v-textarea>
       <v-btn type="submit" color="success" class="mr-3" :disabled="!valid"
         >儲存</v-btn
@@ -144,3 +195,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.theme--dark.v-application {
+  background: rgba(31,41,55,0.6);
+}
+</style>

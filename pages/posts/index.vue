@@ -1,5 +1,5 @@
 <template>
-  <div class="posts-page">
+  <div class="posts-page container">
     <post-list :posts="loadedPosts"></post-list>
   </div>
 </template>

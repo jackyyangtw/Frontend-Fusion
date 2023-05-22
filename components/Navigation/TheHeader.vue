@@ -9,12 +9,12 @@
     </div>
     <!-- <div class="spacer"></div> -->
     <SearchBar></SearchBar>
-    <ModeSwitcher></ModeSwitcher>
+    <ModeSwitcher class="pr-3"></ModeSwitcher>
     <div class="navigation-items">
       <ul class="nav-list">
-        <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/posts">Blog</nuxt-link></li>
+        <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/posts">部落格</nuxt-link></li>
         <!-- <li class="nav-item"><nuxt-link to="/about">About</nuxt-link></li> -->
-        <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/admin">Admin</nuxt-link></li>
+        <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/admin">管理</nuxt-link></li>
       </ul>
     </div>
   </header>
@@ -29,6 +29,9 @@ export default {
   name: "TheHeader",
   components: {
     TheSideNavToggle,SearchBar,ModeSwitcher
+  },
+  mounted(){
+    this.$store.commit('ui/setHeaderHeight', this.$refs.theHeader.clientHeight);
   }
 };
 </script>

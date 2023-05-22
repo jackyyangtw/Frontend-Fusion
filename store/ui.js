@@ -3,12 +3,17 @@ export default {
     state() {
         return {
             isDark: true,
+            headerHeight: 0
         }
     },
     mutations: {
         setDark(state) {
             state.isDark = !state.isDark;
+        },
+        setHeaderHeight(state, height) {
+            state.headerHeight = height;
         }
+
     },
     actions: {
         toggleDarkMode(vuexContext) {
@@ -25,6 +30,9 @@ export default {
     getters: {
         isDark(state) {
             return state.isDark;
+        },
+        headerHeight(state) {
+            return state.headerHeight;
         }
     }
 }

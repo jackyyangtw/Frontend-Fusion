@@ -1,6 +1,6 @@
 <template>
-  <div class="single-post-page">
-    <section class="post">
+  <div class="single-post-page container">
+    <section class="post w-full md:w-[60%] mx-auto">
       <h1 class="post-title text-slate-950 dark:text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
       <p class="post-content text-slate-950 dark:text-white text-xl font-light">{{ loadedPost.previewText }}</p>
       <div class="post-details mb-5">
@@ -89,16 +89,16 @@ export default {
   box-sizing: border-box;
 }
 
-.post {
+/* .post {
   width: 100%;
-}
+} */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .post {
     width: 600px;
     margin: auto;
   }
-}
+} */
 
 .post-title {
   margin: 0;

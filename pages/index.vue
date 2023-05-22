@@ -13,7 +13,9 @@
         </div>
       </div>
     </section>
-    <post-list :posts="loadedPosts" admin></post-list>
+    <div class="container">
+      <post-list :posts="loadedPosts" admin></post-list>
+    </div>
   </div>
 </template>
 
@@ -21,8 +23,8 @@
 export default {
   head(){
     return {
-      title: 'Home Page',
-      meta:[{ hid: "description", name: "description", content: 'Home Page' }],
+      title: 'Frontend Fusion',
+      meta:[{ hid: "description", name: "description", content: 'Frontend Fusion' }],
     }
   },
   methods: {

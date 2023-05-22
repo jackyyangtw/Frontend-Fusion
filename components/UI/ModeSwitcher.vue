@@ -22,6 +22,7 @@
         methods: {
             toggleDarkMode() {
                 this.$store.dispatch('ui/toggleDarkMode');
+                this.$vuetify.theme.dark = this.isDark;
             },
         },
     }

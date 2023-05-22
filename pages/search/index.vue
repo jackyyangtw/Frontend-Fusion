@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="container mt-5">
+        <div class="container" v-if="hasPosts">
             <p class="text-style">
-                Key Words: 
+                關鍵字: 
                 <span class="text-sky-500 dark:text-pink-500">{{this.searchText}}</span>
             </p>
         </div>
-        <div v-if="hasPosts">
+        <div class="container" v-if="hasPosts">
             <PostList :posts="searchedPosts"></PostList>
         </div>
         <div class="container" v-else>
             <div class="text-style">
-                No posts found
+                沒有找到任何文章
             </div>
         </div>
     </div>

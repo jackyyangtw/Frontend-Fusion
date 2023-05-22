@@ -29,6 +29,6 @@
 .drawer-toggle .bar {
   width: 90%;
   height: 2px;
-  background-color: white;
+  @apply bg-black dark:bg-white;
 }
 </style>

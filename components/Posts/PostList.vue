@@ -1,5 +1,5 @@
 <template>
-    <section class="featured-posts">
+    <section class="p-6 flex flex-wrap items-center justify-start">
         <post-preview
             :is-admin="isAdmin" 
             v-for="post in posts"
@@ -29,15 +29,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-
-.featured-posts {
-    display: flex;
-    padding: 20px;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-</style>

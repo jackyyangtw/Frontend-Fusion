@@ -44,8 +44,7 @@ module.exports = {
 
 
   // color-mode 設定dark mode
-  buildModules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode"],
-  modules: ['@nuxtjs/color-mode'],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode"],
   colorMode: {
     classSuffix: "",
     preference:'dark',
@@ -56,7 +55,17 @@ module.exports = {
       darkMode: 'class',
     }
   },
-
+  vuetify: {
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          primary:"#eff6ff",
+          background:"#eff6ff",
+        },
+      },
+    }
+  },
   axios: {
     baseURL:
       process.env.BASE_URL ||
