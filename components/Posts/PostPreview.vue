@@ -4,23 +4,30 @@
             <figure class="post-thumbnail" :style="{ backgroundImage: `url(${thumbnail})` }">
                 <div class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center" v-if="!thumbnail">目前沒有圖片</div>
             </figure>
-            <div class="px-6 py-4 group-hover:bg-grey-800/[.1] dark:group-hover:bg-white/[.1]">
+            <div class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]">
                 <h2 class="font-bold text-xl mb-2 text-black dark:text-white">{{ title }}</h2>
                 <p class="text-base pb-1 text-gray-700 dark:text-white">
                     {{ previewText }}
                 </p>
-                <span class="bg-green-100 text-green-800 badge-style dark:bg-green-900 dark:text-green-300">Vue</span>
-                <span class="bg-yellow-100 text-yellow-800 badge-style dark:bg-yellow-900 dark:text-yellow-300">JavaScript</span>
-                <span class="bg-blue-100 text-blue-800 badge-style dark:bg-blue-900 dark:text-blue-300">React</span>
-                <span class="bg-green-100 text-green-800 badge-style dark:bg-green-900 dark:text-green-300">Nuxt</span>
+                <PostBadge v-for="tag in tags" :key="tag" :badgeName="tag" :classes="getBadgeClass(tag)"></PostBadge>
+
             </div>
         </div>
     </nuxt-link>
 </template>
-
 <script>
+import PostBadge from '../UI/PostBadge.vue';
 export default {
+    components: { 
+        PostBadge 
+    },
     name: 'PostPreview',
+    methods: {
+        getBadgeClass(tagName) {
+            console.log(this.$tags[tagName])
+            return this.$tags[tagName];
+        }
+    },
     props: {
         id: {
             type: String,
@@ -38,6 +45,10 @@ export default {
             type: String,
             required: true,
         },
+        tags: {
+            type: Array,
+            required: true
+        },
         isAdmin: {
             type: Boolean,
             required: true
@@ -46,15 +57,13 @@ export default {
     computed: {
         postLink(){
             return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
-.post-preview {
-    /* width: 90%; */
-}
+
 
 a {
     text-decoration: none;

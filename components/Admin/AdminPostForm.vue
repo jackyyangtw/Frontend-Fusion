@@ -66,18 +66,21 @@
         :rules="[(v) => !!v || '請填入預覽文字']"
         required
       ></v-text-field>
-      <!-- 四個checkbox:React,vue,nuxt,javascript，使用者必須至少選擇一個，否則會出錯，用vuetify實作 ，一開始不一定會有資料，需要處理這部分-->
-      <v-checkbox
-        v-model="editedPost.tags"
-        :rules="[(v) => !!v || '請至少選擇一個標籤']"
-        :label="tag"
-        :value="tag"
-        v-for="tag in ['React', 'Vue', 'Nuxt', 'Javascript']"
-        :key="tag"
-        required
-      ></v-checkbox>
-
-
+      <label class="mb-0 text-gray-500 dark:text-gray-300">文章類別</label>
+      <div class="flex">
+        <v-checkbox 
+          v-model="editedPost.tags" 
+          v-for="val in tags" 
+          :key="val"
+          :value="val" 
+          :label="val" 
+          :rules="checkboxRules" 
+          hide-details
+          class="mr-3"
+        >
+        </v-checkbox>
+      </div>
+      <p class="error--text" v-if="checkboxRules">{{ checkboxErrMsg }}</p>
 
       <v-textarea
         outlined
@@ -124,10 +127,12 @@ export default {
     AppControlInput,
   },
   created() {
-    console.log(this.$route);
+    console.log(this.$refs);
   },
   data() {
     return {
+      selectedCheckbox: [],
+      checkboxVal: ['React','Vue','Nuxt','Javascript'],
       editedPost: this.post
         ? { ...this.post }
         : {
@@ -136,6 +141,7 @@ export default {
             thumbnail: "",
             content: "",
             previewText: "",
+            tags: [],
           },
       dialog: false,
       isDialogShow: false,
@@ -191,6 +197,24 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+  },
+  computed: {
+    checkboxRules() {
+      return [
+        this.editedPost.tags.length > 0 || "請至少選擇一個Tag"
+      ];
+    },
+    checkboxErrMsg() {
+      return this.editedPost.tags.length > 0 ? "" : "請至少選擇一個Tag";
+    },
+    checkboxs() {
+      return this.editedPost.tags ? this.editedPost.tags : this.selectedCheckbox;
+    },
+    tags() {
+      // 取出this.$tags的key值，並轉成陣列
+      return Object.keys(this.$tags);
+      
     },
   },
 };

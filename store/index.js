@@ -66,6 +66,7 @@ const createStore = () => {
           ...postData,
           updatedDate: new Date()
         };
+        console.log(createdPost)
         return this.$axios
           .$post(`/posts.json?auth=${vuexContext.state.token}`, createdPost)
           .then(data =>

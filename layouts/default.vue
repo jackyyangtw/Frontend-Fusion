@@ -38,6 +38,12 @@ export default {
       return `height: ${headerHeight}px`;
     }
   },
+  asyncData() {
+    // 取得localStorage的isDark
+    const localIsDark = localStorage.getItem('isDark');
+    const isDark = this.$store.getters['ui/isDark'];
+    console.log('localIsDark', localIsDark);
+  },
 }
 </script>
 <style>
