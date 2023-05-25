@@ -20,7 +20,7 @@
       :value="value"
       @input="$emit('input', $event.target.value)">
     </textarea>
-    <div class="text-red" v-if="!hasError">{{ message }}</div>
+    <!-- <div class="text-red" v-if="!hasError">{{ message }}</div> -->
   </div>
 </template>
 

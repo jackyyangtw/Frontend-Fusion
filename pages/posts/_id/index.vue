@@ -1,6 +1,6 @@
 <template>
   <div class="single-post-page container">
-    <section class="post w-full md:w-[60%] mx-auto">
+    <section class="post w-full md:w-[60%] lg:w-[750px] mx-auto">
       <h1 class="post-title text-slate-950 dark:text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
       <p class="post-content text-slate-950 dark:text-white text-xl font-light">{{ loadedPost.previewText }}</p>
       <div class="post-details mb-5">
@@ -9,7 +9,7 @@
         </div>
         <div class="post-detail text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content text-slate-950 dark:text-white">{{ loadedPost.content }}</p>
+      <p class="post-content text-slate-950 dark:text-white" v-html="loadedPost.content"></p>
     </section>
   </div>
 </template>

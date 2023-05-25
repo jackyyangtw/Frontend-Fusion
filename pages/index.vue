@@ -1,15 +1,12 @@
 <template>
   <div class="home-page">
-    <section class="intro" :class="introBg">
+    <section class="intro bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-950 dark:to-slate-800" >
       <div class=" rounded-md p-6 min-w-[360px] min-h-[200px]  mx-auto">
         <div class="flex flex-col justify-center items-center h-[200px]">
-          <h1 class="text-3xl font-bold mb-4 bg-gradient-to-r text-transparent bg-clip-text
-          from-blue-400 to-sky-400
-          dark:from-purple-400 dark:to-fuchsia-400 
-          ">
+          <h1 class="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-sky-400 dark:from-purple-400 dark:to-fuchsia-400">
             Frontend Fusion - 前端技術融合
           </h1>
-          <h2 class="text-lg font-medium mb-2 text-slate-950 dark:text-white">探索最新的前端技術和工具</h2>
+          <h2 class="text-lg font-medium mb-2 text-slate-950 dark:text-slate-50">探索最新的前端技術和工具</h2>
         </div>
       </div>
     </section>
@@ -38,12 +35,6 @@ export default {
     },
     isDark(){
       return this.$store.getters['ui/isDark'];
-    },
-    introBg(){
-      if(this.isDark){
-        return 'bg-gradient-to-r from-slate-950 to-slate-800'
-      }
-      return 'bg-gradient-to-r from-slate-100 to-slate-200'
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="" :class="isDark ? 'dark' : 'light'">
+  <div :class="isDark ? 'dark' : 'light'">
     <the-header @sidenavToggle="displaySideNav = !displaySideNav"></the-header>
     <the-sidenav :show="displaySideNav" @close="displaySideNav = false"></the-sidenav>
     <div class="placeholder" :style="placeHolderHeight"></div>
@@ -22,13 +22,13 @@ export default {
       displaySideNav: false
     }
   },
-  head(){
-    return {
-      bodyAttrs: {
-        class: this.isDark ? 'bg-slate-950' : 'bg-slate-100'
-      }
-    }
-  },
+  // head(){
+  //   return {
+  //     bodyAttrs: {
+  //       class: this.isDark ? 'bg-slate-950' : 'bg-slate-100'
+  //     }
+  //   }
+  // },
   computed: {
     isDark(){
       return this.$store.getters['ui/isDark'];
@@ -38,11 +38,12 @@ export default {
       return `height: ${headerHeight}px`;
     }
   },
-  asyncData() {
-    // 取得localStorage的isDark
-    const localIsDark = localStorage.getItem('isDark');
-    const isDark = this.$store.getters['ui/isDark'];
-    console.log('localIsDark', localIsDark);
+  created() {
+    // 依照loacalStorage isDark值來決定是否要切換成深色模式
+    if(process.client){
+      this.$store.commit('ui/initSetDark')
+      this.$vuetify.theme.dark = this.isDark;
+    }
   },
 }
 </script>

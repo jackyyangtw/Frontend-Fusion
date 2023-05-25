@@ -35,12 +35,22 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ["@/assets/css/main.css"],
+  css: [
+    "@/assets/css/main.css",
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.core.css'
+  ],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~plugins/core-components.js", "~plugins/date-filter.js","~plugins/tags.js"],
+  plugins: [
+    "~plugins/core-components.js", 
+    "~plugins/date-filter.js",
+    "~plugins/tags.js",
+    { src: "~plugins/vue-quill-editor.js", ssr: false },
+  ],
 
 
   // color-mode 設定dark mode

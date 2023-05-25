@@ -24,7 +24,6 @@ export default {
     name: 'PostPreview',
     methods: {
         getBadgeClass(tagName) {
-            console.log(this.$tags[tagName])
             return this.$tags[tagName];
         }
     },

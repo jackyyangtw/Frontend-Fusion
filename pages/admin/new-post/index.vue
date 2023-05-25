@@ -1,8 +1,6 @@
 <template>
-  <div class="admin-new-post-page">
-    <section class="new-post-form">
-      <admin-post-form @submit="submitForm"></admin-post-form>
-    </section>
+  <div class="mt-5">
+    <admin-post-form @submit="submitForm"></admin-post-form>
   </div>
 </template>
 
@@ -24,14 +22,5 @@ export default {
 </script>
 
 <style scoped>
-.new-post-form {
-  width: 90%;
-  margin: 20px auto;
-}
 
-@media (min-width: 768px) {
-  .new-post-form {
-    width: 500px;
-  }
-}
 </style>
