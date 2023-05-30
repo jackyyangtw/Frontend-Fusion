@@ -32,13 +32,13 @@ export default {
   methods: {
     updatePost(updatedPost) {
       this.$store
-        .dispatch("editPost", updatedPost)
+        .dispatch("post/editPost", updatedPost)
         .then(() => this.$router.push("/admin"));
     },
     deletePost(deleteId) {
       console.log("ondelete");
       this.$store
-        .dispatch("deletePost", deleteId)
+        .dispatch("post/deletePost", deleteId)
         .then(() => this.$router.push("/admin"));
     },
   },

@@ -5,13 +5,16 @@
         <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    登入您的帳號
+                    {{ isLogin ? '登入您的帳號': '註冊新帳號' }}
                 </h1>
                 <form @submit.prevent="onSubmit" class="space-y-4 md:space-y-6">
-                  <AppControlInput type="email" v-model="email"
+                  <AppControlInput type="text" v-model="name" v-if="!isLogin" :placeholder="`請輸入您的名稱`"
+                    >名稱</AppControlInput
+                  >
+                  <AppControlInput type="email" v-model="email" :placeholder="`請輸入您的電子郵件`"
                     >E-Mail</AppControlInput
                   >
-                  <AppControlInput type="password" v-model="password"
+                  <AppControlInput type="password" v-model="password" :placeholder="`請輸入您的密碼`"
                     >密碼</AppControlInput
                   >
                   <div class="flex">
@@ -26,7 +29,7 @@
                       type="button"
                       :btnStyle="`w-1/2 bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-1/2 ml-2`"
                       @click="isLogin = !isLogin"
-                      >更換至{{ isLogin ? "註冊" : "登入" }}</AppButton
+                      >切換至{{ isLogin ? "註冊" : "登入" }}</AppButton
                     >
                   </div>
                 </form>
@@ -45,7 +48,8 @@ export default {
     return {
       isLogin: true,
       email: "",
-      password: ""
+      password: "",
+      name: ""
     };
   },
   methods: {
@@ -54,7 +58,8 @@ export default {
         .dispatch("authenciateUser", {
           isLogin: this.isLogin,
           email: this.email,
-          password: this.password
+          password: this.password,
+          name: this.name
         })
         .then(() => this.$router.push("/admin"));
     }

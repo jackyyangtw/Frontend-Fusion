@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     loadedPosts() {
-      return this.$store.getters.loadedPosts;
+      return this.$store.getters['post/loadedPosts'];
     },
     isDark(){
       return this.$store.getters['ui/isDark'];

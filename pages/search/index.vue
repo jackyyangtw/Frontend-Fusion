@@ -30,10 +30,10 @@ export default {
         };
     },
     updated() {
-        this.$store.dispatch("setLoading", false)
+        this.$store.dispatch("ui/setLoading", false)
     },
     created() {
-        this.$store.dispatch("setLoading", false)
+        this.$store.dispatch("ui/setLoading", false)
         const searchText = this.$store.getters.searchText;
         this.setSearchedPosts(searchText)
     },

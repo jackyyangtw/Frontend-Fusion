@@ -4,10 +4,19 @@ const axios = require("axios");
 
 module.exports = {
   mode: "universal",
+  // color-mode 設定dark mode
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode",'@nuxtjs/firebase'],
 
-  /*
-   ** Headers of the page
-   */
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os',
+      projectId: 'nuxt-blog-b5610',
+    },
+    services: {
+      database: true // enable the Firebase Realtime Database service
+    }
+  },
+
   head: {
     title: pkg.name,
     // htmlAttrs: {
@@ -53,8 +62,7 @@ module.exports = {
   ],
 
 
-  // color-mode 設定dark mode
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode"],
+
   colorMode: {
     classSuffix: "",
     preference:'dark',

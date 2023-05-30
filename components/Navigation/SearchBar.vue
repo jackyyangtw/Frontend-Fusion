@@ -29,7 +29,7 @@
                 if (!this.searchText || this.searchText === this.$store.getters.searchText) return;
                 // debounce
                 const searchText = this.searchText;
-                this.$store.dispatch("setLoading", true);
+                this.$store.dispatch("ui/setLoading", true);
                 setTimeout(() => {
                     if (searchText === this.searchText) {
                         this.$store.commit("setSearchText", this.searchText);

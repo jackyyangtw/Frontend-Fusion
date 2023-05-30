@@ -3,7 +3,8 @@ export default {
     state() {
         return {
             isDark: true,
-            headerHeight: 0
+            headerHeight: 0,
+            loading: false
         }
     },
     mutations: {
@@ -22,15 +23,15 @@ export default {
             if(state.isDark){
                 document.documentElement.classList.add('dark');
                 document.documentElement.classList.remove('light');
-                document.body.classList.add('bg-slate-950');
-                document.body.classList.remove('bg-slate-100');
             }else{
                 document.documentElement.classList.add('light');
                 document.documentElement.classList.remove('dark');
-                document.body.classList.add('bg-slate-100');
-                document.body.classList.remove('bg-slate-950');
             }
-        }
+            document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
+        },
+        setLoading(state, loading) {
+            state.loading = loading;
+        },
 
     },
     actions: {
@@ -40,15 +41,15 @@ export default {
             if(vuexContext.state.isDark){
                 document.documentElement.classList.add('dark');
                 document.documentElement.classList.remove('light');
-                document.body.classList.add('bg-slate-950');
-                document.body.classList.remove('bg-slate-100');
             }else{
                 document.documentElement.classList.add('light');
                 document.documentElement.classList.remove('dark')
-                document.body.classList.add('bg-slate-100');
-                document.body.classList.remove('bg-slate-950');
             }
-        }
+            document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
+        },
+        setLoading(vuexContext, loading) {
+            vuexContext.commit("setLoading", loading);
+        },
     },
     getters: {
         isDark(state) {
@@ -56,6 +57,9 @@ export default {
         },
         headerHeight(state) {
             return state.headerHeight;
+        },
+        loading(state) {
+            return state.loading;
         }
     }
 }

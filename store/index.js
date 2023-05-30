@@ -1,39 +1,19 @@
 import Vuex from "vuex";
 import Cookie from "js-cookie";
 import ui from "./ui";
+import post from "./post";
+import user from './user'
 const createStore = () => {
   return new Vuex.Store({
-    modules: {ui},
+    modules: { ui, post },
     state: {
-      loadedPosts: [],
       token: null,
-      searchText:'',
-      loading: false
+      searchText: '',
+
     },
     mutations: {
-      setLoading(state, loading) {
-        state.loading = loading;
-      },
       setSearchText(state, searchText) {
         state.searchText = searchText;
-      },
-      setPosts(state, posts) {
-        state.loadedPosts = posts;
-      },
-      addPost(state, post) {
-        state.loadedPosts.push(post);
-      },
-      editPost(state, editedPost) {
-        const postIndex = state.loadedPosts.findIndex(
-          post => post.id === editedPost.id
-        );
-        state.loadedPosts[postIndex] = editedPost;
-      },
-      deletePost(state, deletePost) {
-        const deletedIndex = state.loadedPosts.findIndex(
-          post => post.id === deletePost
-        );
-        state.loadedPosts.splice(deletedIndex, 1);
       },
       setToken(state, token) {
         state.token = token;
@@ -43,9 +23,6 @@ const createStore = () => {
       }
     },
     actions: {
-      setLoading(vuexContext, loading) {
-        vuexContext.commit("setLoading", loading);
-      },
       nuxtServerInit(vuexContext, context) {
         return context.app.$axios
           .$get("/posts.json")
@@ -54,43 +31,9 @@ const createStore = () => {
             for (const key in data) {
               postArr.push({ ...data[key], id: key });
             }
-            vuexContext.commit("setPosts", postArr);
+            vuexContext.commit("post/setPosts", postArr);
           })
           .catch(e => context.error(e));
-      },
-      setPosts(vuexContext, posts) {
-        vuexContext.commit("setPosts", posts);
-      },
-      addPost(vuexContext, postData) {
-        const createdPost = {
-          ...postData,
-          updatedDate: new Date()
-        };
-        console.log(createdPost)
-        return this.$axios
-          .$post(`/posts.json?auth=${vuexContext.state.token}`, createdPost)
-          .then(data =>
-            vuexContext.commit("addPost", { ...createdPost, id: data.name })
-          )
-          .catch(err => console.log(err));
-      },
-      editPost(vuexContext, editedPost) {
-        return this.$axios
-          .$put(
-            `/posts/${editedPost.id}.json?auth=${vuexContext.state.token}`,
-            editedPost
-          )
-          .then(() => vuexContext.commit("editPost", editedPost))
-          .catch(err => console.log(err));
-      },
-      deletePost(vuexContext, deletePost) {
-        return this.$axios
-          .$delete(
-            `/posts/${deletePost}.json?auth=${vuexContext.state.token}`,
-            deletePost
-          )
-          .then(() => vuexContext.commit("deletePost", deletePost))
-          .catch(err => console.log(err));
       },
       authenciateUser(vuexContext, payload) {
         let authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIKey}`;
@@ -104,7 +47,6 @@ const createStore = () => {
             returnSecureToken: true
           })
           .then(res => {
-            console.log(res);
             vuexContext.commit("setToken", res.idToken);
             localStorage.setItem("token", res.idToken);
             localStorage.setItem(
@@ -116,6 +58,23 @@ const createStore = () => {
               "tokenExpiration",
               new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
             );
+            // if(!payload.isLogin) {
+            //   try {
+            //     this.$axios.post('/users.json', {
+            //       name: payload.name,
+            //       email: payload.email,
+            //       password: payload.password
+            //     })
+            //     const userRef = this.$fire.database.ref('users').push()
+            //     userRef.set({
+            //       name: payload.name,
+            //       email: payload.email,
+            //       password: payload.password
+            //     })
+            //   } catch (error) {
+            //     console.log(error)
+            //   }
+            // }
             return this.$axios.$post("http://localhost:3000/api/track-data", {
               data: "Authenticated!! "
             });
@@ -158,18 +117,12 @@ const createStore = () => {
       }
     },
     getters: {
-      loadedPosts(state) {
-        return state.loadedPosts;
-      },
       isAuthenicated(state) {
         return state.token != null;
       },
-      searchText(state){
+      searchText(state) {
         return state.searchText;
       },
-      loading(state) {
-        return state.loading;
-      }
     }
   });
 };

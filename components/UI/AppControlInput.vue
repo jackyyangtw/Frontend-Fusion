@@ -7,7 +7,7 @@
       focus:ring-primary-600 focus:border-primary-600 
       dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
       " 
-      placeholder="name@company.com" 
+      :placeholder="placeholder" 
       required=""
       v-if="controlType === 'input'"
       v-bind="$attrs"
@@ -39,7 +39,11 @@ export default {
     hasError: {
       type: Boolean,
       default: false
-    }
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
   }
 }
 </script>
