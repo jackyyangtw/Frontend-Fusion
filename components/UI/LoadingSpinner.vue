@@ -1,5 +1,5 @@
 <template>
-    <div v-show="loading" class="fixed inset-0 flex justify-center items-center bg-black/30 dark:bg-white/30" ref="loadingSpinner">
+    <div v-show="loading" class="fixed inset-0 flex justify-center items-center bg-black/30 dark:bg-white/30 z-30" ref="loadingSpinner">
         <div class="loader"></div>
     </div>
 </template>

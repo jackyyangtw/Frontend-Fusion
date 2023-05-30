@@ -1,22 +1,7 @@
-# nuxt-course
+## bugs fix:
+~如果選擇light mode重整後會直接變成dark mode~
 
-> Nuxt.js course for Udemy
-
-## Build Setup
-
-``` bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn run dev
-
-# build for production and launch server
-$ yarn run build
-$ yarn start
-
-# generate static project
-$ yarn run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+## features:
+* 登入後可編輯個人資料，新增Post的時候可以自動帶入姓名
+~新增Post圖片上傳功能~
+* 新增filter功能

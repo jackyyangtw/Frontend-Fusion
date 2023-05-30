@@ -11,9 +11,9 @@
       <ul
         class="nav-list"
         @click="$emit('close')">
-        <li class="nav-item"><nuxt-link to="/">Home</nuxt-link></li>
-        <li class="nav-item"><nuxt-link to="/posts">Blog</nuxt-link></li>
-        <li class="nav-item"><nuxt-link to="/admin">Admin</nuxt-link></li>
+        <li class="nav-item"><nuxt-link to="/">Fronted Fusion</nuxt-link></li>
+        <li class="nav-item"><nuxt-link to="/posts">部落格</nuxt-link></li>
+        <li class="nav-item"><nuxt-link to="/admin">管理</nuxt-link></li>
       </ul>
     </div>
   </transition>
@@ -42,23 +42,24 @@ export default {
 .sidenav-backdrop {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.2);
   z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
+  @apply dark:bg-white/[0.1] bg-slate-950/[0.2]
 }
 
 .sidenav {
   height: 100%;
   width: 300px;
-  background-color: white;
   z-index: 10000;
   position: fixed;
   top: 0;
   left: 0;
   box-sizing: border-box;
   padding: 30px;
+  @apply bg-white dark:bg-slate-950
 }
 
 .slide-side-enter-active,
@@ -82,12 +83,12 @@ export default {
 
 .nav-item a {
   text-decoration: none;
-  color: black;
   font-size: 1.5rem;
+  @apply text-black dark:text-white;
 }
 
 .nav-item a:hover,
 .nav-item a:active {
-  color: red;
+  @apply text-sky-500
 }
 </style>

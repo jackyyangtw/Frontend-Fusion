@@ -22,13 +22,6 @@ export default {
       displaySideNav: false
     }
   },
-  // head(){
-  //   return {
-  //     bodyAttrs: {
-  //       class: this.isDark ? 'bg-slate-950' : 'bg-slate-100'
-  //     }
-  //   }
-  // },
   computed: {
     isDark(){
       return this.$store.getters['ui/isDark'];
@@ -41,7 +34,7 @@ export default {
   created() {
     // 依照loacalStorage isDark值來決定是否要切換成深色模式
     if(process.client){
-      this.$store.commit('ui/initSetDark')
+      this.$store.commit('ui/initSetDark');
       this.$vuetify.theme.dark = this.isDark;
     }
   },

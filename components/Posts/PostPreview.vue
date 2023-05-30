@@ -1,5 +1,5 @@
 <template>
-    <nuxt-link class="m-2 group w-full md:w-[46%] lg:w-[31.333%]" :to="postLink">
+    <nuxt-link class="m-2 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]" :to="postLink">
         <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
             <figure class="post-thumbnail" :style="{ backgroundImage: `url(${thumbnail})` }">
                 <div class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center" v-if="!thumbnail">目前沒有圖片</div>
@@ -10,7 +10,6 @@
                     {{ previewText }}
                 </p>
                 <PostBadge v-for="tag in tags" :key="tag" :badgeName="tag" :classes="getBadgeClass(tag)"></PostBadge>
-
             </div>
         </div>
     </nuxt-link>

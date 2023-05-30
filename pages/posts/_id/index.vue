@@ -4,12 +4,14 @@
       <h1 class="post-title text-slate-950 dark:text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
       <p class="post-content text-slate-950 dark:text-white text-xl font-light">{{ loadedPost.previewText }}</p>
       <div class="post-details mb-5">
-        <div class="post-detail text-gray-400 dark:text-gray-500 mr-3">
+        <div class="text-gray-400 dark:text-gray-500 mr-3">
           Last updated on {{ loadedPost.updatedDate | date }}
         </div>
-        <div class="post-detail text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
+        <div class="text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content text-slate-950 dark:text-white" v-html="loadedPost.content"></p>
+      <div class="ql-snow">
+        <div class="post-content text-slate-950 dark:text-white ql-editor !p-0" v-html="loadedPost.content"></div>
+      </div>
     </section>
   </div>
 </template>
@@ -89,26 +91,16 @@ export default {
   box-sizing: border-box;
 }
 
-/* .post {
-  width: 100%;
-} */
 
-/* @media (min-width: 768px) {
-  .post {
-    width: 600px;
-    margin: auto;
-  }
-} */
 
 .post-title {
   margin: 0;
 }
 
 .post-details {
-  padding: 10px 0;
+  padding: 5px 0;
   box-sizing: border-box;
-  display: flex;
-
+  @apply flex flex-col md:flex-row
 }
 
 @media (min-width: 768px) {
