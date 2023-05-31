@@ -25,7 +25,8 @@ export default {
         },
         posts: {
             type: Array,
-            required: true
+            required: true,
+            default: () => []
         }
     },
 }

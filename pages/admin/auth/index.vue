@@ -55,7 +55,7 @@ export default {
   methods: {
     onSubmit() {
       this.$store
-        .dispatch("authenciateUser", {
+        .dispatch("authenticateUser", {
           isLogin: this.isLogin,
           email: this.email,
           password: this.password,

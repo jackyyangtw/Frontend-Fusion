@@ -116,7 +116,7 @@ export default {
       editedPost: this.post
         ? { ...this.post }
         : {
-            author: "",
+            author: this.userName,
             title: "",
             thumbnail: "",
             content: "",
@@ -158,7 +158,10 @@ export default {
   },
   methods: {
     onSave() {
-      this.$emit("submit", this.editedPost);
+      this.$emit("submit", {
+        ...this.editedPost, 
+        userId: this.$store.getters['user/userData'].id
+      });
     },
     onCancel() {
       this.$router.push("/admin");
@@ -199,6 +202,10 @@ export default {
       // 取出this.$tags的key值，並轉成陣列
       return Object.keys(this.$tags);
       
+    },
+    userName() {
+      const userData = this.$store.getters['user/userData'];
+      return userData && userData.name ? userData.name : '';
     },
   },
 };

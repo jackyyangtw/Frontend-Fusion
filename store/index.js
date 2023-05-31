@@ -3,13 +3,13 @@ import Cookie from "js-cookie";
 import ui from "./ui";
 import post from "./post";
 import user from './user'
+// import { json } from "body-parser";
 const createStore = () => {
   return new Vuex.Store({
-    modules: { ui, post },
+    modules: { ui, post,user },
     state: {
       token: null,
       searchText: '',
-
     },
     mutations: {
       setSearchText(state, searchText) {
@@ -20,7 +20,8 @@ const createStore = () => {
       },
       clearToken(state) {
         state.token = null;
-      }
+      },
+
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
@@ -35,51 +36,65 @@ const createStore = () => {
           })
           .catch(e => context.error(e));
       },
-      authenciateUser(vuexContext, payload) {
-        let authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIKey}`;
-        if (!payload.isLogin) {
-          authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbAPIKey}`;
-        }
-        return this.$axios
-          .$post(authUrl, {
+      async authenticateUser(vuexContext, payload) {
+        const authUrl = payload.isLogin
+          ? `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIKey}`
+          : `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbAPIKey}`;
+      
+        try {
+          const { data } = await this.$axios.post(authUrl, {
             email: payload.email,
             password: payload.password,
-            returnSecureToken: true
-          })
-          .then(res => {
-            vuexContext.commit("setToken", res.idToken);
-            localStorage.setItem("token", res.idToken);
-            localStorage.setItem(
-              "tokenExpiration",
-              new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
+            returnSecureToken: true,
+          });
+      
+          const { idToken, expiresIn, localId } = data;
+      
+          vuexContext.commit('setToken', idToken);
+          localStorage.setItem('token', idToken);
+          localStorage.setItem(
+            'tokenExpiration',
+            new Date().getTime() + Number.parseInt(expiresIn) * 1000
+          );
+          Cookie.set('jwt', idToken);
+          Cookie.set(
+            'tokenExpiration',
+            new Date().getTime() + Number.parseInt(expiresIn) * 1000
+          );
+      
+          if (!payload.isLogin) {
+            const commitData = {
+              name: payload.name,
+              email: payload.email,
+              password: payload.password,
+              id: localId,
+            };
+      
+            await this.$axios.post(
+              `/users/${localId}.json?auth=${idToken}`,
+              commitData
             );
-            Cookie.set("jwt", res.idToken);
-            Cookie.set(
-              "tokenExpiration",
-              new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
-            );
-            // if(!payload.isLogin) {
-            //   try {
-            //     this.$axios.post('/users.json', {
-            //       name: payload.name,
-            //       email: payload.email,
-            //       password: payload.password
-            //     })
-            //     const userRef = this.$fire.database.ref('users').push()
-            //     userRef.set({
-            //       name: payload.name,
-            //       email: payload.email,
-            //       password: payload.password
-            //     })
-            //   } catch (error) {
-            //     console.log(error)
-            //   }
-            // }
-            return this.$axios.$post("http://localhost:3000/api/track-data", {
-              data: "Authenticated!! "
-            });
-          })
-          .catch(err => console.log(err.response.data.error.message));
+      
+            vuexContext.commit('user/setUserData', commitData);
+            Cookie.set(`userData`, JSON.stringify(commitData));
+          }
+      
+          const { data: userData } = await this.$axios.get(
+            `/users/${localId}.json?auth=${idToken}`
+          );
+      
+          Object.values(userData).forEach((item) => {
+            const userData = { ...item, id: localId };
+            Cookie.set(`userData`, JSON.stringify(userData));
+          });
+
+          
+          vuexContext.dispatch('user/setUserData');
+
+          vuexContext.dispatch('user/setUserPosts');
+        } catch (error) {
+          console.log(error);
+        }
       },
       initAuth(vuexContext, req) {
         let token;
@@ -107,9 +122,12 @@ const createStore = () => {
         vuexContext.commit("setToken", token);
       },
       onLogout(vuexContext) {
-        vuexContext.commit("clearToken");
         Cookie.remove("jwt");
         Cookie.remove("tokenExpiration");
+        Cookie.remove("userData");
+        vuexContext.commit("clearToken");
+        vuexContext.commit("user/setUserData", null);
+        vuexContext.commit("user/setUserPosts", null);
         if (process.client) {
           localStorage.removeItem("token");
           localStorage.removeItem("tokenExpiration");

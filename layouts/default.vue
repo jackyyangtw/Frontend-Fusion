@@ -36,6 +36,8 @@ export default {
     if(process.client){
       this.$store.commit('ui/initSetDark');
       this.$vuetify.theme.dark = this.isDark;
+      this.$store.dispatch("user/setUserData");
+      this.$store.dispatch("user/setUserPosts");
     }
   },
 }

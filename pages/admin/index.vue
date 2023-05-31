@@ -1,5 +1,6 @@
 <template>
   <div class="admin-page container">
+    <p class="text-black dark:text-white">Hello, {{ userData.name }}</p>
     <section class="new-post">
       <AppButton :btnStyle="`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`" @click="$router.push('/admin/new-post')"
         >新增文章</AppButton
@@ -9,8 +10,10 @@
       >
     </section>
     <section class="pt-8">
-      <h1 class="text-center text-blue-400 dark:text-pink-400 text-3xl font-bold">現有的文章</h1>
-      <post-list isAdmin :posts="loadedPosts"></post-list>
+      <h1 class="text-center text-blue-400 dark:text-pink-400 text-3xl font-bold">
+        {{userPosts.length > 0 ? '現有的文章' : '目前沒有文章'}}
+      </h1>
+      <post-list isAdmin :posts="userPosts"></post-list>
     </section>
   </div>
 </template>
@@ -28,6 +31,12 @@ export default {
   computed: {
     loadedPosts() {
       return this.$store.getters['post/loadedPosts'];
+    },
+    userPosts() {
+      return this.$store.getters['user/userPosts'] || [];
+    },
+    userData() {
+      return this.$store.getters['user/userData'] || '';
     }
   }
 };
