@@ -2,7 +2,7 @@ import createApp from './app.js'
 
 import databaseService from './service.database.js'
 
-const appConfig = {"apiKey":"AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os","projectId":"nuxt-blog-b5610"}
+const appConfig = {"apiKey":"AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os","projectId":"nuxt-blog-b5610","authDomain":"nuxt-blog-b5610.firebaseapp.com","storageBucket":"nuxt-blog-b5610.appspot.com"}
 
 export default async (ctx, inject) => {
   const { firebase, session } = await createApp(appConfig, ctx)
