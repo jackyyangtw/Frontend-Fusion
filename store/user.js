@@ -13,6 +13,15 @@ export default {
         },
         setUserPosts(state, userPosts) {
             state.userPosts = userPosts;
+        },
+        addUserPost(state, userPost) {
+            state.userPosts.push(userPost);
+        },
+        deleteUserPost(state, deletePost) {
+            const deletedIndex = state.userPosts.findIndex(
+                post => post.id === deletePost
+            );
+            state.userPosts.splice(deletedIndex, 1);
         }
     },
     actions: {

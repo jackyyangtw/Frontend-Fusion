@@ -35,9 +35,11 @@ export default {
             console.log(createdPost, vuexContext.rootState)
             return this.$axios
                 .$post(`/posts.json?auth=${vuexContext.rootState.token}`, createdPost)
-                .then(data =>
+                .then(data => {
                     vuexContext.commit("addPost", { ...createdPost, id: data.name })
-                )
+                    vuexContext.commit("user/addUserPost", { ...createdPost, id: data.name },{ root: true })
+                    this.$axios.$put(`/posts/${data.name}.json?auth=${vuexContext.rootState.token}`, { ...createdPost, id: data.name })
+                })
                 .catch(err => console.log(err));
         },
         editPost(vuexContext, editedPost) {
@@ -52,10 +54,13 @@ export default {
         deletePost(vuexContext, deletePost) {
             return this.$axios
                 .$delete(
-                    `/posts/${deletePost}.json?auth=${vuexContext.state.token}`,
+                    `/posts/${deletePost}.json?auth=${vuexContext.rootState.token}`,
                     deletePost
                 )
-                .then(() => vuexContext.commit("deletePost", deletePost))
+                .then(() => {
+                    vuexContext.commit("deletePost", deletePost);
+                    vuexContext.commit("user/deleteUserPost", deletePost,{root: true});
+                })
                 .catch(err => console.log(err));
         },
     },

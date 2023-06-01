@@ -208,6 +208,9 @@ export default {
       return userData && userData.name ? userData.name : '';
     },
   },
+  mounted() {
+    this.editedPost.author = this.userName;
+  },
 };
 </script>
 
