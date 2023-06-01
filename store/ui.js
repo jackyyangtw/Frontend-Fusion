@@ -4,7 +4,8 @@ export default {
         return {
             isDark: true,
             headerHeight: 0,
-            loading: false
+            loading: false,
+            sidebarWidth: 0,
         }
     },
     mutations: {
@@ -32,6 +33,9 @@ export default {
         setLoading(state, loading) {
             state.loading = loading;
         },
+        setSidebarWidth(state, height) {
+            state.sidebarWidth = height;
+        }
 
     },
     actions: {
@@ -60,6 +64,10 @@ export default {
         },
         loading(state) {
             return state.loading;
+        },
+        sidebarWidth(state) {
+            return state.sidebarWidth;
         }
+        
     }
 }

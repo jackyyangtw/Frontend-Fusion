@@ -36,11 +36,13 @@ export default {
             }
         },
         async setUserPosts(vuexContext) {
-            const userId = vuexContext.state.userData.id;
-            if(userId) {
-                const userPosts = await this.$axios.$get(`/posts.json`);
-                const filteredPosts = Object.values(userPosts).filter(post => post.userId === userId);
-                vuexContext.commit("setUserPosts",filteredPosts);
+            if(vuexContext.state.userData) {
+                const userId = vuexContext.state.userData.id;
+                if(userId) {
+                    const userPosts = await this.$axios.$get(`/posts.json`);
+                    const filteredPosts = Object.values(userPosts).filter(post => post.userId === userId);
+                    vuexContext.commit("setUserPosts",filteredPosts);
+                }
             }
         }
     },

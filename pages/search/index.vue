@@ -48,7 +48,7 @@ export default {
             if (!this.searchText) {
                 return;
             }
-            this.searchedPosts = this.$store.getters.loadedPosts.filter(post => {
+            this.searchedPosts = this.$store.getters['post/loadedPosts'].filter(post => {
                 return post.title.toLowerCase().includes(posts.toLowerCase()) || post.content.toLowerCase().includes(posts.toLowerCase());
             });
         }

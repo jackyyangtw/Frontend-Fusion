@@ -95,7 +95,6 @@ export default {
 .nav-item a:hover,
 .nav-item a:active,
 .nav-item a.nuxt-link-active {
-  color: #38BDF8;
-  font-weight: 700;
+  @apply font-bold text-sky-500 dark:text-pink-500;
 }
 </style>
