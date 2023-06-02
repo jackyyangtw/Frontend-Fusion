@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     getSidebarWidth(width) {
-      console.log(width)
       return this.sidebarWidth = width
     },
     setFilter(tag) {

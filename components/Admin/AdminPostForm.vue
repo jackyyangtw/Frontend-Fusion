@@ -30,7 +30,7 @@
         required
       ></v-text-field>
       <label class="mb-0 text-gray-500 dark:text-gray-300">文章類別</label>
-      <div class="flex">
+      <div class="flex flex-wrap">
         <v-checkbox 
           v-model="editedPost.tags" 
           v-for="val in tags" 
@@ -57,16 +57,17 @@
           :content="editedPost.content"
           v-quill:myQuillEditor="editorOption"
           @change="onEditorChange($event)"
-          style="height: 500px;"
+          style="height: 400px;"
       >
       </div>
 
-
-      <v-btn type="submit" color="success" class="mr-3" :disabled="!valid"
-        >儲存</v-btn
-      >
-      <v-btn color="error" @click="dialog = true" class="mr-2"> 刪除 </v-btn>
-      <v-btn text @click="onCancel" type="button"> 取消 </v-btn>
+      <div class="pb-5">
+        <v-btn type="submit" color="success" class="mr-3" :disabled="!valid"
+          >儲存</v-btn
+        >
+        <v-btn color="error" @click="dialog = true" class="mr-2"> 刪除 </v-btn>
+        <v-btn text @click="onCancel" type="button"> 取消 </v-btn>
+      </div>
     </v-form>
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="350">

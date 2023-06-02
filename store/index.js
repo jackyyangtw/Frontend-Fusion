@@ -115,7 +115,6 @@ const createStore = () => {
           expirationDate = localStorage.getItem("tokenExpiration");
         }
         if (new Date().getTime() > +expirationDate || !token) {
-          console.log("there is no token");
           vuexContext.dispatch("onLogout");
           return;
         }

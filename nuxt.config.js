@@ -2,22 +2,26 @@ const pkg = require("./package");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 
+// import nuxt firebase modul
+
+
+
 module.exports = {
   mode: "universal",
   // color-mode 設定dark mode
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode",'@nuxtjs/firebase'],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode"],
 
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os',
-      projectId: 'nuxt-blog-b5610',
-      authDomain: 'nuxt-blog-b5610.firebaseapp.com',
-      storageBucket: 'nuxt-blog-b5610.appspot.com',
-    },
-    services: {
-      database: true // enable the Firebase Realtime Database service
-    }
-  },
+  // firebase: {
+  //   config: {
+  //     apiKey: 'AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os',
+  //     projectId: 'nuxt-blog-b5610',
+  //     authDomain: 'nuxt-blog-b5610.firebaseapp.com',
+  //     storageBucket: 'nuxt-blog-b5610.appspot.com',
+  //   },
+  //   services: {
+  //     database: true // enable the Firebase Realtime Database service
+  //   }
+  // },
 
   head: {
     title: pkg.name,

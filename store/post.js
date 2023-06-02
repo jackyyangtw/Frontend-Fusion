@@ -32,7 +32,6 @@ export default {
                 ...postData,
                 updatedDate: new Date()
             };
-            console.log(createdPost, vuexContext.rootState)
             return this.$axios
                 .$post(`/posts.json?auth=${vuexContext.rootState.token}`, createdPost)
                 .then(data => {

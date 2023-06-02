@@ -21,7 +21,6 @@ export default {
     return context.app.$axios
       .$get(`/posts/${context.params.postId}.json`)
       .then((data) => {
-        console.log(data);
         return {
           loadedPost: { ...data, id: context.params.postId },
           dialog: false,
@@ -36,7 +35,6 @@ export default {
         .then(() => this.$router.push("/admin"));
     },
     deletePost(deleteId) {
-      console.log("ondelete");
       this.$store
         .dispatch("post/deletePost", deleteId)
         .then(() => this.$router.push("/admin"));
