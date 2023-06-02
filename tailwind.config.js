@@ -1,7 +1,10 @@
 module.exports = {
   content: [
-    "./src/**/*.{html,js}",
-    "./node_modules/tw-elements/dist/js/**/*.js",
+    "./components/**/*.{js,vue,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./plugins/**/*.{js,ts}",
+    "./nuxt.config.{js,ts}",
   ],
   // plugins: [require("tw-elements/dist/plugin.cjs"),require('tailwindcss-dark-mode')()],
   darkMode: 'class',
