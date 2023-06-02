@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
     <button
       @click="toggleSidebar"
       data-drawer-target="default-sidebar"

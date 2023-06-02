@@ -2,6 +2,7 @@
 * ~如果選擇light mode重整後會直接變成dark mode~
 * ~admin page 的 filtered data 有問題 post id 為undefined~
 * ~admin/new-post 的 userName 總是 return userData~
+* store/user/isManager 需處理等userData有值再進行運算
 
 ## features:
 * ~登入後可編輯個人資料，新增Post的時候可以自動帶入姓名~

@@ -1,12 +1,20 @@
 <template>
   <div class="home-page">
-    <section class="intro bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-950 dark:to-slate-800" >
-      <div class=" rounded-md p-6 min-w-[360px] min-h-[200px]  mx-auto">
+    <section
+      class="intro bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-950 dark:to-slate-800"
+    >
+      <div class="rounded-md p-6 min-w-[360px] min-h-[200px] mx-auto">
         <div class="flex flex-col justify-center items-center h-[200px]">
-          <h1 class="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-sky-400 dark:from-purple-400 dark:to-fuchsia-400">
+          <h1
+            class="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-sky-400 dark:from-purple-400 dark:to-pink-400"
+          >
             Frontend Fusion - 前端技術融合
           </h1>
-          <h2 class="text-lg font-medium mb-2 text-slate-950 dark:text-slate-50">探索最新的前端技術和工具</h2>
+          <h2
+            class="text-lg font-medium mb-2 text-slate-950 dark:text-slate-50"
+          >
+            探索最新的前端技術和工具
+          </h2>
         </div>
       </div>
     </section>
@@ -18,25 +26,27 @@
 
 <script>
 export default {
-  head(){
+  head() {
     return {
-      title: 'Frontend Fusion',
-      meta:[{ hid: "description", name: "description", content: 'Frontend Fusion' }],
-    }
+      title: "Frontend Fusion",
+      meta: [
+        { hid: "description", name: "description", content: "Frontend Fusion" },
+      ],
+    };
   },
   methods: {
     clearLocalStorage() {
       localStorage.clear();
-    }
+    },
   },
   computed: {
     loadedPosts() {
-      return this.$store.getters['post/loadedPosts'];
+      return this.$store.getters["post/loadedPosts"];
     },
-    isDark(){
-      return this.$store.getters['ui/isDark'];
-    }
-  }
+    isDark() {
+      return this.$store.getters["ui/isDark"];
+    },
+  },
 };
 </script>
 
