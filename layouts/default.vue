@@ -51,7 +51,7 @@ html {
   height: 0;
 }
 .container {
-    @apply 2xl:!max-w-[1536px]
+    @apply !mx-auto 2xl:!max-w-[1536px]
 }
 
 </style>
