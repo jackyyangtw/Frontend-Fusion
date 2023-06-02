@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-3">
         <div class="w-6 h-6 cursor-pointer" @click="toggleDarkMode">
             <!-- moon -->
             <svg v-show="isDark" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

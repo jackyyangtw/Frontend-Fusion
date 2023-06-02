@@ -74,11 +74,17 @@ module.exports = {
     preference:'dark',
     fallback:'light',
   },
-  tailwindcss: {
-    config: {
-      darkMode: 'class',
-    }
-  },
+  // tailwindcss: {
+  //   config: {
+  //     darkMode: 'class',
+  //   },
+  //   purge: {
+  //     // 排除 container 類別
+  //     options: {
+  //       safelist: ['html', 'body'],
+  //     },
+  //   },
+  // },
   vuetify: {
     theme: {
       dark: true,

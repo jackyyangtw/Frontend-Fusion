@@ -89,6 +89,6 @@ export default {
 
 .nav-item a:hover,
 .nav-item a:active {
-  @apply text-sky-500
+  @apply text-sky-500 dark:text-pink-500;
 }
 </style>

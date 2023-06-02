@@ -1,9 +1,9 @@
 <template>
-    <div class="flex justify-center items-center">
+    <div class="flex max-w-full justify-center items-center px-3">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-slate-600 dark:stroke-white cursor-pointer" @click="search">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
-        <div class="search-bar text-slate-700 max-w-[200px] md:max-w-[350px]
+        <div class="flex-auto max-w-full search-bar text-slate-700 max-w-[200px] md:max-w-[350px]
         dark:text-white
         ">
             <input class="text-slate-700 border border-indigo-600

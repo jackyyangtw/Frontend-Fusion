@@ -50,4 +50,8 @@ html {
 .placeholder{
   height: 0;
 }
+.container {
+    @apply 2xl:!max-w-[1536px]
+}
+
 </style>

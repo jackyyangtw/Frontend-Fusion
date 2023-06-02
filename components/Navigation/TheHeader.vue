@@ -9,7 +9,7 @@
     </div>
     <!-- <div class="spacer"></div> -->
     <SearchBar></SearchBar>
-    <ModeSwitcher class="pr-3"></ModeSwitcher>
+    <ModeSwitcher></ModeSwitcher>
     <div class="navigation-items">
       <ul class="nav-list">
         <li class="nav-item"><nuxt-link class="text-slate-700 dark:text-white" to="/posts">部落格</nuxt-link></li>
