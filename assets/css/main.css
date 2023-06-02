@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    /* @apply bg-cover bg-gradient-to-bl from-black to-teal-900 min-h-[100vh] relative; */
+    @apply relative;
+    /* background-color: #0B1121; */
+}
+
+html {
+    color-scheme: dark;
+}
+
+* {
+    transition: all 0.2s ease-in;
+}
+
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+  

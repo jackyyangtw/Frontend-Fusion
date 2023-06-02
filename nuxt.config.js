@@ -9,7 +9,7 @@ const axios = require("axios");
 module.exports = {
   mode: "universal",
   // color-mode 設定dark mode
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss'],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
 
   // firebase: {
   //   config: {
@@ -119,13 +119,21 @@ module.exports = {
     },
 
     // 設定dark mode
+    // postcss: {
+    //   plugins: {
+    //     'postcss-import': {},
+    //     'postcss-nested': {},
+    //     'postcss-custom-properties': {},
+    //     'tailwindcss': {},
+    //     'autoprefixer': {},
+    //   },
+    // },
     postcss: {
-      plugins: {
-        'postcss-import': {},
-        'postcss-nested': {},
-        'postcss-custom-properties': {},
-        'tailwindcss': {},
-        'autoprefixer': {},
+      postcssOptions: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {},
+        },
       },
     },
   },
