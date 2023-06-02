@@ -9,7 +9,7 @@ const axios = require("axios");
 module.exports = {
   mode: "universal",
   // color-mode 設定dark mode
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss',"@nuxtjs/color-mode"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify",'@nuxtjs/tailwindcss'],
 
   // firebase: {
   //   config: {
