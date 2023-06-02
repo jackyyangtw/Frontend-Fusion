@@ -147,7 +147,7 @@ module.exports = {
     middleware: "log",
   },
 
-  serverMiddleware: [bodyParser.json(), "~/api/index.js"],
+  serverMiddleware: [bodyParser.json()],
   generate: {
     routes: function () {
       return axios
