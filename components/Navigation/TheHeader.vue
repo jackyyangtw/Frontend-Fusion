@@ -1,6 +1,6 @@
 <template>
-<div class="header-container fixed z-10">
-  <header class="the-header bg-white dark:bg-gray-900" ref="theHeader">
+<div class="h-[60px] fixed z-10 w-full bg-white dark:bg-gray-900">
+  <header class="container mx-auto the-header " ref="theHeader">
     <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
     <div class="logo hidden md:block text-slate-700
     dark:text-white
@@ -44,7 +44,6 @@ export default {
 
 .the-header {
   width: 100%;
-  position: fixed;
   height: 60px;
   display: flex;
   justify-content: space-around;

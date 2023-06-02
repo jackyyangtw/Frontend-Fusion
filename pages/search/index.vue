@@ -1,15 +1,15 @@
 <template>
     <div>
-        <div class="container" v-if="hasPosts">
+        <div class="container mx-auto" v-if="hasPosts">
             <p class="text-style">
                 關鍵字:
                 <span class="text-sky-500 dark:text-pink-500">{{ this.searchText }}</span>
             </p>
         </div>
-        <div class="container" v-if="hasPosts">
+        <div class="container mx-auto" v-if="hasPosts">
             <PostList :posts="searchedPosts"></PostList>
         </div>
-        <div class="container" v-else>
+        <div class="container mx-auto" v-else>
             <div class="text-style">
                 沒有找到任何文章
             </div>

@@ -10,7 +10,7 @@
         </div>
       </div>
     </section>
-    <div class="container">
+    <div class="container mx-auto">
       <post-list :posts="loadedPosts" admin></post-list>
     </div>
   </div>
