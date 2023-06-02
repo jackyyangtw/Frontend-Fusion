@@ -4,7 +4,6 @@ import { decode, parsePath, withoutBase, withoutTrailingSlash, normalizeURL } fr
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 import NuxtError from '..\\layouts\\error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
-import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
 import '..\\assets\\css\\tailwind.css'
 
@@ -15,8 +14,6 @@ import '..\\node_modules\\quill\\dist\\quill.bubble.css'
 import '..\\node_modules\\quill\\dist\\quill.snow.css'
 
 import '..\\node_modules\\quill\\dist\\quill.core.css'
-
-import '..\\node_modules\\vuetify\\dist\\vuetify.css'
 
 import _77068119 from '..\\layouts\\admin.vue'
 import _6f6c098b from '..\\layouts\\default.vue'
@@ -56,7 +53,7 @@ export default {
       }
     }, [
       loadingEl,
-      h(NuxtBuildIndicator),
+
       transitionEl
     ])
   },
@@ -192,10 +189,6 @@ export default {
     },
 
     setLayout (layout) {
-      if(layout && typeof layout !== 'string') {
-        throw new Error('[nuxt] Avoid using non-string value as layout property.')
-      }
-
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }
