@@ -8,3 +8,9 @@
 * ~新增Post圖片上傳功能~
 * 新增filter功能
 * 新增可以管理TAG的帳號
+
+## deploy vercel error
+https://github.com/orgs/vercel/discussions/103
+
+nuxt:
+https://github.com/nuxt/vercel-builder/issues/633
