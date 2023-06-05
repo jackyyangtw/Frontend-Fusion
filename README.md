@@ -3,6 +3,7 @@
 * ~admin page 的 filtered data 有問題 post id 為undefined~
 * ~admin/new-post 的 userName 總是 return userData~
 * store/user/isManager 需處理等userData有值再進行運算
+* 新增的TAG會有class但不會有樣式
 
 ## features:
 * ~登入後可編輯個人資料，新增Post的時候可以自動帶入姓名~

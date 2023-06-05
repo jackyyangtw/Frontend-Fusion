@@ -20,6 +20,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\store\\post.js'), 'post.js')
+  resolveStoreModules(require('..\\store\\tag.js'), 'tag.js')
   resolveStoreModules(require('..\\store\\ui.js'), 'ui.js')
   resolveStoreModules(require('..\\store\\user.js'), 'user.js')
 
@@ -30,6 +31,7 @@ let store = {};
     module.hot.accept([
       '..\\store\\index.js',
       '..\\store\\post.js',
+      '..\\store\\tag.js',
       '..\\store\\ui.js',
       '..\\store\\user.js',
     ], () => {

@@ -6,11 +6,15 @@ export default {
             headerHeight: 0,
             loading: false,
             sidebarWidth: 0,
+            tags: [],
         }
     },
     mutations: {
         setDark(state) {
             state.isDark = !state.isDark;
+        },
+        addTag(state, tags) {
+            state.tags = tags;
         },
         setHeaderHeight(state, height) {
             state.headerHeight = height;
@@ -54,6 +58,17 @@ export default {
         setLoading(vuexContext, loading) {
             vuexContext.commit("setLoading", loading);
         },
+        addTag(vuexContext, tagData) {
+            const addedTag = {
+                ...tagData,
+            };
+            return this.$axios
+                .$post(`/tags.json?auth=${vuexContext.rootState.token}`, addedTag)
+                .then(() => {
+                    vuexContext.commit("addTag", { ...addedTag })
+                })
+                .catch(err => console.log(err));
+        },
     },
     getters: {
         isDark(state) {
@@ -67,7 +82,9 @@ export default {
         },
         sidebarWidth(state) {
             return state.sidebarWidth;
+        },
+        tags(state) {
+            return state.tags;
         }
-        
     }
 }

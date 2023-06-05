@@ -1,1 +1,1 @@
-export default {"theme":{"dark":true,"themes":{"dark":{"primary":"#eff6ff","background":"#eff6ff"}}}}
+export default {"theme":{"dark":true,"themes":{"dark":{"primary":"#EC4899","background":"#020617","backgroundLight":"#141B2A"},"light":{"primary":"#0EA5E9","background":"#F1F5F9","backgroundLight":"#FFFFFF"}}}}

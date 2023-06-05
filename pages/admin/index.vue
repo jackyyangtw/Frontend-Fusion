@@ -14,12 +14,13 @@
         @click="$router.push('/admin/new-post')"
         >新增文章</AppButton
       >
-      <AppButton
-        v-if="isManager"
-        :btnStyle="`ml-[10px] focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-red-900`"
-        @click="$router.push('/admin/tag')"
-        >Tag管理</AppButton
-      >
+      <div v-show="isManager">
+        <AppButton
+          :btnStyle="`ml-[10px] focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-900`"
+          @click="$router.push('/admin/manage-tags')"
+          >Tag管理</AppButton
+        >
+      </div>
       <AppButton
         :btnStyle="`ml-[10px] focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900`"
         @click="onLogout"
@@ -58,7 +59,7 @@ export default {
       return this.$store.getters["user/userData"] || "";
     },
     isManager() {
-      return this.$store.getters["user/isManager"];
+      return this.userData.manager || "";
     },
   },
 };

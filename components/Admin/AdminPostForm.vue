@@ -44,14 +44,6 @@
         </v-checkbox>
       </div>
       <p class="error--text" v-if="checkboxRules">{{ checkboxErrMsg }}</p>
-
-      <!-- <v-textarea
-        outlined
-        name="input-7-4"
-        label="文章內容"
-        v-model="editedPost.content"
-        class="mt-5"
-      ></v-textarea> -->
       
       <div class="quill-editor mb-5"
           :content="editedPost.content"
@@ -201,8 +193,10 @@ export default {
     },
     tags() {
       // 取出this.$tags的key值，並轉成陣列
-      return Object.keys(this.$tags);
-      
+      // return Object.keys(this.$tags);
+      const tags = this.$store.getters['tag/tags'];
+      const tagNames = tags.map((tag) => tag.name);
+      return tagNames;
     },
     userName() {
       const userData = this.$store.getters['user/userData'];
@@ -212,13 +206,14 @@ export default {
   mounted() {
     this.editedPost.author = this.userName;
   },
+  created() {
+    this.$store.dispatch('tag/getTags');
+  },
 };
 </script>
 
-<style>
-.theme--dark.v-application {
-  background: rgba(31,41,55,0.6);
-}
+<style scoped>
+
 .ql-header,.ql-editor .ql-blank,.ql-editor.ql-blank::before {
   @apply text-black dark:!text-white
 }
@@ -234,5 +229,9 @@ export default {
 }
 .ql-picker-item {
   @apply text-black;
+}
+.theme--dark.v-application {
+  /* background: #141B2A !important; */
+  @apply bg-gray-800/[0.6];
 }
 </style>

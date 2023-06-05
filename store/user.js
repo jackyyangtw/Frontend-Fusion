@@ -58,8 +58,8 @@ export default {
         userPosts(state) {
             return state.userPosts;
         },
-        isManager(state) {
-            return false;
-        }
+        // isManager(state) {
+        //     return state.userData.manager;
+        // }
     }
 }

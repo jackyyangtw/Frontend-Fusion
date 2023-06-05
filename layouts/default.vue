@@ -37,6 +37,7 @@ export default {
       this.$store.commit('ui/initSetDark');
       this.$vuetify.theme.dark = this.isDark;
       this.$store.dispatch("user/setUserData");
+      // this.$store.commit('setIsManager',localStorage.getItem('isManager'));
       this.$store.dispatch("user/setUserPosts");
     }
   },

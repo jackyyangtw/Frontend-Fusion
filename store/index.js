@@ -2,11 +2,12 @@ import Vuex from "vuex";
 import Cookie from "js-cookie";
 import ui from "./ui";
 import post from "./post";
-import user from './user'
+import user from './user';
+import tag from './tag';
 // import { json } from "body-parser";
 const createStore = () => {
   return new Vuex.Store({
-    modules: { ui, post,user },
+    modules: { ui, post, user, tag },
     state: {
       token: null,
       searchText: '',
@@ -40,16 +41,16 @@ const createStore = () => {
         const authUrl = payload.isLogin
           ? `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIKey}`
           : `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbAPIKey}`;
-      
+
         try {
           const { data } = await this.$axios.post(authUrl, {
             email: payload.email,
             password: payload.password,
             returnSecureToken: true,
           });
-      
+
           const { idToken, expiresIn, localId } = data;
-      
+
           vuexContext.commit('setToken', idToken);
           localStorage.setItem('token', idToken);
           localStorage.setItem(
@@ -61,7 +62,7 @@ const createStore = () => {
             'tokenExpiration',
             new Date().getTime() + Number.parseInt(expiresIn) * 1000
           );
-      
+
           if (!payload.isLogin) {
             const commitData = {
               name: payload.name,
@@ -69,26 +70,26 @@ const createStore = () => {
               password: payload.password,
               id: localId,
             };
-      
+
             await this.$axios.post(
               `/users/${localId}.json?auth=${idToken}`,
               commitData
             );
-      
+
             vuexContext.commit('user/setUserData', commitData);
             Cookie.set(`userData`, JSON.stringify(commitData));
           }
-      
+
           const { data: userData } = await this.$axios.get(
             `/users/${localId}.json?auth=${idToken}`
           );
-      
+
           Object.values(userData).forEach((item) => {
             const userData = { ...item, id: localId };
             Cookie.set(`userData`, JSON.stringify(userData));
           });
 
-          
+
           vuexContext.dispatch('user/setUserData');
 
           vuexContext.dispatch('user/setUserPosts');

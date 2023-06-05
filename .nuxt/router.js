@@ -9,7 +9,7 @@ const _11797d70 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* w
 const _52816b28 = () => interopDefault(import('..\\pages\\posts\\index.vue' /* webpackChunkName: "pages/posts/index" */))
 const _1a6c44a6 = () => interopDefault(import('..\\pages\\search\\index.vue' /* webpackChunkName: "pages/search/index" */))
 const _08e3e270 = () => interopDefault(import('..\\pages\\admin\\auth\\index.vue' /* webpackChunkName: "pages/admin/auth/index" */))
-const _71745e7e = () => interopDefault(import('..\\pages\\admin\\manage-tag\\index.vue' /* webpackChunkName: "pages/admin/manage-tag/index" */))
+const _433028fa = () => interopDefault(import('..\\pages\\admin\\manage-tags\\index.vue' /* webpackChunkName: "pages/admin/manage-tags/index" */))
 const _1a5200ba = () => interopDefault(import('..\\pages\\admin\\new-post\\index.vue' /* webpackChunkName: "pages/admin/new-post/index" */))
 const _d2ad092c = () => interopDefault(import('..\\pages\\admin\\_postId\\index.vue' /* webpackChunkName: "pages/admin/_postId/index" */))
 const _ef3ab3a4 = () => interopDefault(import('..\\pages\\posts\\_id\\index.vue' /* webpackChunkName: "pages/posts/_id/index" */))
@@ -48,9 +48,9 @@ export const routerOptions = {
     component: _08e3e270,
     name: "admin-auth"
   }, {
-    path: "/admin/manage-tag",
-    component: _71745e7e,
-    name: "admin-manage-tag"
+    path: "/admin/manage-tags",
+    component: _433028fa,
+    name: "admin-manage-tags"
   }, {
     path: "/admin/new-post",
     component: _1a5200ba,
