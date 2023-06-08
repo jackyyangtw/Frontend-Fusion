@@ -212,7 +212,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 
 .ql-header,.ql-editor .ql-blank,.ql-editor.ql-blank::before {
   @apply text-black dark:!text-white
@@ -222,10 +222,10 @@ export default {
 }
 .ql-toolbar .ql-stroke,
 .ql-toolbar .ql-image {
-  @apply stroke-black dark:stroke-white;
+  @apply stroke-black dark:!stroke-white;
 }
 .ql-fill {
-  @apply fill-black dark:fill-white;
+  @apply fill-black dark:!fill-white;
 }
 .ql-picker-item {
   @apply text-black;

@@ -54,7 +54,7 @@ module.exports = {
     "@/assets/css/main.css",
     'quill/dist/quill.bubble.css',
     'quill/dist/quill.snow.css',
-    'quill/dist/quill.core.css'
+    'quill/dist/quill.core.css',
   ],
 
   /*

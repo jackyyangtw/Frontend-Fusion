@@ -9,7 +9,7 @@
                 <p class="text-base pb-1 text-gray-700 dark:text-white">
                     {{ previewText }}
                 </p>
-                <PostBadge v-for="tag in tags" :key="tag" :badgeName="tag" :classes="getBadgeClass(tag)"></PostBadge>
+                <PostBadge v-for="tag in tags" :key="tag.id" :badgeName="tag.name" :classes="getBadgeClass(tag.name)"></PostBadge>
             </div>
         </div>
     </nuxt-link>
@@ -23,7 +23,13 @@ export default {
     name: 'PostPreview',
     methods: {
         getBadgeClass(tagName) {
-            return this.$tags[tagName];
+            // return this.$tags[tagName];
+            if(!this.storeTags) {
+                return '';
+            } else {
+                const tag = this.storeTags.find(tag => tag.name === tagName);
+                // return tag.style;
+            }
         }
     },
     props: {

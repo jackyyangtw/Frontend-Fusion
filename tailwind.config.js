@@ -5,6 +5,7 @@ module.exports = {
     "./pages/**/*.vue",
     "./plugins/**/*.{js,ts}",
     "./nuxt.config.{js,ts}",
+    "./error.vue",
   ],
   // plugins: [require("tw-elements/dist/plugin.cjs"),require('tailwindcss-dark-mode')()],
   darkMode: 'class',
