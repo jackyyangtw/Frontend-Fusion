@@ -1,7 +1,7 @@
 <template>
   <div class="container text-center">
     <h2 class="text-2xl text-sky-500 dark:text-pink-500 font-bold">Tag管理</h2>
-    <!-- <div class="p-3 min-w-[80px] mr-3 text-center relative bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900 dark:text-fuchsia-300">test</div> -->
+    <!-- <div class="p-3 min-w-[80px] mr-3 text-center relative bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-300">test</div> -->
     <v-app>
       <v-sheet width="50%" class="mx-auto mt-5 p-5">
         <p class="text-2xl text-sky-500 dark:text-pink-500 font-bold text-left">

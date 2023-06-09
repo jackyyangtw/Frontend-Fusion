@@ -25,8 +25,13 @@ export default {
         },
         setIsManager(state, isManager) {
             state.isManager = isManager;
-        }
-
+        },
+        editUserPost(state, editedPost) {
+            const postIndex = state.userPosts.findIndex(
+                post => post.id === editedPost.id
+            );
+            state.userPosts[postIndex] = editedPost;
+        },
     },
     actions: {
         setUserData(vuexContext) {
@@ -49,7 +54,7 @@ export default {
                     vuexContext.commit("setUserPosts", filteredPosts);
                 }
             }
-        }
+        },
     },
     getters: {
         userData(state) {

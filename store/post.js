@@ -47,7 +47,10 @@ export default {
                     `/posts/${editedPost.id}.json?auth=${vuexContext.rootState.token}`,
                     editedPost
                 )
-                .then(() => vuexContext.commit("editPost", editedPost))
+                .then(() => {
+                    vuexContext.commit("editPost", editedPost);
+                    vuexContext.commit("user/editUserPost", editedPost,{root: true});
+                })
                 .catch(err => console.log(err));
         },
         deletePost(vuexContext, deletePost) {

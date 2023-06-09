@@ -10,7 +10,7 @@
         <div class="text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
       </div>
       <div class="ql-snow">
-        <div class="post-content text-slate-950 dark:text-white ql-editor !p-0" v-html="loadedPost.content"></div>
+        <div class="post-content text-slate-950 dark:text-white ql-editor !p-0 !leading-8" v-html="loadedPost.content"></div>
       </div>
     </section>
   </div>
@@ -100,7 +100,7 @@ export default {
 .post-details {
   padding: 5px 0;
   box-sizing: border-box;
-  @apply flex flex-col md:flex-row
+  @apply flex flex-col md:flex-row text-sm
 }
 
 @media (min-width: 768px) {

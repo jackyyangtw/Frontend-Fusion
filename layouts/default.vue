@@ -39,7 +39,7 @@ export default {
       this.$store.dispatch("user/setUserData");
       // this.$store.commit('setIsManager',localStorage.getItem('isManager'));
       this.$store.dispatch("user/setUserPosts");
-      this.$store.dispatch("tag/getTags")
+      this.$store.dispatch("tag/getTags");
     }
   },
 }

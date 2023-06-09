@@ -34,7 +34,7 @@
                     if (searchText === this.searchText) {
                         this.$store.commit("setSearchText", this.searchText);
                         this.$router.push({ name: "search", params: { searchText: this.searchText } });
-                        this.searchText = '';
+                        // this.searchText = '';
                         this.$refs.searchInput.blur();
                     }
                 }, 1000);

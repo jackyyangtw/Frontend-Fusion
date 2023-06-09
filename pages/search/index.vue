@@ -49,7 +49,7 @@ export default {
                 return;
             }
             this.searchedPosts = this.$store.getters['post/loadedPosts'].filter(post => {
-                return post.title.toLowerCase().includes(posts.toLowerCase()) || post.content.toLowerCase().includes(posts.toLowerCase());
+                return post.title.toLowerCase().includes(posts.toLowerCase()) || post.content.toLowerCase().includes(posts.toLowerCase()) || post.previewText.toLowerCase().includes(posts.toLowerCase());
             });
         }
     },
@@ -59,12 +59,12 @@ export default {
         }
         );
     },
-    beforeRouteLeave(to,from,next) {
-        next();
-        setTimeout(() => {
-            this.$store.commit("setSearchText", "");
-        }, 3000);
-    },
+    // beforeRouteLeave(to,from,next) {
+    //     next();
+    //     setTimeout(() => {
+    //         this.$store.commit("setSearchText", "");
+    //     }, 3000);
+    // },
 
 }
 </script>

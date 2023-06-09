@@ -1,5 +1,5 @@
 <template>
-    <section class="w-full pt-0 lg:pt-6 p-6 flex flex-wrap items-center justify-center container mx-auto">
+    <section class="w-full pt-0 lg:pt-6 p-6 flex flex-wrap items-center justify-start container mx-auto">
         <post-preview
             :is-admin="isAdmin" 
             v-for="post in posts"

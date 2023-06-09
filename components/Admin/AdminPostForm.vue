@@ -31,27 +31,26 @@
       ></v-text-field>
       <label class="mb-0 text-gray-500 dark:text-gray-300">文章類別</label>
       <div class="flex flex-wrap">
-        <v-checkbox 
-          v-model="editedPost.tags" 
-          v-for="val in tags" 
+        <v-checkbox
+          v-model="editedPost.tags"
+          v-for="val in tags"
           :key="val"
-          :value="val" 
-          :label="val" 
-          :rules="checkboxRules" 
+          :value="val"
+          :label="val"
+          :rules="checkboxRules"
           hide-details
           class="mr-3"
         >
         </v-checkbox>
       </div>
       <p class="error--text" v-if="checkboxRules">{{ checkboxErrMsg }}</p>
-      
-      <div class="quill-editor mb-5"
-          :content="editedPost.content"
-          v-quill:myQuillEditor="editorOption"
-          @change="onEditorChange($event)"
-          style="height: 400px;"
-      >
-      </div>
+
+      <div
+        class="quill-editor mb-5 !h-[400px] !text-base"
+        :content="editedPost.content"
+        v-quill:myQuillEditor="editorOption"
+        @change="onEditorChange($event)"
+      ></div>
 
       <div class="pb-5">
         <v-btn type="submit" color="success" class="mr-3" :disabled="!valid"
@@ -90,22 +89,22 @@ export default {
   name: "AdminPostForm",
   components: {
     AppButton,
-    AppControlInput
+    AppControlInput,
   },
   data() {
-    return {    
+    return {
       editorOption: {
-        // change icon color to red
         modules: {
           toolbar: [
             [{ header: [1, 2, false] }],
             ["bold", "italic", "underline"],
-            ['link',"image",'video',"code-block"],
+            ["link", "image", "video", "code-block"],
+            [{ 'color': [] }, { 'background': [] }],  
           ],
         },
       },
       selectedCheckbox: [],
-      checkboxVal: ['React','Vue','Nuxt','Javascript'],
+      checkboxVal: ["React", "Vue", "Nuxt", "Javascript"],
       editedPost: this.post
         ? { ...this.post }
         : {
@@ -152,8 +151,8 @@ export default {
   methods: {
     onSave() {
       this.$emit("submit", {
-        ...this.editedPost, 
-        userId: this.$store.getters['user/userData'].id
+        ...this.editedPost,
+        userId: this.$store.getters["user/userData"].id,
       });
     },
     onCancel() {
@@ -181,45 +180,44 @@ export default {
   },
   computed: {
     checkboxRules() {
-      return [
-        this.editedPost.tags.length > 0 || "請至少選擇一個Tag"
-      ];
+      return [this.editedPost.tags.length > 0 || "請至少選擇一個Tag"];
     },
     checkboxErrMsg() {
       return this.editedPost.tags.length > 0 ? "" : "請至少選擇一個Tag";
     },
     checkboxs() {
-      return this.editedPost.tags ? this.editedPost.tags : this.selectedCheckbox;
+      return this.editedPost.tags
+        ? this.editedPost.tags
+        : this.selectedCheckbox;
     },
     tags() {
-      // 取出this.$tags的key值，並轉成陣列
-      // return Object.keys(this.$tags);
-      const tags = this.$store.getters['tag/tags'];
+      const tags = this.$store.getters["tag/tags"];
       const tagNames = tags.map((tag) => tag.name);
       return tagNames;
     },
     userName() {
-      const userData = this.$store.getters['user/userData'];
-      return userData && userData.name ? userData.name : '';
+      const userData = this.$store.getters["user/userData"];
+      return userData && userData.name ? userData.name : "";
     },
   },
   mounted() {
     this.editedPost.author = this.userName;
   },
   created() {
-    this.$store.dispatch('tag/getTags');
+    this.$store.dispatch("tag/getTags");
   },
 };
 </script>
 
 <style>
-
-.ql-header,.ql-editor .ql-blank,.ql-editor.ql-blank::before {
-  @apply text-black dark:!text-white
-}
+.ql-header,
+.ql-editor .ql-blank,
 .ql-editor.ql-blank::before {
-  content: '請輸入文章內容...';
+  @apply text-black dark:!text-white;
 }
+/* .ql-editor.ql-blank::before {
+  content: '請輸入文章內容...';
+} */
 .ql-toolbar .ql-stroke,
 .ql-toolbar .ql-image {
   @apply stroke-black dark:!stroke-white;
