@@ -15,8 +15,8 @@
         </div>
       </section>
       <section class="comments mt-20">
-        <comment-form :postId="loadedPost.id" />
-        <comment-list :comments="loadedPost.comments" />
+        <!-- <comment-form :post="loadedPost" /> -->
+        <!-- <comment-list :comments="loadedPost.comments" /> -->
       </section>
     </div>
   </div>

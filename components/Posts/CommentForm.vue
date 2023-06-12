@@ -31,7 +31,7 @@ export default {
             this.$store.dispatch('comments/addComment', {
                 name: this.user.name,
                 email: this.user.email,
-                comment: this.comment,
+                commentText: this.comment,
                 postId: this.post.id,
                 // userId
             })
