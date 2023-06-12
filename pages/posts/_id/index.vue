@@ -1,23 +1,34 @@
 <template>
   <div class="single-post-page container">
-    <section class="post w-full md:w-[60%] lg:w-[750px] mx-auto">
-      <h1 class="post-title text-slate-950 dark:text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
-      <p class="post-content text-slate-950 dark:text-white text-xl font-light">{{ loadedPost.previewText }}</p>
-      <div class="post-details mb-5">
-        <div class="text-gray-400 dark:text-gray-500 mr-3">
-          Last updated on {{ loadedPost.updatedDate | date }}
+    <div class=" w-full md:w-[60%] lg:w-[750px] mx-auto">
+      <section class="post">
+        <h1 class="post-title text-slate-950 dark:text-white text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
+        <p class="post-content text-slate-950 dark:text-white text-xl font-light">{{ loadedPost.previewText }}</p>
+        <div class="post-details mb-5">
+          <div class="text-gray-400 dark:text-gray-500 mr-3">
+            Last updated on {{ loadedPost.updatedDate | date }}
+          </div>
+          <div class="text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
         </div>
-        <div class="text-gray-400 dark:text-gray-500">Written by {{ loadedPost.author }}</div>
-      </div>
-      <div class="ql-snow">
-        <div class="post-content text-slate-950 dark:text-white ql-editor !p-0 !leading-8" v-html="loadedPost.content"></div>
-      </div>
-    </section>
+        <div class="ql-snow">
+          <div class="post-content text-slate-950 dark:text-white ql-editor !p-0 !leading-8" v-html="loadedPost.content"></div>
+        </div>
+      </section>
+      <section class="comments mt-20">
+        <comment-form :postId="loadedPost.id" />
+        <comment-list :comments="loadedPost.comments" />
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
+import CommentForm from '~/components/Posts/CommentForm.vue'
+import CommentList from '~/components/Posts/CommentList.vue'
 export default {
+  components: {
+    CommentForm,CommentList
+  },
   head(){
     return {
       title: this.loadedPost.title,
@@ -68,7 +79,7 @@ export default {
     if (context.payload) {
       return {
         loadedPost: context.payload.postData,
-        structuredData: getStructuredData(context.payload.postData)
+        structuredData: getStructuredData(context.payload.postData),
       };
     }
     return context.app.$axios
