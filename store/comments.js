@@ -1,14 +1,14 @@
-const state = () => ({  
+export const state = () => ({  
     comments: []
 })
 
-const mutations = {
+export const mutations = {
     setComments(state, comments) {
         state.comments = comments
     }
 }
 
-const actions = {
+export const actions = {
     async getComments(vuexContext, post) {
         const postData = await this.$axios.$get(`/post/${post.id}.json`);
         const comments = postData.comments;
@@ -24,16 +24,8 @@ const actions = {
     }
 }
 
-const getters = {
+export const getters = {
     allComments(state) {
         return state.comments
     }
-}
-
-export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions,
-    getters
 }

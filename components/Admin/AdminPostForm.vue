@@ -215,9 +215,9 @@ export default {
 .ql-editor.ql-blank::before {
   @apply text-black dark:!text-white;
 }
-/* .ql-editor.ql-blank::before {
+.ql-editor.ql-blank::before {
   content: '請輸入文章內容...';
-} */
+}
 .ql-toolbar .ql-stroke,
 .ql-toolbar .ql-image {
   @apply stroke-black dark:!stroke-white;

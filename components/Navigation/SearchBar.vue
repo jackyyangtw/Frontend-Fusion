@@ -10,7 +10,7 @@
             placeholder-slate-700
             dark:placeholder-white dark:border-white dark:text-white dark:focus:text-slate-950
             " 
-            type="text" placeholder="搜尋" v-model="searchText" @keyup.enter="search" ref="searchInput"/>
+            type="text" placeholder="搜尋" v-model="searchText" @keyup.enter="search" ref="searchInput" @focus="searchText = ''"/>
         </div>
     </div>
 </template>
