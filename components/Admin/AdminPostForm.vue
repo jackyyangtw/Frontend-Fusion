@@ -209,7 +209,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="postcss">
 .ql-header,
 .ql-editor .ql-blank,
 .ql-editor.ql-blank::before {

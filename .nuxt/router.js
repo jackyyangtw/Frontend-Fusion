@@ -11,10 +11,10 @@ const _1a6c44a6 = () => interopDefault(import('..\\pages\\search\\index.vue' /* 
 const _08e3e270 = () => interopDefault(import('..\\pages\\admin\\auth\\index.vue' /* webpackChunkName: "pages/admin/auth/index" */))
 const _433028fa = () => interopDefault(import('..\\pages\\admin\\manage-tags\\index.vue' /* webpackChunkName: "pages/admin/manage-tags/index" */))
 const _1a5200ba = () => interopDefault(import('..\\pages\\admin\\new-post\\index.vue' /* webpackChunkName: "pages/admin/new-post/index" */))
+const _687192d5 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 const _d2ad092c = () => interopDefault(import('..\\pages\\admin\\_postId\\index.vue' /* webpackChunkName: "pages/admin/_postId/index" */))
 const _ef3ab3a4 = () => interopDefault(import('..\\pages\\posts\\_id\\index.vue' /* webpackChunkName: "pages/posts/_id/index" */))
 const _1169a91a = () => interopDefault(import('..\\pages\\search\\_searchText\\index.vue' /* webpackChunkName: "pages/search/_searchText/index" */))
-const _687192d5 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
 
@@ -56,6 +56,10 @@ export const routerOptions = {
     component: _1a5200ba,
     name: "admin-new-post"
   }, {
+    path: "/",
+    component: _687192d5,
+    name: "index"
+  }, {
     path: "/admin/:postId",
     component: _d2ad092c,
     name: "admin-postId"
@@ -67,10 +71,6 @@ export const routerOptions = {
     path: "/search/:searchText",
     component: _1169a91a,
     name: "search-searchText"
-  }, {
-    path: "/",
-    component: _687192d5,
-    name: "index"
   }],
 
   fallback: false

@@ -1,9 +1,8 @@
 import Cookie from "js-cookie";
 
 export const state = () => ({
-    token: null,
-    userId: null,
     isManager: false,
+    userData: null,
 })
 
 export const mutations = {
@@ -64,8 +63,5 @@ export const getters = {
     userPosts(state) {
         return state.userPosts;
     },
-    // isManager(state) {
-    //     return state.userData.manager;
-    // }
 }
 

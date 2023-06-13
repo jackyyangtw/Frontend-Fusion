@@ -95,7 +95,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 
 .single-post-page {
   padding: 30px;

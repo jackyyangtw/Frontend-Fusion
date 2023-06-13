@@ -5,6 +5,7 @@
 * ~store/user/isManager 需處理等userData有值再進行運算~
 * ~postPreview tag undefined~
 * 新增的TAG會有class但不會有樣式
+* 調整 store/initAuth 需加入用google登入的判斷(如果是google登入就不用考慮tokenExpiration)
 
 ## features:
 * 讓使用者可以上傳preview圖片
