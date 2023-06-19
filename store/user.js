@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 export const state = () => ({
     isManager: false,
     userData: null,
+    userPosts: [],
 })
 
 export const mutations = {

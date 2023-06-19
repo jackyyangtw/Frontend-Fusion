@@ -99,20 +99,17 @@ export default {
       this.$store.dispatch("signinWithGoogleAction");
     },
   },
-  mounted(){
-    // this.$store.dispatch("setSinginWithGoogleData")
-    // if(this.$store.getters.singinWithGoogle) {
-    //   this.$router.push("/admin");
-    // }
-    // if(process.client) {
-      // }
-    // if(Boolean(Cookie.get("singinWithGoogle"))) {
-    //   console.log("mounted")
-    //   this.$router.push("/admin");
-    // }
-
-    //get singinWithGoogle from cookie
-  }
+  computed: {
+    isAuthenicated() {
+      return this.$store.getters.isAuthenicated;
+    },
+  },
+  mounted() {
+    
+    if (this.isAuthenicated) {
+      this.$router.push("/admin");
+    }
+  },
 };
 </script>
 

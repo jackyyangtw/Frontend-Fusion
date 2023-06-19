@@ -118,7 +118,6 @@ export const actions = {
       localStorage.setItem("singinWithGoogle", true);
   
       await this.$firebase.auth().signInWithRedirect(provider);
-      // this.$router.push('/admin');
     } catch (e) {
       console.log(e);
     }
@@ -140,17 +139,21 @@ export const actions = {
         .find(cookie => cookie.trim().startsWith("tokenExpiration="))
         ?.split("=")[1];
     } else if (process.client) {
+      console.log('在客戶端')
       token = localStorage.getItem("token");
       if(!vuexContext.state.singinWithGoogle) {
+        console.log('沒有google登入')
         expirationDate = localStorage.getItem("tokenExpiration");
       }
     }
     if(!vuexContext.state.singinWithGoogle) {
+      console.log('沒有google登入')
       if (new Date().getTime() > +expirationDate || !token) {
         vuexContext.dispatch("onLogout");
         return;
       }
     }
+    console.log("token", token);
     vuexContext.commit("setToken", token);
   },
   onLogout(vuexContext) {

@@ -4,17 +4,17 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _7dcc6a72 = () => interopDefault(import('..\\pages\\about\\index.vue' /* webpackChunkName: "pages/about/index" */))
-const _11797d70 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages/admin/index" */))
-const _52816b28 = () => interopDefault(import('..\\pages\\posts\\index.vue' /* webpackChunkName: "pages/posts/index" */))
-const _1a6c44a6 = () => interopDefault(import('..\\pages\\search\\index.vue' /* webpackChunkName: "pages/search/index" */))
-const _08e3e270 = () => interopDefault(import('..\\pages\\admin\\auth\\index.vue' /* webpackChunkName: "pages/admin/auth/index" */))
-const _433028fa = () => interopDefault(import('..\\pages\\admin\\manage-tags\\index.vue' /* webpackChunkName: "pages/admin/manage-tags/index" */))
-const _1a5200ba = () => interopDefault(import('..\\pages\\admin\\new-post\\index.vue' /* webpackChunkName: "pages/admin/new-post/index" */))
-const _687192d5 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
-const _d2ad092c = () => interopDefault(import('..\\pages\\admin\\_postId\\index.vue' /* webpackChunkName: "pages/admin/_postId/index" */))
-const _ef3ab3a4 = () => interopDefault(import('..\\pages\\posts\\_id\\index.vue' /* webpackChunkName: "pages/posts/_id/index" */))
-const _1169a91a = () => interopDefault(import('..\\pages\\search\\_searchText\\index.vue' /* webpackChunkName: "pages/search/_searchText/index" */))
+const _930f622a = () => interopDefault(import('..\\pages\\about\\index.vue' /* webpackChunkName: "pages/about/index" */))
+const _4a2561e9 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages/admin/index" */))
+const _0f6b2ee5 = () => interopDefault(import('..\\pages\\posts\\index.vue' /* webpackChunkName: "pages/posts/index" */))
+const _60caef58 = () => interopDefault(import('..\\pages\\search\\index.vue' /* webpackChunkName: "pages/search/index" */))
+const _54de16fe = () => interopDefault(import('..\\pages\\admin\\auth\\index.vue' /* webpackChunkName: "pages/admin/auth/index" */))
+const _c5fa58ac = () => interopDefault(import('..\\pages\\admin\\manage-tags\\index.vue' /* webpackChunkName: "pages/admin/manage-tags/index" */))
+const _bde33e48 = () => interopDefault(import('..\\pages\\admin\\new-post\\index.vue' /* webpackChunkName: "pages/admin/new-post/index" */))
+const _796ed47c = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _6456e1de = () => interopDefault(import('..\\pages\\admin\\_postId\\index.vue' /* webpackChunkName: "pages/admin/_postId/index" */))
+const _3c00b556 = () => interopDefault(import('..\\pages\\posts\\_id\\index.vue' /* webpackChunkName: "pages/posts/_id/index" */))
+const _0c0d482c = () => interopDefault(import('..\\pages\\search\\_searchText\\index.vue' /* webpackChunkName: "pages/search/_searchText/index" */))
 
 const emptyFn = () => {}
 
@@ -29,47 +29,47 @@ export const routerOptions = {
 
   routes: [{
     path: "/about",
-    component: _7dcc6a72,
+    component: _930f622a,
     name: "about"
   }, {
     path: "/admin",
-    component: _11797d70,
+    component: _4a2561e9,
     name: "admin"
   }, {
     path: "/posts",
-    component: _52816b28,
+    component: _0f6b2ee5,
     name: "posts"
   }, {
     path: "/search",
-    component: _1a6c44a6,
+    component: _60caef58,
     name: "search"
   }, {
     path: "/admin/auth",
-    component: _08e3e270,
+    component: _54de16fe,
     name: "admin-auth"
   }, {
     path: "/admin/manage-tags",
-    component: _433028fa,
+    component: _c5fa58ac,
     name: "admin-manage-tags"
   }, {
     path: "/admin/new-post",
-    component: _1a5200ba,
+    component: _bde33e48,
     name: "admin-new-post"
   }, {
     path: "/",
-    component: _687192d5,
+    component: _796ed47c,
     name: "index"
   }, {
     path: "/admin/:postId",
-    component: _d2ad092c,
+    component: _6456e1de,
     name: "admin-postId"
   }, {
     path: "/posts/:id",
-    component: _ef3ab3a4,
+    component: _3c00b556,
     name: "posts-id"
   }, {
     path: "/search/:searchText",
-    component: _1169a91a,
+    component: _0c0d482c,
     name: "search-searchText"
   }],
 
