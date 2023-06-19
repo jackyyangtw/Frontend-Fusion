@@ -5,7 +5,11 @@
 * ~store/user/isManager 需處理等userData有值再進行運算~
 * ~postPreview tag undefined~
 * 新增的TAG會有class但不會有樣式
-* 調整 store/initAuth 需加入用google登入的判斷(如果是google登入就不用考慮tokenExpiration)
+* google 登入後無法轉跳admin https://auth.nuxtjs.org/providers/google/
+
+// firebase.auth().signInWithPopup 會產生popup 需要reload，抵銷error
+// signInWithRedirect 則會失去login data，因為page reload
+// 目前狀況是兩個一起用的話可以解決，但是無法direct 到 /admin
 
 ## features:
 * 讓使用者可以上傳preview圖片

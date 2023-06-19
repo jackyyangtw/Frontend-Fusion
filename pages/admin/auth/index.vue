@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
 export default {
   name: "AdminAuthPage",
   // layout: "admin",
@@ -95,9 +96,23 @@ export default {
         .then(() => this.$router.push("/admin"));
     },
     signinWithGoogle() {
-      this.$store.dispatch("signinWithGoogle");
+      this.$store.dispatch("signinWithGoogleAction");
     },
   },
+  mounted(){
+    // this.$store.dispatch("setSinginWithGoogleData")
+    // if(this.$store.getters.singinWithGoogle) {
+    //   this.$router.push("/admin");
+    // }
+    // if(process.client) {
+      // }
+    // if(Boolean(Cookie.get("singinWithGoogle"))) {
+    //   console.log("mounted")
+    //   this.$router.push("/admin");
+    // }
+
+    //get singinWithGoogle from cookie
+  }
 };
 </script>
 

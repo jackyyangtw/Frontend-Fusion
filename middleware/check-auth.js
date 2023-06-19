@@ -8,4 +8,7 @@ export default function(context) {
   //   context.store.dispatch("initAuth", context.req);
   // }
   context.store.dispatch("initAuth", context.req);
+  // if(isSinginWithGoogle) {
+  //   context.router.push('/admin')
+  // }
 }

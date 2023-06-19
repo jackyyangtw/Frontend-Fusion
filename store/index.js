@@ -94,62 +94,41 @@ export const actions = {
       console.log(error);
     }
   },
-  async signinWithGoogle(vuexContext) {
+  async signinWithGoogleAction(vuexContext) {
     vuexContext.commit('setSinginWithGoogle', true);
     const provider = new this.$firebase.auth.GoogleAuthProvider();
-    this.$firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        const { idToken } = result.credential;
-        const { displayName, email, photoURL, uid } = result.user;
-        const userData = {
-          name: displayName,
-          email,
-          photoURL,
-          id: uid,
-        }
-        vuexContext.commit('user/setUserData', userData);
-        Cookie.set(`userData`, JSON.stringify(userData));
-        vuexContext.commit('setToken', idToken);
-        Cookie.set('jwt', idToken);
-        localStorage.setItem('token', idToken);
-        Cookie.set("singinWithGoogle", true);
-        localStorage.setItem("singinWithGoogle", true);
-
-        // this.$firebase.auth().setPersistence(this.$firebase.auth.Auth.Persistence.SESSION);
-        return this.$firebase.auth().signInWithRedirect(provider);
-
-      })
-      .then(() => {
-        this.$router.push("/")
-      })
-      .catch((e) => {
-        // this.$snotify.error(e.message);
-        console.log(e);
-      });
-  },
-  initAuthWithGoogle(vuexContext, req) {
-    let token;
-    if(req) {
-      token = req.headers.cookie
-      .split(";")
-      .find(cookie => cookie.trim().startsWith("jwt="))
-      .split("=")[1];
-    }
-    vuexContext.commit("setToken", token);
-    let userData;
-    if (process.client) {
-      userData = Cookie.get("userData");
-    }
-    if (userData) {
-      vuexContext.commit("user/setUserData", userData);
+    try {
+      const res = await this.$firebase.auth().signInWithPopup(provider);
+      // const res = await this.$firebase.auth().signInWithRedirect(provider);
+      const { idToken } = res.credential;
+      const { displayName, email, photoURL, uid } = res.user;
+      const userData = {
+        name: displayName,
+        email,
+        photoURL,
+        id: uid,
+      }
+      vuexContext.commit('user/setUserData', userData);
+      vuexContext.commit('setToken', idToken);
+      vuexContext.commit('setSinginWithGoogle', true);
+      Cookie.set(`userData`, JSON.stringify(userData));
+      Cookie.set('jwt', idToken);
+      localStorage.setItem('token', idToken);
+      Cookie.set("singinWithGoogle", true);
+      localStorage.setItem("singinWithGoogle", true);
+  
+      await this.$firebase.auth().signInWithRedirect(provider);
+      // this.$router.push('/admin');
+    } catch (e) {
+      console.log(e);
     }
   },
   initAuth(vuexContext, req) {
-    console.log('initAuth')
     let token;
     let expirationDate;
+    if(process.client) {
+      vuexContext.commit("setSinginWithGoogle", Boolean(localStorage.getItem("singinWithGoogle")));
+    }
     if (req) {
       if (!req.headers.cookie) return;
       token = req.headers.cookie
@@ -179,6 +158,7 @@ export const actions = {
     if (process.client) {
       localStorage.removeItem("token");
       localStorage.removeItem("tokenExpiration");
+      localStorage.removeItem("singinWithGoogle");
     }
   },
   clearCookie(vuexContext) {
@@ -201,7 +181,7 @@ export const getters = {
     return state.searchText;
   },
   singinWithGoogle(state) {
-    return state.singinWithGoogle;
+    return Boolean(localStorage.getItem("singinWithGoogle")) || state.singinWithGoogle;
   }
 }
 
