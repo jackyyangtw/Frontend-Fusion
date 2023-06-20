@@ -2,78 +2,67 @@
   {
     "name": "about",
     "path": "/about",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\about\\\\index.vue",
-    "chunkName": "pages/about/index",
-    "_name": "_930f622a"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\about\\\\index.vue",
+    "chunkName": "pages/about/index"
   },
   {
     "name": "admin",
     "path": "/admin",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\index.vue",
-    "chunkName": "pages/admin/index",
-    "_name": "_4a2561e9"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\index.vue",
+    "chunkName": "pages/admin/index"
   },
   {
     "name": "posts",
     "path": "/posts",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\posts\\\\index.vue",
-    "chunkName": "pages/posts/index",
-    "_name": "_0f6b2ee5"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\posts\\\\index.vue",
+    "chunkName": "pages/posts/index"
   },
   {
     "name": "search",
     "path": "/search",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\search\\\\index.vue",
-    "chunkName": "pages/search/index",
-    "_name": "_60caef58"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\search\\\\index.vue",
+    "chunkName": "pages/search/index"
   },
   {
     "name": "admin-auth",
     "path": "/admin/auth",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\auth\\\\index.vue",
-    "chunkName": "pages/admin/auth/index",
-    "_name": "_54de16fe"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\auth\\\\index.vue",
+    "chunkName": "pages/admin/auth/index"
   },
   {
     "name": "admin-manage-tags",
     "path": "/admin/manage-tags",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\manage-tags\\\\index.vue",
-    "chunkName": "pages/admin/manage-tags/index",
-    "_name": "_c5fa58ac"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\manage-tags\\\\index.vue",
+    "chunkName": "pages/admin/manage-tags/index"
   },
   {
     "name": "admin-new-post",
     "path": "/admin/new-post",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\new-post\\\\index.vue",
-    "chunkName": "pages/admin/new-post/index",
-    "_name": "_bde33e48"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\new-post\\\\index.vue",
+    "chunkName": "pages/admin/new-post/index"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_796ed47c"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
   },
   {
     "name": "admin-postId",
     "path": "/admin/:postId",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\_postId\\\\index.vue",
-    "chunkName": "pages/admin/_postId/index",
-    "_name": "_6456e1de"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\admin\\\\_postId\\\\index.vue",
+    "chunkName": "pages/admin/_postId/index"
   },
   {
     "name": "posts-id",
     "path": "/posts/:id",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\posts\\\\_id\\\\index.vue",
-    "chunkName": "pages/posts/_id/index",
-    "_name": "_3c00b556"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\posts\\\\_id\\\\index.vue",
+    "chunkName": "pages/posts/_id/index"
   },
   {
     "name": "search-searchText",
     "path": "/search/:searchText",
-    "component": "C:\\\\Users\\\\User\\\\Desktop\\\\nuxt-blog\\\\pages\\\\search\\\\_searchText\\\\index.vue",
-    "chunkName": "pages/search/_searchText/index",
-    "_name": "_0c0d482c"
+    "component": "D:\\\\Users\\\\jackyyang\\\\Desktop\\\\nuxt-blog\\\\pages\\\\search\\\\_searchText\\\\index.vue",
+    "chunkName": "pages/search/_searchText/index"
   }
 ]

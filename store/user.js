@@ -34,13 +34,20 @@ export const mutations = {
 }
 
 export const actions = {
-    setUserData(vuexContext) {
+    async setUserData(vuexContext) {
         if (process.client) {
             const userDataString = Cookie.get('userData');
             if (!userDataString) return;
             const userData = JSON.parse(userDataString);
+
+            // const dbUserData = await this.$axios.get(`/users.json`);
+            // const managerObj = Object.values(dbUserData.data).find(user => {
+            //     return Object.values(user)[0].manager === true;
+            // })
+            // console.log(Object.values(managerObj)[0].manager);
+
             vuexContext.commit("setUserData", userData);
-            vuexContext.commit("setIsManager", userData.isManager);
+            // vuexContext.commit("setIsManager", Object.values(managerObj)[0].manager);
         } else {
             vuexContext.commit("setUserData", '');
         }

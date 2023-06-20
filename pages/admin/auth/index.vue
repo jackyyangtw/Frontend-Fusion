@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import Cookie from "js-cookie";
 export default {
   name: "AdminAuthPage",
   // layout: "admin",
@@ -84,6 +83,7 @@ export default {
       name: "",
     };
   },
+  middleware: "check-auth",
   methods: {
     onSubmit() {
       this.$store
@@ -105,7 +105,6 @@ export default {
     },
   },
   mounted() {
-    
     if (this.isAuthenicated) {
       this.$router.push("/admin");
     }
