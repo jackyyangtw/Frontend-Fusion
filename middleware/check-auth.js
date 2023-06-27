@@ -1,14 +1,14 @@
 // import Cookie from "js-cookie";
 export default function(context) {
-  // const isSinginWithGoogle = Boolean(context.req.headers.cookie.split(';').find(c => c.trim().startsWith('singinWithGoogle=')).split('=')[1]);
-  // if (isSinginWithGoogle) {
+  // const issigninWithGoogle = Boolean(context.req.headers.cookie.split(';').find(c => c.trim().startsWith('signinWithGoogle=')).split('=')[1]);
+  // if (issigninWithGoogle) {
   //   context.store.dispatch("initAuthWithGoogle", context.req);
   //   return;
   // } else {
   //   context.store.dispatch("initAuth", context.req);
   // }
   context.store.dispatch("initAuth", context.req);
-  // if(isSinginWithGoogle) {
+  // if(issigninWithGoogle) {
   //   context.router.push('/admin')
   // }
 }

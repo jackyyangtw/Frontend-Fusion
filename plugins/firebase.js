@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+
 // copy the config from the console https://console.firebase.google.com/u/0/project/sign-11111/settings/general/
 const firebaseConfig = {
     apiKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
@@ -13,7 +14,7 @@ const firebaseConfig = {
 let app = null
 // prevent initializing firebase more than once
 if (!firebase.apps.length) {
-    app = firebase.initializeApp(firebaseConfig,{
+    app = firebase.initializeApp(firebaseConfig, {
         'X-Client-Name': 'web',
         'X-Client-Version': '1.0.0'
     })

@@ -53,7 +53,11 @@
       ></div>
 
       <div class="pb-5">
-        <v-btn type="submit" color="success" class="mr-3" :disabled="!valid"
+        <v-btn
+          type="submit"
+          color="success"
+          class="mr-3"
+          :disabled="checkboxs.length === 0 || !valid"
           >儲存</v-btn
         >
         <v-btn color="error" @click="dialog = true" class="mr-2"> 刪除 </v-btn>
@@ -99,12 +103,11 @@ export default {
             [{ header: [1, 2, false] }],
             ["bold", "italic", "underline"],
             ["link", "image", "video", "code-block"],
-            [{ 'color': [] }, { 'background': [] }],  
+            [{ color: [] }, { background: [] }],
           ],
         },
       },
       selectedCheckbox: [],
-      checkboxVal: ["React", "Vue", "Nuxt", "Javascript"],
       editedPost: this.post
         ? { ...this.post }
         : {
@@ -117,7 +120,7 @@ export default {
           },
       dialog: false,
       isDialogShow: false,
-      valid: true,
+      valid: false,
       formData: {},
       name: "",
       nameRules: [
@@ -216,7 +219,7 @@ export default {
   @apply text-black dark:!text-white;
 }
 .ql-editor.ql-blank::before {
-  content: '請輸入文章內容...';
+  content: "請輸入文章內容...";
 }
 .ql-toolbar .ql-stroke,
 .ql-toolbar .ql-image {

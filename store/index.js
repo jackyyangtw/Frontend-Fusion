@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 export const state = () => ({
   token: null,
   searchText: '',
-  singinWithGoogle: false,
+  signinWithGoogle: false,
 })
 
 export const mutations = {
@@ -16,8 +16,8 @@ export const mutations = {
   clearToken(state) {
     state.token = null;
   },
-  setSinginWithGoogle(state, singinWithGoogle) {
-    state.singinWithGoogle = singinWithGoogle;
+  setsigninWithGoogle(state, signinWithGoogle) {
+    state.signinWithGoogle = signinWithGoogle;
   }
 }
 
@@ -95,12 +95,11 @@ export const actions = {
     }
   },
   async signinWithGoogleAction(vuexContext) {
-    vuexContext.commit('setSinginWithGoogle', true);
+    vuexContext.commit('setsigninWithGoogle', true);
     const provider = new this.$firebase.auth.GoogleAuthProvider();
     try {
       const res = await this.$firebase.auth().signInWithPopup(provider);
-      // const res = await this.$firebase.auth().signInWithRedirect(provider);
-      const { idToken } = res.credential;
+
       const { displayName, email, photoURL, uid } = res.user;
       const userData = {
         name: displayName,
@@ -108,14 +107,17 @@ export const actions = {
         photoURL,
         id: uid,
       }
+      const user = this.$firebase.auth().currentUser;
+      const token = await user.getIdToken();
+
       vuexContext.commit('user/setUserData', userData);
-      vuexContext.commit('setToken', idToken);
-      vuexContext.commit('setSinginWithGoogle', true);
+      vuexContext.commit('setToken', token);
+      vuexContext.commit('setsigninWithGoogle', true);
       Cookie.set(`userData`, JSON.stringify(userData));
-      Cookie.set('jwt', idToken);
-      localStorage.setItem('token', idToken);
-      Cookie.set("singinWithGoogle", true);
-      localStorage.setItem("singinWithGoogle", true);
+      Cookie.set('jwt', token);
+      localStorage.setItem('token', token);
+      Cookie.set("signinWithGoogle", true);
+      localStorage.setItem("signinWithGoogle", true);
   
       await this.$firebase.auth().signInWithRedirect(provider);
     } catch (e) {
@@ -126,7 +128,7 @@ export const actions = {
     let token;
     let expirationDate;
     if(process.client) {
-      vuexContext.commit("setSinginWithGoogle", Boolean(localStorage.getItem("singinWithGoogle")));
+      vuexContext.commit("setsigninWithGoogle", Boolean(localStorage.getItem("signinWithGoogle")));
     }
     if (req) {
       if (!req.headers.cookie) return;
@@ -141,19 +143,18 @@ export const actions = {
     } else if (process.client) {
       console.log('在客戶端')
       token = localStorage.getItem("token");
-      if(!vuexContext.state.singinWithGoogle) {
+      if(!vuexContext.state.signinWithGoogle) {
         console.log('沒有google登入')
         expirationDate = localStorage.getItem("tokenExpiration");
       }
     }
-    if(!vuexContext.state.singinWithGoogle) {
+    if(!vuexContext.state.signinWithGoogle) {
       console.log('沒有google登入')
       if (new Date().getTime() > +expirationDate || !token) {
         vuexContext.dispatch("onLogout");
         return;
       }
     }
-    console.log("token", token);
     vuexContext.commit("setToken", token);
   },
   onLogout(vuexContext) {
@@ -161,18 +162,18 @@ export const actions = {
     if (process.client) {
       localStorage.removeItem("token");
       localStorage.removeItem("tokenExpiration");
-      localStorage.removeItem("singinWithGoogle");
+      localStorage.removeItem("signinWithGoogle");
     }
   },
   clearCookie(vuexContext) {
     Cookie.remove("jwt");
     Cookie.remove("tokenExpiration");
     Cookie.remove("userData");
-    Cookie.remove("singinWithGoogle");
+    Cookie.remove("signinWithGoogle");
     vuexContext.commit("clearToken");
     vuexContext.commit("user/setUserData", null);
     vuexContext.commit("user/setUserPosts", null);
-    vuexContext.commit("setSinginWithGoogle", false);
+    vuexContext.commit("setsigninWithGoogle", false);
   },
 }
 
@@ -183,8 +184,8 @@ export const getters = {
   searchText(state) {
     return state.searchText;
   },
-  singinWithGoogle(state) {
-    return Boolean(localStorage.getItem("singinWithGoogle")) || state.singinWithGoogle;
+  signinWithGoogle(state) {
+    return Boolean(localStorage.getItem("signinWithGoogle")) || state.signinWithGoogle;
   }
 }
 
