@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 
 export const state = () => ({
-    isManager: false,
+    // isManager: false,
     userData: null,
     userPosts: [],
 })
@@ -40,21 +40,24 @@ export const actions = {
             if (!userDataString) return;
             const userData = JSON.parse(userDataString);
 
-            // const dbUserData = await this.$axios.get(`/users.json`);
-            // const managerObj = Object.values(dbUserData.data).find(user => {
-            //     return Object.values(user)[0].manager === true;
+            const res = await this.$axios.get(`/users/${userData.id}.json`);
+            // const currentUser = Object.values(dbUserData.data).find(user => {
+            //     return Object.values(user)[0].id === userData.id;
             // })
-            // console.log(Object.values(managerObj)[0].manager);
-
-            vuexContext.commit("setUserData", userData);
-            // vuexContext.commit("setIsManager", Object.values(managerObj)[0].manager);
+            const dbUserData = res.data;
+            const isManager = dbUserData.isManager;
+            vuexContext.commit("setUserData", {...userData, isManager});
         } else {
             vuexContext.commit("setUserData", '');
         }
     },
     async setUserPosts(vuexContext) {
-        if (vuexContext.state.userData) {
-            const userId = vuexContext.state.userData.id;
+        const userDataString = Cookie.get('userData');
+        if (!userDataString) return;
+        const userData = JSON.parse(userDataString);
+
+        if (process.client && userData) {
+            const userId = userData.id;
             if (userId) {
                 const userPosts = await this.$axios.$get(`/posts.json`);
                 const filteredPosts = Object.values(userPosts).filter(post => post.userId === userId);
@@ -62,6 +65,25 @@ export const actions = {
             }
         }
     },
+    // async updateUserPhoto(vuexContext, photo) {
+    //     const storageRef = this.$storage.ref();
+    //     const uid = vuexContext.state.userData.id;
+    //     const stickerRef = storageRef.child(
+    //         `user-sticker/${uid}`
+    //     );
+    //     stickerRef.put(photo).then(() => {
+    //         // get root state token
+    //         const token = vuexContext.rootState.token;
+
+    //         stickerRef.getDownloadURL().then((url) => {
+    //             this.$axios.$put(`/users/${uid}.json?auth=${token}`, {
+    //                 photoUrl: url
+    //             }).then(() => {
+    //                 vuexContext.commit("setUserData", {...vuexContext.state.userData, photo: url});
+    //             });
+    //         });
+    //     });
+    // },
 }
 
 export const getters = {
@@ -71,5 +93,8 @@ export const getters = {
     userPosts(state) {
         return state.userPosts;
     },
+    isManager(state) {
+        return state.userData?.isManager;
+    }
 }
 

@@ -1,49 +1,71 @@
 <template>
-    <nuxt-link class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]" :to="postLink">
-        <div class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto">
-            <figure class="post-thumbnail" :style="{ backgroundImage: `url(${thumbnail})` }">
-                <div class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center" v-if="!thumbnail">目前沒有圖片</div>
+    <nuxt-link
+        class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]"
+        :to="postLink"
+    >
+        <div
+            class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
+        >
+            <figure
+                class="post-thumbnail"
+                :style="{ backgroundImage: `url(${thumbnail})` }"
+            >
+                <div
+                    class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center"
+                    v-if="!thumbnail"
+                >
+                    目前沒有圖片
+                </div>
             </figure>
-            <div class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]">
-                <h2 class="font-bold text-xl mb-2 text-black dark:text-white">{{ title }}</h2>
+            <div
+                class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]"
+            >
+                <h2 class="font-bold text-xl mb-2 text-black dark:text-white">
+                    {{ title }}
+                </h2>
                 <p class="text-base pb-1 text-gray-700 dark:text-white">
                     {{ previewText }}
                 </p>
-                <PostBadge v-for="tag in tags" :key="tag" :badgeName="tag" :classes="getBadgeClass(tag)"></PostBadge>
+                <PostBadge
+                    v-for="tag in tags"
+                    :key="tag"
+                    :badgeName="tag"
+                    :classes="getBadgeClass(tag)"
+                ></PostBadge>
             </div>
         </div>
     </nuxt-link>
 </template>
 <script>
-import PostBadge from '../UI/PostBadge.vue';
+import PostBadge from "../UI/PostBadge.vue";
 export default {
-    components: { 
-        PostBadge 
+    components: {
+        PostBadge,
     },
-    name: 'PostPreview',
+    name: "PostPreview",
     methods: {
         getBadgeClass(tagName) {
-            if(process.client) {
-                const storeTag = this.$store.getters['tag/tags']
-                const tag = storeTag.find(tag => tag.name === tagName);
-                if(tag) {
+            if (process.client) {
+                const storeTag = this.$store.getters["tag/tags"];
+                const tag = storeTag.find((tag) => tag.name === tagName);
+                if (tag) {
                     return tag.style;
                 }
             }
-        }
+        },
     },
     props: {
         id: {
             type: String,
-            required: true
+            required: true,
         },
         title: {
             type: String,
-            required: true
+            required: true,
         },
         previewText: {
             type: String,
-            required: true
+            required: true,
         },
         thumbnail: {
             type: String,
@@ -51,43 +73,37 @@ export default {
         },
         tags: {
             type: Array,
-            required: true
+            required: true,
         },
         isAdmin: {
             type: Boolean,
-            required: true
-        }
+            required: true,
+        },
     },
     computed: {
-        postLink(){
-            return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id
+        postLink() {
+            return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
         },
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
-
-
 a {
     text-decoration: none;
     color: black;
 }
 
-
-
 .post-thumbnail {
-  margin: 0;
-  width: 100%;
-  height: 250px;
-  background-position: center;
-  background-size: cover;
-  background-image: url(http://rocketai.org/wp-content/uploads/2021/06/Hi-Tech-Platforms-Information-Services.jpg);
+    margin: 0;
+    width: 100%;
+    height: 250px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(http://rocketai.org/wp-content/uploads/2021/06/Hi-Tech-Platforms-Information-Services.jpg);
 }
 
 .badge-style {
     @apply text-xs font-medium mr-2 px-2.5 py-0.5 rounded;
 }
-
-
 </style>

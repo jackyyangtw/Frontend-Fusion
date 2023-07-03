@@ -49,6 +49,8 @@ export const actions = {
 
       const { idToken, expiresIn, localId } = data;
 
+      console.log(data)
+
       vuexContext.commit('setToken', idToken);
       localStorage.setItem('token', idToken);
       localStorage.setItem(
@@ -69,13 +71,14 @@ export const actions = {
           id: localId,
         };
 
-        await this.$axios.post(
-          `/users/${localId}.json?auth=${idToken}`,
-          commitData
+
+        await this.$axios.put(
+          `/users/${localId}.json?auth=${idToken}`, commitData
         );
 
         vuexContext.commit('user/setUserData', commitData);
         Cookie.set(`userData`, JSON.stringify(commitData));
+        return;
       }
 
       const { data: userData } = await this.$axios.get(
@@ -98,6 +101,7 @@ export const actions = {
     vuexContext.commit('setsigninWithGoogle', true);
     const provider = new this.$firebase.auth.GoogleAuthProvider();
     try {
+      await this.$firebase.auth().setPersistence(this.$firebase.auth.Auth.Persistence.LOCAL);
       const res = await this.$firebase.auth().signInWithPopup(provider);
 
       const { displayName, email, photoURL, uid } = res.user;
@@ -110,14 +114,23 @@ export const actions = {
       const user = this.$firebase.auth().currentUser;
       const token = await user.getIdToken();
 
-      vuexContext.commit('user/setUserData', userData);
-      vuexContext.commit('setToken', token);
-      vuexContext.commit('setsigninWithGoogle', true);
+      // 檢查是否有該用戶資料，沒有就新增
+      const { data } = await this.$axios.get(`/users/${uid}.json?auth=${token}`);
+      if(!data) {        
+        await this.$axios.put(
+          `/users/${uid}.json?auth=${token}`,
+          {...userData}
+        );
+      }
+
       Cookie.set(`userData`, JSON.stringify(userData));
       Cookie.set('jwt', token);
       localStorage.setItem('token', token);
       Cookie.set("signinWithGoogle", true);
       localStorage.setItem("signinWithGoogle", true);
+      vuexContext.commit('user/setUserData', userData);
+      vuexContext.commit('setToken', token);
+      vuexContext.dispatch('user/setUserPosts');
   
       await this.$firebase.auth().signInWithRedirect(provider);
     } catch (e) {

@@ -1,5 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+// import "firebase/firestore";
+import "firebase/storage";
+import "firebase/database";
 
 // copy the config from the console https://console.firebase.google.com/u/0/project/sign-11111/settings/general/
 const firebaseConfig = {
@@ -12,14 +15,23 @@ const firebaseConfig = {
     appId: "1:583146395669:web:a4c72fde19beecba74d61c"
 };
 let app = null
-// prevent initializing firebase more than once
+
 if (!firebase.apps.length) {
     app = firebase.initializeApp(firebaseConfig, {
         'X-Client-Name': 'web',
         'X-Client-Version': '1.0.0'
     })
 }
-// inject it so it can be accessed as this.$firebase inside the project
+
+const db = firebase.database();
+const storage = firebase.storage();
+
+// const 
+
+
+
 export default (ctx, inject) => {
     inject('firebase', firebase)
+    inject('db', db)
+    inject('storage', storage)
 }
