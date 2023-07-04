@@ -34,7 +34,7 @@ export const actions = {
       })
       .catch(e => context.error(e));
   },
-  async authenticateUser(vuexContext, payload) {
+  async authenticateUserWithEMail(vuexContext, payload) {
     // payload.isLogin 是從 auth頁面tab傳過來的，判斷是否為登入模式
     const authUrl = payload.isLogin
       ? `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIKey}`
@@ -49,8 +49,6 @@ export const actions = {
 
       const { idToken, expiresIn, localId } = data;
 
-      console.log(data)
-
       vuexContext.commit('setToken', idToken);
       localStorage.setItem('token', idToken);
       localStorage.setItem(
@@ -63,36 +61,37 @@ export const actions = {
         new Date().getTime() + Number.parseInt(expiresIn) * 1000
       );
 
-      if (!payload.isLogin) {
-        const commitData = {
-          name: payload.name,
-          email: payload.email,
-          password: payload.password,
-          id: localId,
-        };
+      const commitData = {
+        name: payload.name,
+        email: payload.email,
+        password: payload.password,
+        id: localId,
+      };
 
-
-        await this.$axios.put(
-          `/users/${localId}.json?auth=${idToken}`, commitData
-        );
-
-        vuexContext.commit('user/setUserData', commitData);
-        Cookie.set(`userData`, JSON.stringify(commitData));
-        return;
+      const serUserDataToCookie = (data) => {
+        Cookie.set(`userData`, JSON.stringify(data));
       }
 
       const { data: userData } = await this.$axios.get(
         `/users/${localId}.json?auth=${idToken}`
       );
 
-      Object.values(userData).forEach((item) => {
-        const userData = { ...item, id: localId };
-        Cookie.set(`userData`, JSON.stringify(userData));
-      });
+      const initUserData = (userData) => {
+        serUserDataToCookie(userData)
+        vuexContext.commit('user/setUserData', userData);
+        vuexContext.dispatch('user/setUserData');
+        vuexContext.dispatch('user/setUserPosts');
+      }
 
+      if (!payload.isLogin) {
+        await this.$axios.put(
+          `/users/${localId}.json?auth=${idToken}`, commitData
+        );
+        initUserData(commitData);
+      } else if (payload.isLogin && userData) {
+        initUserData(userData);
+      }
 
-      vuexContext.dispatch('user/setUserData');
-      vuexContext.dispatch('user/setUserPosts');
     } catch (error) {
       console.log(error);
     }
@@ -105,22 +104,25 @@ export const actions = {
       const res = await this.$firebase.auth().signInWithPopup(provider);
 
       const { displayName, email, photoURL, uid } = res.user;
-      const userData = {
-        name: displayName,
-        email,
-        photoURL,
-        id: uid,
-      }
       const user = this.$firebase.auth().currentUser;
       const token = await user.getIdToken();
+      const { data: userDataFromFire } = await this.$axios.get(`/users/${uid}.json?auth=${token}`)
+      let userData;
 
       // 檢查是否有該用戶資料，沒有就新增
-      const { data } = await this.$axios.get(`/users/${uid}.json?auth=${token}`);
-      if(!data) {        
+      if (!userDataFromFire) {
+        userData = {
+          name: displayName,
+          email,
+          photoURL,
+          id: uid,
+        }
         await this.$axios.put(
           `/users/${uid}.json?auth=${token}`,
-          {...userData}
+          userData
         );
+      } else {
+        userData = userDataFromFire;
       }
 
       Cookie.set(`userData`, JSON.stringify(userData));
@@ -131,7 +133,7 @@ export const actions = {
       vuexContext.commit('user/setUserData', userData);
       vuexContext.commit('setToken', token);
       vuexContext.dispatch('user/setUserPosts');
-  
+
       await this.$firebase.auth().signInWithRedirect(provider);
     } catch (e) {
       console.log(e);
@@ -140,7 +142,7 @@ export const actions = {
   initAuth(vuexContext, req) {
     let token;
     let expirationDate;
-    if(process.client) {
+    if (process.client) {
       vuexContext.commit("setsigninWithGoogle", Boolean(localStorage.getItem("signinWithGoogle")));
     }
     if (req) {
@@ -156,12 +158,12 @@ export const actions = {
     } else if (process.client) {
       console.log('在客戶端')
       token = localStorage.getItem("token");
-      if(!vuexContext.state.signinWithGoogle) {
+      if (!vuexContext.state.signinWithGoogle) {
         console.log('沒有google登入')
         expirationDate = localStorage.getItem("tokenExpiration");
       }
     }
-    if(!vuexContext.state.signinWithGoogle) {
+    if (!vuexContext.state.signinWithGoogle) {
       console.log('沒有google登入')
       if (new Date().getTime() > +expirationDate || !token) {
         vuexContext.dispatch("onLogout");

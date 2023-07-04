@@ -46,7 +46,7 @@ export const actions = {
             // })
             const dbUserData = res.data;
             const isManager = dbUserData.isManager;
-            vuexContext.commit("setUserData", {...userData, isManager});
+            vuexContext.commit("setUserData", { ...userData, isManager });
         } else {
             vuexContext.commit("setUserData", '');
         }
@@ -65,25 +65,23 @@ export const actions = {
             }
         }
     },
-    // async updateUserPhoto(vuexContext, photo) {
-    //     const storageRef = this.$storage.ref();
-    //     const uid = vuexContext.state.userData.id;
-    //     const stickerRef = storageRef.child(
-    //         `user-sticker/${uid}`
-    //     );
-    //     stickerRef.put(photo).then(() => {
-    //         // get root state token
-    //         const token = vuexContext.rootState.token;
-
-    //         stickerRef.getDownloadURL().then((url) => {
-    //             this.$axios.$put(`/users/${uid}.json?auth=${token}`, {
-    //                 photoUrl: url
-    //             }).then(() => {
-    //                 vuexContext.commit("setUserData", {...vuexContext.state.userData, photo: url});
-    //             });
-    //         });
-    //     });
-    // },
+    async updateUserPhoto(vuexContext, photo) {
+        const storageRef = this.$storage.ref();
+        const uid = vuexContext.state.userData.id;
+        const stickerRef = storageRef.child(
+            `user-sticker/${uid}`
+        );
+        stickerRef.put(photo).then(() => {
+            const token = vuexContext.rootState.token;
+            stickerRef.getDownloadURL().then((url) => {
+                const updatedData = { ...vuexContext.state.userData, photoURL: url };
+                this.$axios.$put(`/users/${uid}.json?auth=${token}`, updatedData).then(() => {
+                    vuexContext.commit("setUserData", updatedData);
+                    Cookie.set('userData', JSON.stringify(updatedData));
+                });
+            });
+        });
+    },
 }
 
 export const getters = {

@@ -1,125 +1,133 @@
 <template>
-  <div class="admin-auth-page">
-    <section class="bg-slate-100 dark:bg-slate-950">
-      <div
-        class="flex flex-col items-center justify-center px-6 mx-auto h-screen lg:py-0"
-      >
-        <div
-          class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
-        >
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1
-              class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+    <div class="admin-auth-page">
+        <section class="bg-slate-100 dark:bg-slate-950">
+            <div
+                class="flex flex-col items-center justify-center px-6 mx-auto h-screen lg:py-0"
             >
-              {{ isLogin ? "登入您的帳號" : "註冊新帳號" }}
-            </h1>
-            <form @submit.prevent="onSubmit" class="space-y-4 md:space-y-6">
-              <AppControlInput
-                type="text"
-                v-model="name"
-                v-if="!isLogin"
-                :placeholder="`請輸入您的名稱`"
-                >名稱</AppControlInput
-              >
-              <AppControlInput
-                type="email"
-                v-model="email"
-                :placeholder="`請輸入您的電子郵件`"
-                >E-Mail</AppControlInput
-              >
-              <AppControlInput
-                type="password"
-                v-model="password"
-                :placeholder="`請輸入您的密碼`"
-                >密碼</AppControlInput
-              >
-              <div class="flex">
-                <AppButton
-                  type="submit"
-                  :btnStyle="`
+                <div
+                    class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+                >
+                    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1
+                            class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+                        >
+                            {{ isLogin ? "登入您的帳號" : "註冊新帳號" }}
+                        </h1>
+                        <form
+                            @submit.prevent="onSubmit"
+                            class="space-y-4 md:space-y-6"
+                        >
+                            <AppControlInput
+                                type="text"
+                                v-model="name"
+                                v-if="!isLogin"
+                                :placeholder="`請輸入您的名稱`"
+                                >名稱</AppControlInput
+                            >
+                            <AppControlInput
+                                type="email"
+                                v-model="email"
+                                :placeholder="`請輸入您的電子郵件`"
+                                >E-Mail</AppControlInput
+                            >
+                            <AppControlInput
+                                type="password"
+                                v-model="password"
+                                :placeholder="`請輸入您的密碼`"
+                                >密碼</AppControlInput
+                            >
+                            <div class="flex">
+                                <AppButton
+                                    type="submit"
+                                    :btnStyle="`
                     text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-1/2
                     dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800
                     `"
-                >
-                  {{ isLogin ? "登入" : "註冊" }}
-                </AppButton>
-                <AppButton
-                  type="button"
-                  :btnStyle="`w-1/2 bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-1/2 ml-2`"
-                  @click="isLogin = !isLogin"
-                  >切換至{{ isLogin ? "註冊" : "登入" }}</AppButton
-                >
-              </div>
-            </form>
-            <div class="!mt-5">
-              <button class="flex justify-center items-center w-full bg-red-500 hover:bg-red-600 rounded-lg" @click="signinWithGoogle">
-                <img
-                  class="w-10 h-10 mr-2 p-2"
-                  :src="require(`@/assets/images/google_white.png`)"
-                />
-                <div>
-                  使用Google登入
-                </div>
-              </button>
-              <!-- <button @click="signInPopup">Sign With Pop Up</button>
+                                >
+                                    {{ isLogin ? "登入" : "註冊" }}
+                                </AppButton>
+                                <AppButton
+                                    type="button"
+                                    :btnStyle="`w-1/2 bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-1/2 ml-2`"
+                                    @click="isLogin = !isLogin"
+                                    >切換至{{
+                                        isLogin ? "註冊" : "登入"
+                                    }}</AppButton
+                                >
+                            </div>
+                        </form>
+                        <div class="!mt-5">
+                            <button
+                                class="flex justify-center items-center w-full bg-red-500 hover:bg-red-600 rounded-lg"
+                                @click="signinWithGoogle"
+                            >
+                                <img
+                                    class="w-10 h-10 mr-2 p-2"
+                                    :src="
+                                        require(`@/assets/images/google_white.png`)
+                                    "
+                                />
+                                <div>使用Google登入</div>
+                            </button>
+                            <!-- <button @click="signInPopup">Sign With Pop Up</button>
               <button @click="test">Test</button> -->
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+        </section>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "AdminAuthPage",
-  // layout: "admin",
-  data() {
-    return {
-      isLogin: true,
-      email: "",
-      password: "",
-      name: "",
-    };
-  },
-  middleware: "check-auth",
-  methods: {
-    onSubmit() {
-      this.$store
-        .dispatch("authenticateUser", {
-          isLogin: this.isLogin,
-          email: this.email,
-          password: this.password,
-          name: this.name,
-        })
-        .then(() => this.$router.push("/admin"));
+    name: "AdminAuthPage",
+    // layout: "admin",
+    data() {
+        return {
+            isLogin: true,
+            email: "",
+            password: "",
+            name: "",
+        };
     },
-    signinWithGoogle() {
-      this.$store.dispatch("signinWithGoogleAction");
+    middleware: "check-auth",
+    methods: {
+        onSubmit() {
+            this.$store
+                .dispatch("authenticateUserWithEMail", {
+                    isLogin: this.isLogin,
+                    email: this.email,
+                    password: this.password,
+                    name: this.name,
+                })
+                .then(() => this.$router.push("/admin"));
+        },
+        signinWithGoogle() {
+            this.$store.dispatch("signinWithGoogleAction");
+        },
     },
-  },
-  computed: {
-    isAuthenicated() {
-      return this.$store.getters.isAuthenicated;
+    computed: {
+        isAuthenicated() {
+            return this.$store.getters.isAuthenicated;
+        },
     },
-  },
-  mounted() {
-    if (this.isAuthenicated) {
-      this.$router.push("/admin");
-    }
-  },
+    mounted() {
+        if (this.isAuthenicated) {
+            this.$router.push("/admin");
+        }
+    },
 };
 </script>
 
 <style scoped>
 .auth-container {
-  /* border: 1px solid #ccc; */
-  border-radius: 5px;
-  box-shadow: 0 2px 2px #ccc;
-  width: 300px;
-  margin: auto;
-  padding: 10px;
-  box-sizing: border-box;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    box-shadow: 0 2px 2px #ccc;
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
 </style>

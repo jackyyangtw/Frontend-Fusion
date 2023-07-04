@@ -26,6 +26,18 @@ import UserCard from "../../components/Admin/UserCard.vue";
 
 export default {
     // layout: "admin",
+    head() {
+        return {
+            title: "管理者頁面",
+            meta: [
+                {
+                    hid: "description",
+                    name: "description",
+                    content: "管理者頁面",
+                },
+            ],
+        };
+    },
     components: {
         UserCard,
     },
@@ -57,6 +69,7 @@ export default {
         },
     },
     async created() {
+        // 加入條件，只在第一次載入時才會執行
         this.loadingCard = true;
         this.loadingPosts = true;
         await this.$store.dispatch("user/setUserData");

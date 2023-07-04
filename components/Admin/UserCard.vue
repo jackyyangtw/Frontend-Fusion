@@ -44,7 +44,7 @@
                     {{ userData.name }}
                 </h5>
                 <span class="text-sm text-gray-500 dark:text-gray-400">
-                    @{{ userData.email.split("@")[0] }}
+                    @{{ userData.email ? userData.email.split("@")[0] : "" }}
                 </span>
                 <div class="flex mt-4 space-x-3 md:mt-6">
                     <AppButton
