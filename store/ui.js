@@ -4,11 +4,15 @@ export const state = () => ({
     loading: false,
     sidebarWidth: 0,
     tags: [],
+    errorMsg: null,
 })
 
 export const mutations = {
     setDark(state) {
         state.isDark = !state.isDark;
+    },
+    setErrorMsg(state, errorMsg) {
+        state.errorMsg = errorMsg;
     },
     addTag(state, tags) {
         state.tags = tags;
@@ -17,15 +21,15 @@ export const mutations = {
         state.headerHeight = height;
     },
     initSetDark(state) {
-        if(localStorage.getItem('isDark') === null){
+        if (localStorage.getItem('isDark') === null) {
             localStorage.setItem('isDark', state.isDark);
-        }else{
+        } else {
             state.isDark = localStorage.getItem('isDark') === 'true';
         }
-        if(state.isDark){
+        if (state.isDark) {
             document.documentElement.classList.add('dark');
             document.documentElement.classList.remove('light');
-        }else{
+        } else {
             document.documentElement.classList.add('light');
             document.documentElement.classList.remove('dark');
         }
@@ -40,13 +44,16 @@ export const mutations = {
 }
 
 export const actions = {
+    setErrorMsg(vuexContext, errorMsg) {
+        vuexContext.commit("setErrorMsg", errorMsg);
+    },
     toggleDarkMode(vuexContext) {
         vuexContext.commit('setDark');
         localStorage.setItem('isDark', vuexContext.state.isDark);
-        if(vuexContext.state.isDark){
+        if (vuexContext.state.isDark) {
             document.documentElement.classList.add('dark');
             document.documentElement.classList.remove('light');
-        }else{
+        } else {
             document.documentElement.classList.add('light');
             document.documentElement.classList.remove('dark')
         }
@@ -83,5 +90,9 @@ export const getters = {
     },
     tags(state) {
         return state.tags;
+    },
+    errorMsg(state) {
+        return state.errorMsg;
     }
+
 }

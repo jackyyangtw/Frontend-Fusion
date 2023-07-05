@@ -1,5 +1,11 @@
 <template>
     <div class="admin-auth-page">
+        <AppToast
+            @closeToast="closeToast"
+            :showToast="toast.showToast"
+            :type="toast.messageType"
+            :message="toast.message"
+        />
         <section class="bg-slate-100 dark:bg-slate-950">
             <div
                 class="flex flex-col items-center justify-center px-6 mx-auto h-screen lg:py-0"
@@ -64,13 +70,11 @@
                                 <img
                                     class="w-10 h-10 mr-2 p-2"
                                     :src="
-                                        require(`@/assets/images/google_white.png`)
+                                        require(`@/assets/images/google-white.svg`)
                                     "
                                 />
                                 <div>使用Google登入</div>
                             </button>
-                            <!-- <button @click="signInPopup">Sign With Pop Up</button>
-              <button @click="test">Test</button> -->
                         </div>
                     </div>
                 </div>
@@ -83,33 +87,69 @@
 export default {
     name: "AdminAuthPage",
     // layout: "admin",
+    head() {
+        return {
+            title: "登入/註冊",
+        };
+    },
     data() {
         return {
             isLogin: true,
             email: "",
             password: "",
             name: "",
+            toast: {
+                showToast: false,
+                messageType: "loading",
+                message: "success message",
+            },
         };
     },
     middleware: "check-auth",
     methods: {
-        onSubmit() {
-            this.$store
-                .dispatch("authenticateUserWithEMail", {
-                    isLogin: this.isLogin,
-                    email: this.email,
-                    password: this.password,
-                    name: this.name,
-                })
-                .then(() => this.$router.push("/admin"));
+        async onSubmit() {
+            this.toast.showToast = true;
+            this.toast.message = "Email登入中...";
+            this.toast.messageType = "loading";
+            await this.$store.dispatch("authenticateUserWithEMail", {
+                isLogin: this.isLogin,
+                email: this.email,
+                password: this.password,
+                name: this.name,
+            });
+            if (this.errorMsg !== null) {
+                setTimeout(() => {
+                    this.toast.message = this.errorMsg;
+                    this.toast.messageType = "error";
+                }, 1000);
+                setTimeout(() => {
+                    this.toast.showToast = false;
+                }, 4000);
+            } else {
+                setTimeout(() => {
+                    this.$router.push("/admin");
+                }, 2500);
+            }
         },
-        signinWithGoogle() {
-            this.$store.dispatch("signinWithGoogleAction");
+        async signinWithGoogle() {
+            this.toast.showToast = true;
+            this.toast.message = "Google登入中...";
+            this.toast.messageType = "loading";
+            await this.$store.dispatch("signinWithGoogleAction");
+            this.toast.showToast = false;
+            this.toast.message = "登入成功";
+            this.toast.messageType = "success";
+        },
+        closeToast() {
+            this.toast.showToast = false;
         },
     },
     computed: {
         isAuthenicated() {
             return this.$store.getters.isAuthenicated;
+        },
+        errorMsg() {
+            return this.$store.getters["ui/errorMsg"];
         },
     },
     mounted() {

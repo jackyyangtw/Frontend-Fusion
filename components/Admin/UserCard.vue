@@ -98,14 +98,30 @@ export default {
             this.$store.dispatch("onLogout");
             this.$router.push("/admin/auth");
         },
-        onPhotoChange(e) {
+        async onPhotoChange(e) {
             const file = e.target.files[0];
             if (!file && !navigator.onLine) return;
             if (file.type !== "image/jpeg" && file.type !== "image/png") {
                 alert("請上傳jpg或png檔案");
                 return;
             }
-            this.$store.dispatch("user/updateUserPhoto", file);
+            this.$emit("showToast", {
+                show: true,
+                msg: "上傳中...",
+                type: "loading",
+            });
+            try {
+                await this.$store.dispatch("user/updateUserPhoto", file);
+            } catch (err) {
+                this.$emit("showToast", {
+                    show: true,
+                    msg: err.message,
+                    type: "error",
+                });
+            }
+            this.$emit("showToast", {
+                show: false,
+            });
         },
     },
 };

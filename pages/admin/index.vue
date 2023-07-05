@@ -1,6 +1,13 @@
 <template>
     <div class="admin-page container">
+        <AppToast
+            :showToast="toast.showToast"
+            :message="toast.message"
+            :type="toast.type"
+            @closeToast="closeToast"
+        />
         <UserCard
+            @showToast="updatePhoto"
             :userData="userData"
             :isManager="isManager"
             :loadingCard="loadingCard"
@@ -42,17 +49,39 @@ export default {
         UserCard,
     },
     middleware: ["check-auth", "auth"],
-    methods: {
-        onLogout() {
-            this.$store.dispatch("onLogout");
-            this.$router.push("/admin/auth");
-        },
-    },
     data() {
         return {
             loadingCard: false,
             loadingPosts: false,
+            toast: {
+                showToast: false,
+                message: "",
+                type: "success",
+            },
         };
+    },
+    methods: {
+        closeToast() {
+            this.toast.showToast = false;
+        },
+        updatePhoto(showToast) {
+            if (showToast.show) {
+                this.toast.showToast = true;
+                this.toast.message = "更新圖片中...";
+                this.toast.type = "loading";
+            } else if (showToast.type === "error") {
+                this.toast.message = showToast.msg;
+                this.toast.type = "error";
+            } else if (!showToast.show) {
+                setTimeout(() => {
+                    this.toast.message = "更新圖片成功!";
+                    this.toast.type = "success";
+                }, 2000);
+                setTimeout(() => {
+                    this.toast.showToast = false;
+                }, 4000);
+            }
+        },
     },
     computed: {
         loadedPosts() {

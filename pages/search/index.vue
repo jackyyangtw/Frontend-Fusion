@@ -3,70 +3,79 @@
         <div class="container mx-auto" v-if="hasPosts">
             <p class="text-style">
                 關鍵字:
-                <span class="text-sky-500 dark:text-pink-500">{{ this.searchText }}</span>
+                <span class="text-sky-500 dark:text-pink-500">{{
+                    this.searchText
+                }}</span>
             </p>
         </div>
         <div class="container mx-auto" v-if="hasPosts">
             <PostList :posts="searchedPosts"></PostList>
         </div>
         <div class="container mx-auto" v-else>
-            <div class="text-style">
-                沒有找到任何文章
-            </div>
+            <div class="text-style">沒有找到任何文章</div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import PostList from '../../components/Posts/PostList.vue';
+import { mapState } from "vuex";
+import PostList from "../../components/Posts/PostList.vue";
 export default {
+    head() {
+        return {
+            title: "搜尋文章:" + this.searchText,
+        };
+    },
     components: {
-        PostList
+        PostList,
     },
     data() {
         return {
-            searchedPosts: []
+            searchedPosts: [],
         };
     },
     updated() {
-        this.$store.dispatch("ui/setLoading", false)
+        this.$store.dispatch("ui/setLoading", false);
     },
     created() {
-        this.$store.dispatch("ui/setLoading", false)
+        this.$store.dispatch("ui/setLoading", false);
         const searchText = this.$store.getters.searchText;
-        this.setSearchedPosts(searchText)
+        this.setSearchedPosts(searchText);
     },
     computed: {
         ...mapState(["searchText"]),
         hasPosts() {
             return this.searchedPosts.length > 0;
-        }
+        },
     },
     methods: {
         setSearchedPosts(posts) {
             if (!this.searchText) {
                 return;
             }
-            this.searchedPosts = this.$store.getters['post/loadedPosts'].filter(post => {
-                return post.title.toLowerCase().includes(posts.toLowerCase()) || post.content.toLowerCase().includes(posts.toLowerCase()) || post.previewText.toLowerCase().includes(posts.toLowerCase());
-            });
-        }
+            this.searchedPosts = this.$store.getters["post/loadedPosts"].filter(
+                (post) => {
+                    return (
+                        post.title
+                            .toLowerCase()
+                            .includes(posts.toLowerCase()) ||
+                        post.content
+                            .toLowerCase()
+                            .includes(posts.toLowerCase()) ||
+                        post.previewText
+                            .toLowerCase()
+                            .includes(posts.toLowerCase())
+                    );
+                }
+            );
+        },
     },
     mounted() {
         this.$watch("searchText", () => {
             this.setSearchedPosts(this.searchText);
-        }
-        );
+        });
     },
-    // beforeRouteLeave(to,from,next) {
-    //     next();
-    //     setTimeout(() => {
-    //         this.$store.commit("setSearchText", "");
-    //     }, 3000);
-    // },
-
-}
+};
 </script>
 
 <style scoped>

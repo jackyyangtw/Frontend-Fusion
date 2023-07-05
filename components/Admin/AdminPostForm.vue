@@ -8,7 +8,6 @@
         >
             <v-text-field
                 v-model="editedPost.author"
-                :counter="10"
                 :rules="nameRules"
                 label="作者名稱"
                 required
@@ -50,7 +49,9 @@
                 >
                 </v-checkbox>
             </div>
-            <p class="error--text" v-if="checkboxRules">{{ checkboxErrMsg }}</p>
+            <p class="error--text" v-if="checkboxRules">
+                {{ checkboxErrMsg }}
+            </p>
 
             <div
                 class="quill-editor mb-5 !h-[400px] !text-base"
@@ -67,7 +68,12 @@
                     :disabled="checkboxs.length === 0 || !valid"
                     >儲存</v-btn
                 >
-                <v-btn color="error" @click="dialog = true" class="mr-2">
+                <v-btn
+                    color="error"
+                    @click="dialog = true"
+                    class="mr-2"
+                    v-if="showDelete"
+                >
                     刪除
                 </v-btn>
                 <v-btn text @click="onCancel" type="button"> 取消 </v-btn>
@@ -98,12 +104,10 @@
 </template>
 
 <script>
-import AppButton from "@/components/UI/AppButton.vue";
 import AppControlInput from "@/components/UI/AppControlInput.vue";
 export default {
     name: "AdminPostForm",
     components: {
-        AppButton,
         AppControlInput,
     },
     data() {
@@ -157,6 +161,11 @@ export default {
         post: {
             type: Object,
             required: false,
+        },
+        showDelete: {
+            type: Boolean,
+            required: false,
+            default: true,
         },
     },
     methods: {

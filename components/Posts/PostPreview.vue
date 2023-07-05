@@ -1,40 +1,45 @@
 <template>
-    <nuxt-link
-        class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]"
-        :to="postLink"
-    >
-        <div
-            class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
+    <transition name="preview">
+        <nuxt-link
+            v-if="isMounted"
+            class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]"
+            :to="postLink"
         >
-            <figure
-                class="post-thumbnail"
-                :style="{ backgroundImage: `url(${thumbnail})` }"
-            >
-                <div
-                    class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center"
-                    v-if="!thumbnail"
-                >
-                    目前沒有圖片
-                </div>
-            </figure>
             <div
-                class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]"
+                class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
             >
-                <h2 class="font-bold text-xl mb-2 text-black dark:text-white">
-                    {{ title }}
-                </h2>
-                <p class="text-base pb-1 text-gray-700 dark:text-white">
-                    {{ previewText }}
-                </p>
-                <PostBadge
-                    v-for="tag in tags"
-                    :key="tag"
-                    :badgeName="tag"
-                    :classes="getBadgeClass(tag)"
-                ></PostBadge>
+                <figure
+                    class="post-thumbnail"
+                    :style="{ backgroundImage: `url(${thumbnail})` }"
+                >
+                    <div
+                        class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center"
+                        v-if="!thumbnail"
+                    >
+                        目前沒有圖片
+                    </div>
+                </figure>
+                <div
+                    class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]"
+                >
+                    <h2
+                        class="font-bold text-xl mb-2 text-black dark:text-white"
+                    >
+                        {{ title }}
+                    </h2>
+                    <p class="text-base pb-1 text-gray-700 dark:text-white">
+                        {{ previewText }}
+                    </p>
+                    <PostBadge
+                        v-for="tag in tags"
+                        :key="tag"
+                        :badgeName="tag"
+                        :classes="getBadgeClass(tag)"
+                    ></PostBadge>
+                </div>
             </div>
-        </div>
-    </nuxt-link>
+        </nuxt-link>
+    </transition>
 </template>
 <script>
 import PostBadge from "../UI/PostBadge.vue";
@@ -43,6 +48,11 @@ export default {
         PostBadge,
     },
     name: "PostPreview",
+    data() {
+        return {
+            isMounted: false,
+        };
+    },
     methods: {
         getBadgeClass(tagName) {
             if (process.client) {
@@ -85,6 +95,9 @@ export default {
             return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
         },
     },
+    mounted() {
+        this.isMounted = true;
+    },
 };
 </script>
 
@@ -105,5 +118,16 @@ a {
 
 .badge-style {
     @apply text-xs font-medium mr-2 px-2.5 py-0.5 rounded;
+}
+
+.preview-enter-active,
+.preview-leave-active {
+    transition: 0.5s;
+}
+
+.preview-enter,
+.preview-leave-to {
+    filter: blur(20px);
+    opacity: 0;
 }
 </style>

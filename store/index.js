@@ -93,7 +93,7 @@ export const actions = {
       }
 
     } catch (error) {
-      console.log(error);
+      vuexContext.dispatch('ui/setErrorMsg', error.response.data.error.message);
     }
   },
   async signinWithGoogleAction(vuexContext) {
