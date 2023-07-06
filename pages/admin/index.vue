@@ -106,6 +106,8 @@ export default {
             this.loadingCard = false;
             this.loadingPosts = false;
         }, 1000);
+
+        this.$store.dispatch("checkUserLoggedInWithGoogle",{ router: this.$router });
     },
 };
 </script>

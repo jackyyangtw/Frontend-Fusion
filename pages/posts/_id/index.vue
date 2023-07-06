@@ -2,8 +2,8 @@
   <div class="single-post-page container">
     <div class=" w-full md:w-[60%] lg:w-[750px] mx-auto">
       <section class="post">
-        <h1 class="post-title text-sky-600 dark:text-pink-500 text-4xl font-black pb-3">{{ loadedPost.title }}</h1>
-        <p class="post-content text-sky-400 dark:text-pink-300 text-xl font-light">{{ loadedPost.previewText }}</p>
+        <h1 class="post-title text-sky-500 dark:text-pink-500 text-4xl font-bold pb-2">{{ loadedPost.title }}</h1>
+        <p class="post-content text-black dark:text-white text-xl font-bold pb-3">{{ loadedPost.previewText }}</p>
         <div class="post-details mb-5">
           <div class="text-gray-400 dark:text-gray-500 mr-3">
             Last updated on {{ loadedPost.updatedDate | date }}

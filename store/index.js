@@ -139,6 +139,17 @@ export const actions = {
       console.log(e);
     }
   },
+  async checkUserLoggedInWithGoogle(vuexContext,{router}) {
+    try {
+      await this.$firebase.auth().setPersistence(this.$firebase.auth.Auth.Persistence.LOCAL);
+      const user = await this.$firebase.auth().currentUser;
+      if (!user) {
+        router.push('/admin/auth');
+      } 
+    } catch (e) {
+      console.log(e);
+    }
+  },
   initAuth(vuexContext, req) {
     let token;
     let expirationDate;

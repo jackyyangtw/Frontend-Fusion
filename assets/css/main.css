@@ -25,11 +25,18 @@ html {
 
 .fade-enter,
 .fade-leave-to
-
-/* .fade-leave-active below version 2.1.8 */
     {
     opacity: 0;
 }
-/* .theme--dark.v-application {
-  background: #020617 !important;
-} */
+
+
+.vagueIn-enter-active,
+.vagueIn-leave-active {
+    transition: 0.5s;
+}
+
+.vagueIn-enter,
+.vagueIn-leave-to {
+    filter: blur(20px);
+    opacity: 0.5;
+}

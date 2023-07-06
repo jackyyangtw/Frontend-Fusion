@@ -9,23 +9,20 @@
 -   ~google 登入後無法更新 POST，驗證錯誤(401)~
 -   ~新增文章時，如果沒有選擇 Tag 也能提交 POST~
 -   ~管理者帳號沒有出現管理 TAG~
+-   ~如果是帳號密碼登入，userData 會變得很奇怪，導致資料無法正確顯示~
 -   新增的 TAG 會有 class 但不會有樣式
 -   搜尋的時候需要排除 base64 的 img code
--   ~如果是帳號密碼登入，userData 會變得很奇怪，導致資料無法正確顯示~
 
-// firebase.auth().signInWithPopup 會產生 popup 需要 reload，抵銷 error
-// signInWithRedirect 則會失去 login data，因為 page reload
-// 目前狀況是兩個一起用的話可以解決，但是無法 direct 到 /admin
 
 ## features:
-
 -   讓使用者可以上傳 preview 圖片
 -   使用者回覆功能
+-   點選作者名稱可以連到該作者的頁面
+-   新增 管理頁面不要一直重複載入資料功能(如果沒有新資料就不要重新載入)
 -   ~登入後可編輯個人資料，新增 Post 的時候可以自動帶入姓名~
 -   ~新增 Post 圖片上傳功能~
 -   ~新增 filter 功能~
 -   ~新增可以管理 TAG 的帳號~
--   新增 管理頁面不要一直重複載入資料功能(如果沒有新資料就不要重新載入)
 
 ## deploy vercel error
 

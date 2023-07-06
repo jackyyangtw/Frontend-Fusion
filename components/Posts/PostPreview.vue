@@ -1,5 +1,5 @@
 <template>
-    <transition name="preview">
+    <transition name="vagueIn">
         <nuxt-link
             v-if="isMounted"
             class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]"
@@ -8,17 +8,18 @@
             <div
                 class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
             >
+                <!-- :style="{ backgroundImage: `url(${thumbnail})` }" -->
                 <figure
-                    class="post-thumbnail"
-                    :style="{ backgroundImage: `url(${thumbnail})` }"
+                    class="post-thumbnail relative"
                 >
-                    <div
-                        class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center"
-                        v-if="!thumbnail"
-                    >
-                        目前沒有圖片
-                    </div>
+                    <img class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]" :src="thumbnail" alt="">
                 </figure>
+                <div
+                    class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center"
+                    v-if="!thumbnail"
+                >
+                    目前沒有圖片
+                </div>
                 <div
                     class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]"
                 >
@@ -111,23 +112,15 @@ a {
     margin: 0;
     width: 100%;
     height: 250px;
-    background-position: center;
-    background-size: cover;
-    background-image: url(http://rocketai.org/wp-content/uploads/2021/06/Hi-Tech-Platforms-Information-Services.jpg);
+    overflow: hidden;
+    /* background-position: center;
+    background-size: cover; */
+    /* background-image: url(http://rocketai.org/wp-content/uploads/2021/06/Hi-Tech-Platforms-Information-Services.jpg); */
 }
 
 .badge-style {
     @apply text-xs font-medium mr-2 px-2.5 py-0.5 rounded;
 }
 
-.preview-enter-active,
-.preview-leave-active {
-    transition: 0.5s;
-}
 
-.preview-enter,
-.preview-leave-to {
-    filter: blur(20px);
-    opacity: 0;
-}
 </style>
