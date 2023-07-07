@@ -60,6 +60,13 @@
                 @change="onEditorChange($event)"
             ></div>
 
+            <input
+                type="file"
+                id="getFile"
+                @change="uploadContentImage($event)"
+                class="hidden"
+            />
+
             <div class="pb-5">
                 <v-btn
                     type="submit"
@@ -105,6 +112,7 @@
 
 <script>
 import AppControlInput from "@/components/UI/AppControlInput.vue";
+import Cookie from "js-cookie";
 export default {
     name: "AdminPostForm",
     components: {
@@ -114,12 +122,22 @@ export default {
         return {
             editorOption: {
                 modules: {
-                    toolbar: [
-                        [{ header: [1, 2, false] }],
-                        ["bold", "italic", "underline"],
-                        ["link", "image", "video", "code-block"],
-                        [{ color: [] }, { background: [] }],
-                    ],
+                    toolbar: {
+                        container: [
+                            [{ header: [1, 2, false] }],
+                            ["bold", "italic", "underline"],
+                            ["link", "image", "video", "code-block"],
+                            [{ color: [] }, { background: [] }],
+                        ],
+                        handlers: {
+                            image: function () {
+                                // 取得上傳的圖檔
+                                const input =
+                                    document.getElementById("getFile");
+                                input.click();
+                            },
+                        },
+                    },
                 },
             },
             selectedCheckbox: [],
@@ -197,6 +215,42 @@ export default {
         onEditorChange({ quill, html, text }) {
             this.editedPost.content = html;
         },
+        uploadContentImage(e) {
+            var form = new FormData();
+            form.append("file[]", e.target.files[0]);
+            // 上傳圖片到firebase storage 路徑: images/posts/:postId/:fileName
+            const postId = this.$route.params.postId;
+            const fileName = e.target.files[0].name;
+            const storageRef = this.$storage.ref(
+                `images/posts/${postId}/${fileName}`
+            );
+            const uploadTask = storageRef.put(e.target.files[0]);
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    // progress
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                },
+                (error) => {
+                    // error
+                    console.log(error);
+                },
+                () => {
+                    // complete
+                    uploadTask.snapshot.ref
+                        .getDownloadURL()
+                        .then((downloadURL) => {
+                            this.myQuillEditor.insertEmbed(
+                                this.myQuillEditor.getSelection().index,
+                                "image",
+                                downloadURL
+                            );
+                        });
+                }
+            );
+        },
     },
     computed: {
         checkboxRules() {
@@ -216,7 +270,9 @@ export default {
             return tagNames;
         },
         userName() {
-            const userData = this.$store.getters["user/userData"];
+            const userData = this.$store.getters["user/userData"]
+                ? this.$store.getters["user/userData"]
+                : JSON.parse(Cookie.get("userData"));
             return userData && userData.name ? userData.name : "";
         },
     },

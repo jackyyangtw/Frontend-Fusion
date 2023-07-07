@@ -139,18 +139,19 @@ export const actions = {
       console.log(e);
     }
   },
-  async checkUserLoggedInWithGoogle(vuexContext,{router}) {
+  async checkUserLoggedInWithGoogle(vuexContext, { router }) {
     try {
       await this.$firebase.auth().setPersistence(this.$firebase.auth.Auth.Persistence.LOCAL);
       const user = await this.$firebase.auth().currentUser;
       if (!user) {
         router.push('/admin/auth');
-      } 
+      }
     } catch (e) {
       console.log(e);
     }
   },
   initAuth(vuexContext, req) {
+    console.log('initAuth')
     let token;
     let expirationDate;
     if (process.client) {
@@ -167,7 +168,6 @@ export const actions = {
         .find(cookie => cookie.trim().startsWith("tokenExpiration="))
         ?.split("=")[1];
     } else if (process.client) {
-      console.log('在客戶端')
       token = localStorage.getItem("token");
       if (!vuexContext.state.signinWithGoogle) {
         console.log('沒有google登入')

@@ -44,6 +44,9 @@ export default {
             }, 3000);
         },
     },
+    created() {
+        this.$store.dispatch("user/setUserData");
+    },
 };
 </script>
 

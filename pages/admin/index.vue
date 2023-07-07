@@ -107,7 +107,7 @@ export default {
             this.loadingPosts = false;
         }, 1000);
 
-        this.$store.dispatch("checkUserLoggedInWithGoogle",{ router: this.$router });
+        // this.$store.dispatch("checkUserLoggedInWithGoogle",{ router: this.$router });
     },
 };
 </script>
