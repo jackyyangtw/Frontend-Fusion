@@ -32,7 +32,6 @@ html {
 
 .vagueIn-enter-active,
 .vagueIn-leave-active {
-    transition: 0.5s;
 }
 
 .vagueIn-enter,

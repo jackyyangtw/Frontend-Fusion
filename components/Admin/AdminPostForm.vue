@@ -11,31 +11,56 @@
                 :rules="nameRules"
                 label="作者名稱"
                 required
+                prepend-icon="mdi-account"
             ></v-text-field>
 
             <v-text-field
+                prepend-icon="mdi-format-title"
                 v-model="editedPost.title"
                 label="文章標題"
                 :rules="titleRules"
                 required
             ></v-text-field>
-
+            
             <v-text-field
-                v-model="editedPost.thumbnail"
-                label="預覽縮圖"
-                :rules="urlRules"
-                required
-            ></v-text-field>
-
-            <v-text-field
+                prepend-icon="mdi-text"
                 v-model="editedPost.previewText"
                 label="預覽文字"
                 :rules="[(v) => !!v || '請填入預覽文字']"
                 required
             ></v-text-field>
-            <label class="mb-0 text-gray-500 dark:text-gray-300"
-                >文章類別</label
-            >
+
+            <v-text-field
+                prepend-icon="mdi-image"
+                v-model="editedPost.thumbnail"
+                label="預覽縮圖(網址)"
+                :rules="urlRules"
+                
+            ></v-text-field>
+            <v-file-input
+                show-size
+                prepend-icon="mdi-camera"
+                label="預覽縮圖(本地上傳)" 
+                :rules="previewImgRules" 
+                required 
+                @change="onPreviewImgChange"
+            ></v-file-input>
+            <!-- 預覽縮圖(本地上傳)的預覽圖 -->
+            <v-img
+                v-if="editedPost.previewImg"
+                :src="editedPost.previewImg"
+                class="mb-5"
+                max-width="300"
+                max-height="300"
+            ></v-img>
+            
+            <!-- v-icon -->
+            <div class="flex">
+                <v-icon class="mr-3">mdi-tag</v-icon>
+                <p class="mb-0 text-gray-500 dark:text-gray-300"
+                    >文章類別</p
+                >
+            </div>
             <div class="flex flex-wrap">
                 <v-checkbox
                     v-model="editedPost.tags"
@@ -150,19 +175,23 @@ export default {
                       content: "",
                       previewText: "",
                       tags: [],
+                      previewImg: "",
                   },
             dialog: false,
             isDialogShow: false,
             valid: false,
             formData: {},
-            name: "",
+            // name: "",
             nameRules: [(v) => !!v || "請填入作者名稱"],
             titleRules: [(v) => !!v || "請填入文章標題"],
-            email: "",
-            emailRules: [
-                (v) => !!v || "E-mail is required",
-                (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+            previewImgRules: [
+                (v) => !!v || "請上傳預覽縮圖",
             ],
+            // email: "",
+            // emailRules: [
+            //     (v) => !!v || "E-mail is required",
+            //     (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+            // ],
             urlRules: [
                 (v) => !!v || "請填入縮圖網址",
                 (v) =>
@@ -193,6 +222,19 @@ export default {
                 userId: this.$store.getters["user/userData"].id,
             });
         },
+        onPreviewImgChange(files){
+            if(files.size > 200000) {
+                this.previewImgRules = [(v) => !!v || "檔案大小不得超過2MB"];
+            } else {
+                this.previewImgRules = [(v) => !!v || "請上傳預覽縮圖"];
+            }
+            // 將files轉成url
+            const reader = new FileReader();
+            reader.readAsDataURL(files);
+            reader.onload = () => {
+                this.editedPost.previewImg = reader.result;
+            };
+        },
         onCancel() {
             this.$router.push("/admin");
         },
@@ -218,11 +260,11 @@ export default {
         uploadContentImage(e) {
             var form = new FormData();
             form.append("file[]", e.target.files[0]);
-            // 上傳圖片到firebase storage 路徑: images/posts/:postId/:fileName
+            // 上傳圖片到firebase storage 路徑: images/posts/:postId/content/:fileName
             const postId = this.$route.params.postId;
             const fileName = e.target.files[0].name;
             const storageRef = this.$storage.ref(
-                `images/posts/${postId}/${fileName}`
+                `images/posts/${postId}/content/${fileName}`
             );
             const uploadTask = storageRef.put(e.target.files[0]);
 
@@ -270,10 +312,16 @@ export default {
             return tagNames;
         },
         userName() {
+            // 為了方便開發，可能會有錯誤(重整的時候)，等onPreviewImgChange再修改
+            if (!this.$store.getters["user/userData"]) {
+                return "";
+            }
+
             const userData = this.$store.getters["user/userData"]
                 ? this.$store.getters["user/userData"]
                 : JSON.parse(Cookie.get("userData"));
-            return userData && userData.name ? userData.name : "";
+            // return userData && userData.name ? userData.name : "";
+            return userData.name || '';
         },
     },
     mounted() {

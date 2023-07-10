@@ -2,7 +2,7 @@
     <transition name="vagueIn">
         <nuxt-link
             v-if="isMounted"
-            class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]"
+            class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] ease-in duration-300 transition"
             :to="postLink"
         >
             <div

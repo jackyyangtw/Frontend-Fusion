@@ -48,14 +48,19 @@ export default {
     },
     methods: {
         async updatePost(updatedPost) {
-            this.toast.showToast = true;
-            this.toast.message = "文章更新中...";
-            this.toast.type = "loading";
-            await this.$store.dispatch("post/editPost", updatedPost);
+            try {
+                this.toast.showToast = true;
+                this.toast.message = "文章更新中...";
+                this.toast.type = "loading";
+                await this.$store.dispatch("post/editPost", updatedPost);
+
+            } catch (err) {
+                console.log(err);
+            }
             setTimeout(() => {
-                this.toast.message = "文章更成功!";
-                this.toast.type = "success";
-            }, 1000);
+                    this.toast.message = "文章更成功!";
+                    this.toast.type = "success";
+                }, 1000);
             setTimeout(() => {
                 this.$router.push("/admin");
             }, 3000);
