@@ -13,6 +13,7 @@
 -   新增的 TAG 會有 class 但不會有樣式
 -   隔一天後cookie data會被刪除，但是依然保持登入狀態
 -   重整頁面後應該要重新抓userData，可以在最外層抓，而不是在每個頁面抓(目前admin兩個表單頁面都有手動寫抓資料)
+-  新增POST會有問題
 
 ## features:
 -   讓使用者可以上傳 preview 圖片
@@ -36,3 +37,12 @@ https://github.com/nuxt/vercel-builder/issues/633
 https://www.alvinchen.club/2020/09/07/nuxt-js%E4%BD%BF%E7%94%A8quill%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E7%89%87%E5%8F%8A%E7%9B%B4%E6%8E%A5%E7%B7%A8%E8%BC%AFhtml/
 
 testing account: jaky2204564@gmail.com
+
+## Google login
+https://www.letswrite.tw/firebase-auth-google-fb/
+
+
+## upload post preview image
+1. 取得使用者上傳的圖片轉為base64，並且顯示在畫面上
+2. 等form submit的時候，把base64轉為blob，並且上傳到firebase storage
+3. 等firebase storage上傳完成後，再把圖片的url放到post的資料庫中

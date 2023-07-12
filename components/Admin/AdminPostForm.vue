@@ -21,7 +21,7 @@
                 :rules="titleRules"
                 required
             ></v-text-field>
-            
+
             <v-text-field
                 prepend-icon="mdi-text"
                 v-model="editedPost.previewText"
@@ -34,32 +34,30 @@
                 prepend-icon="mdi-image"
                 v-model="editedPost.thumbnail"
                 label="預覽縮圖(網址)"
-                :rules="urlRules"
-                
             ></v-text-field>
+
             <v-file-input
                 show-size
                 prepend-icon="mdi-camera"
-                label="預覽縮圖(本地上傳)" 
-                :rules="previewImgRules" 
-                required 
+                label="預覽縮圖(本地上傳)"
+                :rules="previewImgRules"
+                required
                 @change="onPreviewImgChange"
             ></v-file-input>
+
             <!-- 預覽縮圖(本地上傳)的預覽圖 -->
             <v-img
-                v-if="editedPost.previewImg"
-                :src="editedPost.previewImg"
+                v-if="editedPost.previewImgUrl"
+                :src="editedPost.previewImgUrl"
                 class="mb-5"
                 max-width="300"
                 max-height="300"
             ></v-img>
-            
+
             <!-- v-icon -->
             <div class="flex">
                 <v-icon class="mr-3">mdi-tag</v-icon>
-                <p class="mb-0 text-gray-500 dark:text-gray-300"
-                    >文章類別</p
-                >
+                <p class="mb-0 text-gray-500 dark:text-gray-300">文章類別</p>
             </div>
             <div class="flex flex-wrap">
                 <v-checkbox
@@ -145,6 +143,7 @@ export default {
     },
     data() {
         return {
+            previewImageFile: null,
             editorOption: {
                 modules: {
                     toolbar: {
@@ -175,7 +174,7 @@ export default {
                       content: "",
                       previewText: "",
                       tags: [],
-                      previewImg: "",
+                      previewImgUrl: "",
                   },
             dialog: false,
             isDialogShow: false,
@@ -184,16 +183,13 @@ export default {
             // name: "",
             nameRules: [(v) => !!v || "請填入作者名稱"],
             titleRules: [(v) => !!v || "請填入文章標題"],
-            previewImgRules: [
-                (v) => !!v || "請上傳預覽縮圖",
-            ],
+            previewImgRules: [(v) => !!v || "請上傳預覽縮圖"],
             // email: "",
             // emailRules: [
             //     (v) => !!v || "E-mail is required",
             //     (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
             // ],
             urlRules: [
-                (v) => !!v || "請填入縮圖網址",
                 (v) =>
                     /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(
                         v
@@ -219,20 +215,27 @@ export default {
         onSave() {
             this.$emit("submit", {
                 ...this.editedPost,
+                previewImgUrl: "",
                 userId: this.$store.getters["user/userData"].id,
+                previewImageFile: this.previewImageFile,
             });
         },
-        onPreviewImgChange(files){
-            if(files.size > 200000) {
+        onPreviewImgChange(files) {
+            if (!files) {
+                this.editedPost.previewImgUrl = "";
+                return;
+            }
+            if (files.size > 200000) {
                 this.previewImgRules = [(v) => !!v || "檔案大小不得超過2MB"];
             } else {
                 this.previewImgRules = [(v) => !!v || "請上傳預覽縮圖"];
             }
-            // 將files轉成url
+            // 將files轉成base64
             const reader = new FileReader();
             reader.readAsDataURL(files);
             reader.onload = () => {
-                this.editedPost.previewImg = reader.result;
+                this.editedPost.previewImgUrl = reader.result;
+                this.previewImageFile = files;
             };
         },
         onCancel() {
@@ -321,7 +324,7 @@ export default {
                 ? this.$store.getters["user/userData"]
                 : JSON.parse(Cookie.get("userData"));
             // return userData && userData.name ? userData.name : "";
-            return userData.name || '';
+            return userData.name || "";
         },
     },
     mounted() {

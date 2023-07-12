@@ -21,6 +21,7 @@ import AdminPostForm from "@/components/Admin/AdminPostForm.vue";
 export default {
     components: { AdminPostForm },
     middleware: ["check-auth", "auth"],
+    lauout: "admin",
     head() {
         return {
             title: `${this.loadedPost.title} - Admin`,
@@ -40,7 +41,13 @@ export default {
             .$get(`/posts/${context.params.postId}.json`)
             .then((data) => {
                 return {
-                    loadedPost: { ...data, id: context.params.postId },
+                    loadedPost: {
+                        ...data,
+                        id: context.params.postId,
+                        previewImgUrl: data.previewImgUrl
+                            ? data.previewImgUrl
+                            : "",
+                    },
                     dialog: false,
                 };
             })
@@ -52,18 +59,30 @@ export default {
                 this.toast.showToast = true;
                 this.toast.message = "文章更新中...";
                 this.toast.type = "loading";
-                await this.$store.dispatch("post/editPost", updatedPost);
 
-            } catch (err) {
-                console.log(err);
-            }
-            setTimeout(() => {
+                const imgUrl = await this.$store.dispatch(
+                    "post/uploadPreviewImage",
+                    {
+                        postId: updatedPost.id,
+                        previewImageFile: updatedPost.previewImageFile,
+                    }
+                );
+
+                const updateData = {
+                    ...updatedPost,
+                    previewImgUrl: imgUrl,
+                };
+                await this.$store.dispatch("post/editPost", updateData);
+                setTimeout(() => {
                     this.toast.message = "文章更成功!";
                     this.toast.type = "success";
                 }, 1000);
-            setTimeout(() => {
-                this.$router.push("/admin");
-            }, 3000);
+                setTimeout(() => {
+                    this.$router.push("/admin");
+                }, 3000);
+            } catch (err) {
+                console.log(err);
+            }
         },
         async deletePost(deleteId) {
             this.toast.showToast = true;

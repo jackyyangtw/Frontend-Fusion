@@ -170,12 +170,12 @@ export const actions = {
     } else if (process.client) {
       token = localStorage.getItem("token");
       if (!vuexContext.state.signinWithGoogle) {
-        console.log('沒有google登入')
         expirationDate = localStorage.getItem("tokenExpiration");
+      } else {
+        expirationDate = null;
       }
     }
     if (!vuexContext.state.signinWithGoogle) {
-      console.log('沒有google登入')
       if (new Date().getTime() > +expirationDate || !token) {
         vuexContext.dispatch("onLogout");
         return;
