@@ -6,7 +6,7 @@ const axios = require("axios");
 //   google:''
 // }
 module.exports = {
-  mode: "universal",
+  // mode: "universal",
   // color-mode 設定dark mode
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
 
