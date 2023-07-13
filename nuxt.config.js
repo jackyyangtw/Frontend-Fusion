@@ -6,7 +6,7 @@ const axios = require("axios");
 //   google:''
 // }
 module.exports = {
-  // mode: "universal",
+  mode: "universal",
   // color-mode 設定dark mode
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
 
@@ -56,7 +56,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    "~plugins/core-components.js", 
+    "~plugins/core-components.js",
     "~plugins/date-filter.js",
     "~plugins/tags.js",
     { src: "~plugins/vue-quill-editor.js", ssr: false },
@@ -67,22 +67,22 @@ module.exports = {
 
   colorMode: {
     classSuffix: "",
-    preference:'dark',
-    fallback:'light',
+    preference: 'dark',
+    fallback: 'light',
   },
   vuetify: {
     theme: {
       dark: true,
       themes: {
         dark: {
-          primary:"#EC4899",
-          background:"#020617",
-          backgroundLight:"#141B2A",
+          primary: "#EC4899",
+          background: "#020617",
+          backgroundLight: "#141B2A",
         },
         light: {
-          primary:"#0EA5E9",
-          background:"#F1F5F9",
-          backgroundLight:"#FFFFFF",
+          primary: "#0EA5E9",
+          background: "#F1F5F9",
+          backgroundLight: "#FFFFFF",
         }
       },
     }
@@ -106,7 +106,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) { },
     babel: {
       plugins: [
         ["@babel/plugin-proposal-class-properties", { loose: true }],
