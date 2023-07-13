@@ -120,7 +120,7 @@ export const actions = {
     },
     async uploadPreviewImage(vuexContext, payload) {
         // 上傳圖片到firebase storage 路徑: images/posts/:postId/previewImg/:fileName
-        console.log(payload)
+        if (!payload.previewImageFile) return;
         const fileName = payload.previewImageFile.name;
         const storageRef = this.$storage.ref();
         try {

@@ -2,7 +2,7 @@
     <transition name="vagueIn">
         <nuxt-link
             v-if="isMounted"
-            class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] ease-in duration-300 transition"
+            class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] 2xl:w-[calc(33.333%-24px)] ease-in duration-300 transition"
             :to="postLink"
         >
             <div
@@ -10,16 +10,14 @@
             >
                 <!-- :style="{ backgroundImage: `url(${thumbnail})` }" -->
                 <figure
-                    class="post-thumbnail relative"
+                    class="post-thumbnail relative h-[180px] md:h-[200px] xl:h-[250px]"
                 >
-                    <img class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]" :src="thumbnail" alt="">
+                    <img
+                        class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+                        :src="previewImg"
+                        alt=""
+                    />
                 </figure>
-                <div
-                    class="w-full h-full font-blod bg-white/[0.9] flex justify-center items-center"
-                    v-if="!thumbnail"
-                >
-                    目前沒有圖片
-                </div>
                 <div
                     class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]"
                 >
@@ -90,10 +88,21 @@ export default {
             type: Boolean,
             required: true,
         },
+        previewImgUrl: {
+            type: String,
+            required: false,
+        },
     },
     computed: {
         postLink() {
             return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
+        },
+        previewImg() {
+            return this.previewImgUrl
+                ? this.previewImgUrl
+                : this.thumbnail
+                ? this.thumbnail
+                : require("@/assets/images/post-preview-picture.png");
         },
     },
     mounted() {
@@ -111,7 +120,7 @@ a {
 .post-thumbnail {
     margin: 0;
     width: 100%;
-    height: 250px;
+    /* height: 230px; */
     overflow: hidden;
     /* background-position: center;
     background-size: cover; */
@@ -121,6 +130,4 @@ a {
 .badge-style {
     @apply text-xs font-medium mr-2 px-2.5 py-0.5 rounded;
 }
-
-
 </style>

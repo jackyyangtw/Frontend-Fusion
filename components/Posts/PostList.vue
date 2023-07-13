@@ -18,6 +18,7 @@
             :previewText="post.previewText"
             :thumbnail="post.thumbnail"
             :tags="post.tags"
+            :previewImgUrl="post.previewImgUrl"
         >
         </post-preview>
     </section>

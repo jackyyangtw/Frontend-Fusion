@@ -1,6 +1,6 @@
 <template>
     <div
-        class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)]"
+        class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] 2xl:w-[calc(33.333%-24px)]"
     >
         <div
             class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"

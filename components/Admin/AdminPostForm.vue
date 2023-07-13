@@ -41,7 +41,6 @@
                 prepend-icon="mdi-camera"
                 label="預覽縮圖(本地上傳)"
                 :rules="previewImgRules"
-                required
                 @change="onPreviewImgChange"
             ></v-file-input>
 
@@ -183,7 +182,7 @@ export default {
             // name: "",
             nameRules: [(v) => !!v || "請填入作者名稱"],
             titleRules: [(v) => !!v || "請填入文章標題"],
-            previewImgRules: [(v) => !!v || "請上傳預覽縮圖"],
+            previewImgRules: [],
             // email: "",
             // emailRules: [
             //     (v) => !!v || "E-mail is required",
@@ -227,8 +226,6 @@ export default {
             }
             if (files.size > 200000) {
                 this.previewImgRules = [(v) => !!v || "檔案大小不得超過2MB"];
-            } else {
-                this.previewImgRules = [(v) => !!v || "請上傳預覽縮圖"];
             }
             // 將files轉成base64
             const reader = new FileReader();
