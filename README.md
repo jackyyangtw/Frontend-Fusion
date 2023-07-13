@@ -46,3 +46,6 @@ https://www.letswrite.tw/firebase-auth-google-fb/
 1. 取得使用者上傳的圖片轉為base64，並且顯示在畫面上
 2. 等form submit的時候，把base64轉為blob，並且上傳到firebase storage
 3. 等firebase storage上傳完成後，再把圖片的url放到post的資料庫中
+
+## nuxt firebase
+[Title](https://firebase.nuxtjs.org/guide/usage.html)
