@@ -99,9 +99,6 @@ module.exports = {
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
     fbAPIKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
   },
-  /*
-   ** Build configuration
-   */
   build: {
     /*
      ** You can extend webpack config here
