@@ -86,6 +86,16 @@
                 </v-dialog>
             </v-row>
         </v-app>
+        <div
+            class="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
+        >
+            test
+        </div>
+        <div
+            class="bg-violet-100 text-violet-800 dark:bg-violet-900 dark:text-violet-300"
+        >
+            test
+        </div>
     </div>
 </template>
 <script>
@@ -101,7 +111,9 @@ export default {
         };
     },
     middleware: ["check-auth", "auth"],
-    // layout: "admin",
+    // components: {
+    //     TailwindColor,
+    // },
     methods: {
         addTag() {
             const tagData = { ...this.tag };
@@ -126,12 +138,10 @@ export default {
         tags() {
             return this.$store.getters["tag/tags"];
         },
-        // selectedTag() {
-        //   return this.tags.find((tag) => tag.id === this.selectedTagId);
-        // },
     },
     created() {
         this.getTags();
+        this.$store.dispatch("user/setUserData");
     },
 };
 </script>

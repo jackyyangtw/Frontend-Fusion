@@ -48,7 +48,7 @@ export const actions = {
             const isManager = dbUserData.isManager;
             vuexContext.commit("setUserData", { ...userData, isManager });
         } else {
-            vuexContext.commit("setUserData", '');
+            vuexContext.commit("setUserData", {});
         }
     },
     async setUserPosts(vuexContext) {

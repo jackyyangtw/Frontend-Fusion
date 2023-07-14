@@ -7,7 +7,7 @@
             @submit.prevent="onSave"
         >
             <v-text-field
-                v-model="editedPost.author"
+                v-model="userName"
                 :rules="nameRules"
                 label="作者名稱"
                 required
@@ -134,7 +134,6 @@
 
 <script>
 import AppControlInput from "@/components/UI/AppControlInput.vue";
-import Cookie from "js-cookie";
 export default {
     name: "AdminPostForm",
     components: {
@@ -179,15 +178,9 @@ export default {
             isDialogShow: false,
             valid: false,
             formData: {},
-            // name: "",
             nameRules: [(v) => !!v || "請填入作者名稱"],
             titleRules: [(v) => !!v || "請填入文章標題"],
             previewImgRules: [],
-            // email: "",
-            // emailRules: [
-            //     (v) => !!v || "E-mail is required",
-            //     (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-            // ],
             urlRules: [
                 (v) =>
                     /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(
@@ -208,6 +201,10 @@ export default {
             type: Boolean,
             required: false,
             default: true,
+        },
+        userData: {
+            type: Object,
+            required: false,
         },
     },
     methods: {
@@ -260,7 +257,6 @@ export default {
         uploadContentImage(e) {
             var form = new FormData();
             form.append("file[]", e.target.files[0]);
-            // 上傳圖片到firebase storage 路徑: images/posts/:postId/content/:fileName
             const postId = this.$route.params.postId;
             const fileName = e.target.files[0].name;
             const storageRef = this.$storage.ref(
@@ -312,20 +308,8 @@ export default {
             return tagNames;
         },
         userName() {
-            // 為了方便開發，可能會有錯誤(重整的時候)，等onPreviewImgChange再修改
-            if (!this.$store.getters["user/userData"]) {
-                return "";
-            }
-
-            const userData = this.$store.getters["user/userData"]
-                ? this.$store.getters["user/userData"]
-                : JSON.parse(Cookie.get("userData"));
-            // return userData && userData.name ? userData.name : "";
-            return userData.name || "";
+            return this.userData.name;
         },
-    },
-    mounted() {
-        this.editedPost.author = this.userName;
     },
     created() {
         this.$store.dispatch("tag/getTags");

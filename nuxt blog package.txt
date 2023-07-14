@@ -31,3 +31,5 @@
     "tailwindcss": "^3.3.2"
   }
 }
+"This domain (frontend-fusion-qrq4o7y5g-jackyyangtw.vercel.app) is not authorized to run this operation. 
+Add it to the OAuth redirect domains list in the Firebase console -> Auth section -> Sign in method tab."

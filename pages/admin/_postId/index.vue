@@ -9,6 +9,7 @@
             <admin-post-form
                 :post="loadedPost"
                 :showDelete="true"
+                :userData="userData"
                 @submit="updatePost"
                 @delete="deletePost"
             ></admin-post-form>
@@ -96,6 +97,11 @@ export default {
             setTimeout(() => {
                 this.$router.push("/admin");
             }, 3000);
+        },
+    },
+    computed: {
+        userData() {
+            return this.$store.getters["user/userData"];
         },
     },
     created() {

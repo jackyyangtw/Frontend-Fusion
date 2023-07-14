@@ -9,6 +9,7 @@
         <admin-post-form
             @submit="submitForm"
             :showDelete="false"
+            :userData="userData"
         ></admin-post-form>
     </div>
 </template>
@@ -41,10 +42,6 @@ export default {
                     postData
                 );
                 const postId = resData.id;
-                // const imgUrl = await this.uploadPreviewImage(
-                //     postId,
-                //     postData.previewImageFile
-                // );
                 const imgUrl = await this.$store.dispatch(
                     "post/uploadPreviewImage",
                     {
@@ -72,19 +69,11 @@ export default {
                 this.toast.type = "error";
             }
         },
-        // async uploadPreviewImage(postId, imgFile) {
-        //     // 上傳圖片到firebase storage 路徑: images/posts/:postId/previewImg/:fileName
-        //     const fileName = imgFile.name;
-        //     const storageRef = this.$storage.ref();
-        //     try {
-        //         const uploadTask = await storageRef
-        //             .child(`images/posts/${postId}/previewImg/${fileName}`)
-        //             .put(imgFile);
-        //         return await uploadTask.ref.getDownloadURL();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // },
+    },
+    computed: {
+        userData() {
+            return this.$store.getters["user/userData"];
+        },
     },
     created() {
         this.$store.dispatch("user/setUserData");
