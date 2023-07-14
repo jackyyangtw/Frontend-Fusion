@@ -107,11 +107,6 @@ export const actions = {
         };
         console.log(postData);
         try {
-            // if (!signinWithGoogle) {
-            //     await this.$axios.$put(`/posts/${postData.id}.json?auth=${vuexContext.rootState.token}`, postData);
-            // } else {
-            //     // update data to firebase using firebase realtime database
-            // }
             await this.$axios.$put(`/posts/${postData.id}.json?auth=${vuexContext.rootState.token}`, postData);
             commitDataToVuex(postData);
         } catch (error) {
@@ -132,59 +127,28 @@ export const actions = {
             console.log(error);
         }
     },
-    // editPost(vuexContext, editedPost) {
-    //     const signinWithGoogle = vuexContext.rootState.user.signinWithGoogle;
-    //     const commitDataToVuex = () => {
-    //         vuexContext.commit("editPost", editedPost);
-    //         vuexContext.commit("user/editUserPost", editedPost, { root: true });
-    //     }
-    //     if (!signinWithGoogle) {
-    //         return this.$axios
-    //             .$put(
-    //                 `/posts/${editedPost.id}.json?auth=${vuexContext.rootState.token}`,
-    //                 editedPost
-    //             )
-    //             .then(() => {
-    //                 commitDataToVuex();
-    //             })
-    //             .catch(err => console.log(err));
-    //     } else {
-    //         // put data to firebase using firebase sdk
-    //         const db = this.$firebase.firestore;
-    //         const postRef = db.collection("posts").doc(editedPost.id);
-    //         return postRef
-    //             .update(editedPost)
-    //             .then(() => {
-    //                 commitDataToVuex();
-    //             })
-    //     }
-    // },
-    deletePost(vuexContext, deletePost) {
-        const signinWithGoogle = vuexContext.rootState.user.signinWithGoogle;
-        const deletePostFromVuex = () => {
-            vuexContext.commit("deletePost", deletePost);
-            vuexContext.commit("user/deleteUserPost", deletePost, { root: true });
+    async deletePost(vuexContext, deletePostId) {
+        const storageRef = this.$storage.ref();
+        const previewImgRef = storageRef.child(`images/posts/${deletePostId}/previewImg`);
+        const contentImgRef = storageRef.child(`images/posts/${deletePostId}/content`);
+
+        try {
+            await this.$axios.$delete(`/posts/${deletePostId}.json?auth=${vuexContext.rootState.token}`);
+
+            const deleteImage = async (ref) => {
+                const res = await ref.listAll();
+                if (res.items.length === 0) return;
+                await Promise.all(res.items.map(item => item.delete()));
+            };
+
+            await Promise.all([deleteImage(previewImgRef), deleteImage(contentImgRef)]);
+
+            vuexContext.commit("deletePost", deletePostId);
+            vuexContext.commit("user/deleteUserPost", deletePostId, { root: true });
+        } catch (error) {
+            console.error(error);
         }
-        if (!signinWithGoogle) {
-            return this.$axios
-                .$delete(
-                    `/posts/${deletePost}.json?auth=${vuexContext.rootState.token}`,
-                    deletePost
-                )
-                .then(() => {
-                    deletePostFromVuex();
-                })
-                .catch(err => console.log(err));
-        } else {
-            const db = this.$firebase.firestore;
-            const postRef = db.collection("posts").doc(deletePost);
-            return postRef
-                .delete()
-                .then(() => {
-                    deletePostFromVuex();
-                })
-        }
-    },
+    }
 }
 
 export const getters = {

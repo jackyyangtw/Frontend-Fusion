@@ -107,6 +107,20 @@ export default {
     created() {
         this.$store.dispatch("user/setUserData");
     },
+    mounted() {
+        // 取得firebase storage images/posts/:postId 下的所有檔案，然後刪除
+        // const storage = this.$storage;
+        // const storageRef = storage.ref();
+        // const listRef = storageRef.child(
+        //     `images/posts/${this.loadedPost.id}/previewImg`
+        // );
+        // listRef.listAll().then((res) => {
+        //     console.log(res.items);
+        //     res.items.forEach((itemRef) => {
+        //         itemRef.delete();
+        //     });
+        // });
+    },
 };
 </script>
 

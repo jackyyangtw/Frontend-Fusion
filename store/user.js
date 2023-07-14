@@ -35,53 +35,44 @@ export const mutations = {
 
 export const actions = {
     async setUserData(vuexContext) {
-        if (process.client) {
-            const userDataString = Cookie.get('userData');
-            if (!userDataString) return;
-            const userData = JSON.parse(userDataString);
-
-            const res = await this.$axios.get(`/users/${userData.id}.json`);
-            // const currentUser = Object.values(dbUserData.data).find(user => {
-            //     return Object.values(user)[0].id === userData.id;
-            // })
-            const dbUserData = res.data;
-            const isManager = dbUserData.isManager;
-            vuexContext.commit("setUserData", { ...userData, isManager });
-        } else {
+        const userDataString = Cookie.get('userData');
+        if (!userDataString) {
             vuexContext.commit("setUserData", {});
+            return;
         }
+
+        const userData = JSON.parse(userDataString);
+        const { data: dbUserData } = await this.$axios.get(`/users/${userData.id}.json`);
+        const isManager = dbUserData?.isManager;
+        vuexContext.commit("setUserData", { ...userData, isManager });
     },
     async setUserPosts(vuexContext) {
         const userDataString = Cookie.get('userData');
         if (!userDataString) return;
-        const userData = JSON.parse(userDataString);
 
-        if (process.client && userData) {
-            const userId = userData.id;
-            if (userId) {
-                const userPosts = await this.$axios.$get(`/posts.json`);
-                const filteredPosts = Object.values(userPosts).filter(post => post.userId === userId);
-                vuexContext.commit("setUserPosts", filteredPosts);
-            }
-        }
+        const userId = JSON.parse(userDataString)?.id;
+        if (!userId) return;
+
+        const userPosts = await this.$axios.$get(`/posts.json`);
+        const filteredPosts = Object.values(userPosts).filter(post => post.userId === userId);
+        vuexContext.commit("setUserPosts", filteredPosts);
     },
     async updateUserPhoto(vuexContext, photo) {
         const storageRef = this.$storage.ref();
-        const uid = vuexContext.state.userData.id;
-        const stickerRef = storageRef.child(
-            `user-sticker/${uid}`
-        );
-        stickerRef.put(photo).then(() => {
+        const { id: uid } = vuexContext.state.userData;
+        const stickerRef = storageRef.child(`user-sticker/${uid}`);
+        try {
+            await stickerRef.put(photo);
             const token = vuexContext.rootState.token;
-            stickerRef.getDownloadURL().then((url) => {
-                const updatedData = { ...vuexContext.state.userData, photoURL: url };
-                this.$axios.$put(`/users/${uid}.json?auth=${token}`, updatedData).then(() => {
-                    vuexContext.commit("setUserData", updatedData);
-                    Cookie.set('userData', JSON.stringify(updatedData));
-                });
-            });
-        });
-    },
+            const url = await stickerRef.getDownloadURL();
+            const updatedData = { ...vuexContext.state.userData, photoURL: url };
+            await this.$axios.$put(`/users/${uid}.json?auth=${token}`, updatedData);
+            vuexContext.commit("setUserData", updatedData);
+            Cookie.set('userData', JSON.stringify(updatedData));
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
 
 export const getters = {
