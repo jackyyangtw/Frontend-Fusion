@@ -12,6 +12,7 @@
                 :userData="userData"
                 @submit="updatePost"
                 @delete="deletePost"
+                @previewImgChange="onPreviewImgChange"
             ></admin-post-form>
         </section>
     </div>
@@ -35,6 +36,7 @@ export default {
                 message: "",
                 type: "success",
             },
+            isPreviewImgChange: false,
         };
     },
     asyncData(context) {
@@ -56,6 +58,7 @@ export default {
     },
     methods: {
         async updatePost(updatedPost) {
+            let updateData;
             try {
                 this.toast.showToast = true;
                 this.toast.message = "文章更新中...";
@@ -65,14 +68,21 @@ export default {
                     "post/uploadPreviewImage",
                     {
                         postId: updatedPost.id,
+                        // previewImageFile: this.loadedPost.previewImageFile,
                         previewImageFile: updatedPost.previewImageFile,
                     }
                 );
-
-                const updateData = {
+                updateData = {
                     ...updatedPost,
                     previewImgUrl: imgUrl,
                 };
+                // if (this.isPreviewImgChange) {
+                // } else {
+                //     updateData = {
+                //         ...updatedPost,
+                //         previewImgUrl: this.loadedPost.previewImgUrl,
+                //     };
+                // }
                 await this.$store.dispatch("post/editPost", updateData);
                 setTimeout(() => {
                     this.toast.message = "文章更成功!";
@@ -98,10 +108,22 @@ export default {
                 this.$router.push("/admin");
             }, 3000);
         },
+        onPreviewImgChange(data) {
+            const { previewImageFile, previewImgUrl } = data;
+            this.loadedPost.previewImageFile = previewImageFile;
+            this.loadedPost.previewImgUrl = previewImgUrl;
+        },
     },
     computed: {
         userData() {
             return this.$store.getters["user/userData"];
+        },
+    },
+    watch: {
+        "loadedPost.previewImgUrl": function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                this.isPreviewImgChange = true;
+            }
         },
     },
     created() {

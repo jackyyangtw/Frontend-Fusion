@@ -116,7 +116,7 @@ export const actions = {
     async uploadPreviewImage(vuexContext, payload) {
         // 上傳圖片到firebase storage 路徑: images/posts/:postId/previewImg/:fileName
         if (!payload.previewImageFile) return;
-        const fileName = payload.previewImageFile.name;
+        const fileName = payload.postId;
         const storageRef = this.$storage.ref();
         try {
             const uploadTask = await storageRef

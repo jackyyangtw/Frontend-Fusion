@@ -8,6 +8,7 @@
         ></AppToast>
         <admin-post-form
             @submit="submitForm"
+            @previewImgChange="onPreviewImgChange"
             :showDelete="false"
             :userData="userData"
         ></admin-post-form>
@@ -26,6 +27,15 @@ export default {
                 showToast: false,
                 message: "新增文章成功",
                 type: "success",
+            },
+            post: {
+                author: this.userName,
+                title: "",
+                thumbnail: "",
+                content: "",
+                previewText: "",
+                tags: [],
+                previewImgUrl: "",
             },
         };
     },
@@ -69,10 +79,19 @@ export default {
                 this.toast.type = "error";
             }
         },
+        onPreviewImgChange(data) {
+            const { previewImageFile, previewImgUrl } = data;
+            this.post.previewImageFile = previewImageFile;
+            this.post.previewImgUrl = previewImgUrl;
+        },
     },
     computed: {
         userData() {
             return this.$store.getters["user/userData"];
+        },
+        userName() {
+            if (!this.userData) return "";
+            return this.userData.name || "";
         },
     },
     created() {

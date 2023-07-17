@@ -141,6 +141,7 @@ export default {
     },
     data() {
         return {
+            timer: null,
             previewImageFile: null,
             editorOption: {
                 modules: {
@@ -228,6 +229,11 @@ export default {
             const reader = new FileReader();
             reader.readAsDataURL(files);
             reader.onload = () => {
+                console.log("preview img uploaded");
+                // this.$emit("previewImgChange", {
+                //     previewImgUrl: reader.result,
+                //     previewImageFile: files,
+                // });
                 this.editedPost.previewImgUrl = reader.result;
                 this.previewImageFile = files;
             };
@@ -310,6 +316,21 @@ export default {
         userName() {
             return this.userData.name;
         },
+        // editedPost() {
+        //     if (process.client) {
+        //         return this.post
+        //             ? { ...this.post }
+        //             : {
+        //                   author: this.userName,
+        //                   title: "",
+        //                   thumbnail: "",
+        //                   content: "",
+        //                   previewText: "",
+        //                   tags: [],
+        //                   previewImgUrl: "",
+        //               };
+        //     }
+        // },
     },
     created() {
         this.$store.dispatch("tag/getTags");
