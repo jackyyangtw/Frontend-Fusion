@@ -164,13 +164,24 @@ export default {
                 },
             },
             selectedCheckbox: [],
+            // postData: this.post
+            //     ? { ...this.post }
+            //     : {
+            //           author: this.userName,
+            //           title: "",
+            //           thumbnail: "",
+            //           content: ``,
+            //           previewText: "",
+            //           tags: [],
+            //           previewImgUrl: "",
+            //       },
             editedPost: this.post
                 ? { ...this.post }
                 : {
                       author: this.userName,
                       title: "",
                       thumbnail: "",
-                      content: "",
+                      content: ``,
                       previewText: "",
                       tags: [],
                       previewImgUrl: "",
@@ -230,10 +241,10 @@ export default {
             reader.readAsDataURL(files);
             reader.onload = () => {
                 console.log("preview img uploaded");
-                // this.$emit("previewImgChange", {
-                //     previewImgUrl: reader.result,
-                //     previewImageFile: files,
-                // });
+                this.$emit("previewImgChange", {
+                    previewImgUrl: reader.result,
+                    previewImageFile: files,
+                });
                 this.editedPost.previewImgUrl = reader.result;
                 this.previewImageFile = files;
             };
@@ -258,7 +269,8 @@ export default {
             this.$refs.form.resetValidation();
         },
         onEditorChange({ quill, html, text }) {
-            this.editedPost.content = html;
+            // this.editedPost.content = html;
+            this.$emit("contentChange", html);
         },
         uploadContentImage(e) {
             var form = new FormData();
@@ -317,19 +329,25 @@ export default {
             return this.userData.name;
         },
         // editedPost() {
-        //     if (process.client) {
-        //         return this.post
-        //             ? { ...this.post }
-        //             : {
-        //                   author: this.userName,
-        //                   title: "",
-        //                   thumbnail: "",
-        //                   content: "",
-        //                   previewText: "",
-        //                   tags: [],
-        //                   previewImgUrl: "",
-        //               };
-        //     }
+        //     return this.post
+        //         ? { ...this.post }
+        //         : {
+        //               author: this.userName,
+        //               title: "",
+        //               thumbnail: "",
+        //               content: "",
+        //               previewText: "",
+        //               tags: [],
+        //               previewImgUrl: "",
+        //           };
+        // },
+        // editedPost: {
+        //     get() {
+        //         return this.postData;
+        //     },
+        //     set(newVal) {
+        //         this.postData = newVal;
+        //     },
         // },
     },
     created() {

@@ -9,6 +9,7 @@
         <admin-post-form
             @submit="submitForm"
             @previewImgChange="onPreviewImgChange"
+            @contentChange="onContentChange"
             :showDelete="false"
             :userData="userData"
         ></admin-post-form>
@@ -52,13 +53,16 @@ export default {
                     postData
                 );
                 const postId = resData.id;
-                const imgUrl = await this.$store.dispatch(
-                    "post/uploadPreviewImage",
-                    {
-                        postId,
-                        imgFile: postData.previewImageFile,
-                    }
-                );
+                let imgUrl = "";
+                if (postData.previewImageFile) {
+                    imgUrl = await this.$store.dispatch(
+                        "post/uploadPreviewImage",
+                        {
+                            postId,
+                            previewImageFile: postData.previewImageFile,
+                        }
+                    );
+                }
                 const updateData = {
                     ...resData,
                     previewImgUrl: imgUrl,
@@ -83,6 +87,10 @@ export default {
             const { previewImageFile, previewImgUrl } = data;
             this.post.previewImageFile = previewImageFile;
             this.post.previewImgUrl = previewImgUrl;
+        },
+        onContentChange(data) {
+            const { content } = data;
+            this.post.content = content;
         },
     },
     computed: {

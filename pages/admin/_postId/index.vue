@@ -64,25 +64,23 @@ export default {
                 this.toast.message = "文章更新中...";
                 this.toast.type = "loading";
 
-                const imgUrl = await this.$store.dispatch(
-                    "post/uploadPreviewImage",
-                    {
-                        postId: updatedPost.id,
-                        // previewImageFile: this.loadedPost.previewImageFile,
-                        previewImageFile: updatedPost.previewImageFile,
-                    }
-                );
+                let imgUrl;
+                if (this.previewImgChange) {
+                    imgUrl = await this.$store.dispatch(
+                        "post/uploadPreviewImage",
+                        {
+                            postId: updatedPost.id,
+                            // previewImageFile: this.loadedPost.previewImageFile,
+                            previewImageFile: updatedPost.previewImageFile,
+                        }
+                    );
+                }
+                imgUrl = this.loadedPost.previewImgUrl;
                 updateData = {
                     ...updatedPost,
                     previewImgUrl: imgUrl,
                 };
-                // if (this.isPreviewImgChange) {
-                // } else {
-                //     updateData = {
-                //         ...updatedPost,
-                //         previewImgUrl: this.loadedPost.previewImgUrl,
-                //     };
-                // }
+
                 await this.$store.dispatch("post/editPost", updateData);
                 setTimeout(() => {
                     this.toast.message = "文章更成功!";

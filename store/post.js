@@ -84,17 +84,6 @@ export const actions = {
             await this.$axios.$put(`/posts/${data.name}.json?auth=${vuexContext.rootState.token}`, updatedData);
             commitDataToVuex(updatedData);
             return updatedData;
-            // if (!signinWithGoogle) {
-            // } else {
-            //     const db = this.$firebase.firestore;
-            //     const postRef = db.collection("posts").doc();
-            //     await postRef.set(createdPost);
-            //     const doc = await postRef.get();
-            //     const updatedData = doc.data();
-            //     updatedData.id = postRef.id;
-            //     commitDataToVuex(updatedData);
-            //     return updatedData;
-            // }
         } catch (error) {
             console.log(error);
         }
@@ -105,7 +94,6 @@ export const actions = {
             vuexContext.commit("editPost", updatedData);
             vuexContext.commit("user/editUserPost", updatedData, { root: true });
         };
-        console.log(postData);
         try {
             await this.$axios.$put(`/posts/${postData.id}.json?auth=${vuexContext.rootState.token}`, postData);
             commitDataToVuex(postData);
