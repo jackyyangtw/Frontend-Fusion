@@ -150,37 +150,71 @@ export const actions = {
       console.log(e);
     }
   },
+  // initAuth(vuexContext, req) {
+  //   let token;
+  //   let expirationDate;
+  //   let signinWithGoogle;
+  //   if (process.client) {
+  //     signinWithGoogle = Boolean(localStorage.getItem("signinWithGoogle"));
+  //     vuexContext.commit("setsigninWithGoogle", signinWithGoogle);
+  //   }
+  //   if (req) {
+  //     if (!req.headers.cookie) return;
+  //     token = req.headers.cookie
+  //       .split(";")
+  //       .find(cookie => cookie.trim().startsWith("jwt="))
+  //       .split("=")[1];
+  //     expirationDate = req.headers.cookie
+  //       .split(";")
+  //       .find(cookie => cookie.trim().startsWith("tokenExpiration="))
+  //       ?.split("=")[1];
+  //   } else if (process.client) {
+  //     token = localStorage.getItem("token");
+  //     if (!vuexContext.state.signinWithGoogle) {
+  //       expirationDate = localStorage.getItem("tokenExpiration");
+  //     } else {
+  //       expirationDate = null;
+  //     }
+  //   }
+  //   if (!vuexContext.state.signinWithGoogle && !signinWithGoogle) {
+  //     if (new Date().getTime() > +expirationDate || !token) {
+  //       vuexContext.dispatch("onLogout");
+  //       return;
+  //     }
+  //   }
+  //   vuexContext.commit("setToken", token);
+  // },
   initAuth(vuexContext, req) {
-    console.log('initAuth')
     let token;
     let expirationDate;
+    let signinWithGoogle = false;
+
     if (process.client) {
-      vuexContext.commit("setsigninWithGoogle", Boolean(localStorage.getItem("signinWithGoogle")));
+      signinWithGoogle = Boolean(localStorage.getItem("signinWithGoogle"));
+      vuexContext.commit("setsigninWithGoogle", signinWithGoogle);
     }
-    if (req) {
-      if (!req.headers.cookie) return;
+
+    if (req && req.headers.cookie) {
       token = req.headers.cookie
         .split(";")
         .find(cookie => cookie.trim().startsWith("jwt="))
-        .split("=")[1];
+        ?.split("=")[1];
       expirationDate = req.headers.cookie
         .split(";")
         .find(cookie => cookie.trim().startsWith("tokenExpiration="))
         ?.split("=")[1];
     } else if (process.client) {
       token = localStorage.getItem("token");
-      if (!vuexContext.state.signinWithGoogle) {
+      if (!signinWithGoogle) {
         expirationDate = localStorage.getItem("tokenExpiration");
-      } else {
-        expirationDate = null;
       }
     }
-    if (!vuexContext.state.signinWithGoogle) {
-      if (new Date().getTime() > +expirationDate || !token) {
-        vuexContext.dispatch("onLogout");
-        return;
-      }
+
+    if (!signinWithGoogle && new Date().getTime() > +expirationDate) {
+      vuexContext.dispatch("onLogout");
+      return;
     }
+
     vuexContext.commit("setToken", token);
   },
   onLogout(vuexContext) {

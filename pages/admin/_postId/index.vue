@@ -65,17 +65,17 @@ export default {
                 this.toast.type = "loading";
 
                 let imgUrl;
-                if (this.previewImgChange) {
+                if (this.isPreviewImgChange) {
                     imgUrl = await this.$store.dispatch(
                         "post/uploadPreviewImage",
                         {
                             postId: updatedPost.id,
-                            // previewImageFile: this.loadedPost.previewImageFile,
                             previewImageFile: updatedPost.previewImageFile,
                         }
                     );
+                } else {
+                    imgUrl = this.loadedPost.previewImgUrl;
                 }
-                imgUrl = this.loadedPost.previewImgUrl;
                 updateData = {
                     ...updatedPost,
                     previewImgUrl: imgUrl,
@@ -107,6 +107,7 @@ export default {
             }, 3000);
         },
         onPreviewImgChange(data) {
+            console.log("previewImgChange");
             const { previewImageFile, previewImgUrl } = data;
             this.loadedPost.previewImageFile = previewImageFile;
             this.loadedPost.previewImgUrl = previewImgUrl;

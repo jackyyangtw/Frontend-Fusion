@@ -129,6 +129,11 @@
                 </v-card>
             </v-dialog>
         </v-row>
+        <AppToast
+            :showToast="toast.showToast"
+            :message="toast.message"
+            :type="toast.type"
+        ></AppToast>
     </v-app>
 </template>
 
@@ -141,7 +146,7 @@ export default {
     },
     data() {
         return {
-            timer: null,
+            debounceTimeout: null,
             previewImageFile: null,
             editorOption: {
                 modules: {
@@ -153,18 +158,22 @@ export default {
                             [{ color: [] }, { background: [] }],
                         ],
                         handlers: {
-                            image: function () {
-                                // 取得上傳的圖檔
-                                const input =
-                                    document.getElementById("getFile");
-                                input.click();
-                            },
+                            image: this.handleQuillImage,
                         },
                     },
                 },
             },
             selectedCheckbox: [],
-            // postData: this.post
+            editedPost: {
+                author: this.userName,
+                title: "",
+                thumbnail: "",
+                content: ``,
+                previewText: "",
+                tags: [],
+                previewImgUrl: "",
+            },
+            // editedPost: this.post
             //     ? { ...this.post }
             //     : {
             //           author: this.userName,
@@ -175,17 +184,6 @@ export default {
             //           tags: [],
             //           previewImgUrl: "",
             //       },
-            editedPost: this.post
-                ? { ...this.post }
-                : {
-                      author: this.userName,
-                      title: "",
-                      thumbnail: "",
-                      content: ``,
-                      previewText: "",
-                      tags: [],
-                      previewImgUrl: "",
-                  },
             dialog: false,
             isDialogShow: false,
             valid: false,
@@ -202,6 +200,11 @@ export default {
             select: null,
             items: ["Item 1", "Item 2", "Item 3", "Item 4"],
             checkbox: false,
+            toast: {
+                showToast: false,
+                message: "",
+                type: "",
+            },
         };
     },
     props: {
@@ -220,6 +223,30 @@ export default {
         },
     },
     methods: {
+        handleQuillImage() {
+            if (this.post) {
+                // 取得上傳的圖檔
+                const input = document.getElementById("getFile");
+                input.click();
+            } else {
+                const quill = this.myQuillEditor;
+                const input = document.createElement("input");
+                input.setAttribute("type", "file");
+                input.setAttribute("accept", "image/*");
+                input.onchange = () => {
+                    const file = input.files[0];
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        const range = quill.getSelection();
+                        const position = range ? range.index : 0;
+                        quill.insertEmbed(position, "image", reader.result);
+                    };
+                    input.value = "";
+                };
+                input.click();
+            }
+        },
         onSave() {
             this.$emit("submit", {
                 ...this.editedPost,
@@ -240,7 +267,6 @@ export default {
             const reader = new FileReader();
             reader.readAsDataURL(files);
             reader.onload = () => {
-                console.log("preview img uploaded");
                 this.$emit("previewImgChange", {
                     previewImgUrl: reader.result,
                     previewImageFile: files,
@@ -269,43 +295,70 @@ export default {
             this.$refs.form.resetValidation();
         },
         onEditorChange({ quill, html, text }) {
-            // this.editedPost.content = html;
-            this.$emit("contentChange", html);
+            if (this.debounceTimeout) {
+                clearTimeout(this.debounceTimeout);
+            }
+            this.debounceTimeout = setTimeout(() => {
+                this.editedPost.content = html;
+            }, 500);
         },
         uploadContentImage(e) {
-            var form = new FormData();
-            form.append("file[]", e.target.files[0]);
-            const postId = this.$route.params.postId;
-            const fileName = e.target.files[0].name;
-            const storageRef = this.$storage.ref(
-                `images/posts/${postId}/content/${fileName}`
-            );
-            const uploadTask = storageRef.put(e.target.files[0]);
+            if (!this.post) {
+            }
+            if (this.post) {
+                var form = new FormData();
+                form.append("file[]", e.target.files[0]);
+                const postId = this.$route.params.postId;
+                const fileName = e.target.files[0].name;
+                const storageRef = this.$storage.ref(
+                    `images/posts/${postId}/content/${fileName}`
+                );
+                const uploadTask = storageRef.put(e.target.files[0]);
 
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    // progress
-                    const progress =
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                },
-                (error) => {
-                    // error
-                    console.log(error);
-                },
-                () => {
-                    // complete
-                    uploadTask.snapshot.ref
-                        .getDownloadURL()
-                        .then((downloadURL) => {
-                            this.myQuillEditor.insertEmbed(
-                                this.myQuillEditor.getSelection().index,
-                                "image",
-                                downloadURL
-                            );
-                        });
-                }
-            );
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        // progress
+                        const progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100;
+                        // this.toast = {
+                        //     showToast: true,
+                        //     message: `上傳進度：${progress.toFixed(2)}%`,
+                        //     type: "loading",
+                        // };
+                    },
+                    (error) => {
+                        // error
+                        console.log(error);
+                        // this.toast = {
+                        //     showToast: true,
+                        //     message: `上傳失敗：${error.message}`,
+                        //     type: "error",
+                        // };
+                    },
+                    () => {
+                        // complete
+                        uploadTask.snapshot.ref
+                            .getDownloadURL()
+                            .then((downloadURL) => {
+                                this.myQuillEditor.insertEmbed(
+                                    this.myQuillEditor.getSelection().index,
+                                    "image",
+                                    downloadURL
+                                );
+                                // this.toast = {
+                                //     showToast: true,
+                                //     message: `上傳成功`,
+                                //     type: "success",
+                                // };
+                                // setTimeout(() => {
+                                //     this.toast.showToast = false;
+                                // }, 3000);
+                            });
+                    }
+                );
+            }
         },
     },
     computed: {
@@ -328,30 +381,12 @@ export default {
         userName() {
             return this.userData.name;
         },
-        // editedPost() {
-        //     return this.post
-        //         ? { ...this.post }
-        //         : {
-        //               author: this.userName,
-        //               title: "",
-        //               thumbnail: "",
-        //               content: "",
-        //               previewText: "",
-        //               tags: [],
-        //               previewImgUrl: "",
-        //           };
-        // },
-        // editedPost: {
-        //     get() {
-        //         return this.postData;
-        //     },
-        //     set(newVal) {
-        //         this.postData = newVal;
-        //     },
-        // },
     },
     created() {
         this.$store.dispatch("tag/getTags");
+        if (this.post) {
+            this.editedPost = this.post;
+        }
     },
 };
 </script>

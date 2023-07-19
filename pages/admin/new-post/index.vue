@@ -8,8 +8,6 @@
         ></AppToast>
         <admin-post-form
             @submit="submitForm"
-            @previewImgChange="onPreviewImgChange"
-            @contentChange="onContentChange"
             :showDelete="false"
             :userData="userData"
         ></admin-post-form>
@@ -83,15 +81,15 @@ export default {
                 this.toast.type = "error";
             }
         },
-        onPreviewImgChange(data) {
-            const { previewImageFile, previewImgUrl } = data;
-            this.post.previewImageFile = previewImageFile;
-            this.post.previewImgUrl = previewImgUrl;
-        },
-        onContentChange(data) {
-            const { content } = data;
-            this.post.content = content;
-        },
+        // onPreviewImgChange(data) {
+        //     const { previewImageFile, previewImgUrl } = data;
+        //     this.post.previewImageFile = previewImageFile;
+        //     this.post.previewImgUrl = previewImgUrl;
+        // },
+        // onContentChange(data) {
+        //     const { content } = data;
+        //     this.post.content = content;
+        // },
     },
     computed: {
         userData() {
