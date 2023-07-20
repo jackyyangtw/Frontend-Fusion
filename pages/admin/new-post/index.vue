@@ -43,9 +43,11 @@ export default {
     methods: {
         async submitForm(postData) {
             try {
-                this.toast.showToast = true;
-                this.toast.message = "新增文章中...";
-                this.toast.type = "loading";
+                this.toast = {
+                    showToast: true,
+                    message: "新增文章中...",
+                    type: "loading",
+                };
                 const resData = await this.$store.dispatch(
                     "post/addPost",
                     postData
@@ -67,6 +69,31 @@ export default {
                     id: postId,
                 };
 
+                const uploadedContentImagesFiles =
+                    postData.uploadedContentImages;
+
+                if (uploadedContentImagesFiles.length > 0) {
+                    const storageRef = this.$storage.ref(
+                        `images/posts/${postId}/content`
+                    );
+                    // 上傳所有圖片
+                    for (
+                        let i = 0;
+                        i < uploadedContentImagesFiles.length;
+                        i++
+                    ) {
+                        const image = uploadedContentImagesFiles[i];
+                        const imageRef = storageRef.child(image.file.name);
+                        await imageRef.put(image.file);
+                        const url = await imageRef.getDownloadURL();
+                        // 替換所有content中的圖片路徑，只替換img tag的src，其他的HTML CODE 字串要保持原樣
+                        updateData.content = content.replace(
+                            `src="${image.src}"`,
+                            `src="${url}"`
+                        );
+                    }
+                }
+
                 await this.$store.dispatch("post/editPost", updateData);
                 setTimeout(() => {
                     this.toast.message = "新增文章成功";
@@ -76,9 +103,11 @@ export default {
                     this.$router.push("/admin");
                 }, 3000);
             } catch (error) {
-                this.toast.showToast = true;
-                this.toast.message = error.message;
-                this.toast.type = "error";
+                this.toast = {
+                    showToast: true,
+                    message: error.message,
+                    type: "error",
+                };
             }
         },
         // onPreviewImgChange(data) {

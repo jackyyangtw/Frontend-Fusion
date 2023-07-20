@@ -148,6 +148,8 @@ export default {
         return {
             debounceTimeout: null,
             previewImageFile: null,
+            uploadedContentImages: [],
+            updateImageCount: 0,
             editorOption: {
                 modules: {
                     toolbar: {
@@ -198,7 +200,6 @@ export default {
                     ) || "此欄位必須為網址",
             ],
             select: null,
-            items: ["Item 1", "Item 2", "Item 3", "Item 4"],
             checkbox: false,
             toast: {
                 showToast: false,
@@ -223,36 +224,18 @@ export default {
         },
     },
     methods: {
-        handleQuillImage() {
-            if (this.post) {
-                // 取得上傳的圖檔
-                const input = document.getElementById("getFile");
-                input.click();
-            } else {
-                const quill = this.myQuillEditor;
-                const input = document.createElement("input");
-                input.setAttribute("type", "file");
-                input.setAttribute("accept", "image/*");
-                input.onchange = () => {
-                    const file = input.files[0];
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => {
-                        const range = quill.getSelection();
-                        const position = range ? range.index : 0;
-                        quill.insertEmbed(position, "image", reader.result);
-                    };
-                    input.value = "";
-                };
-                input.click();
-            }
-        },
         onSave() {
+            // 找出所有this.editedPost.content中的圖片
+            // 將圖片的src存成陣列
+            // 把this.uploadedContentImages 裡面的物件，物件的src如果不包含在imagesSrc裡面，就刪除
             this.$emit("submit", {
                 ...this.editedPost,
                 previewImgUrl: "",
                 userId: this.$store.getters["user/userData"].id,
                 previewImageFile: this.previewImageFile,
+                uploadedContentImages: this.post
+                    ? []
+                    : this.uploadedContentImages,
             });
         },
         onPreviewImgChange(files) {
@@ -294,11 +277,54 @@ export default {
         resetValidation() {
             this.$refs.form.resetValidation();
         },
+        handleQuillImage() {
+            if (this.post) {
+                // 取得上傳的圖檔
+                const input = document.getElementById("getFile");
+                input.click();
+            } else {
+                this.updateImageCount++;
+                const quill = this.myQuillEditor;
+                const input = document.createElement("input");
+                input.setAttribute("type", "file");
+                input.setAttribute("accept", "image/*");
+                input.onchange = () => {
+                    const file = input.files[0];
+
+                    // 將file name去除檔案格式，並且去除空格存成ID
+                    // const fileId = file.name.split(".")[0].replace(/\s/g, "");
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        const range = quill.getSelection();
+                        const position = range ? range.index : 0;
+                        // 插入圖片，圖片元素的ID設為file name
+                        quill.insertEmbed(position, "image", reader.result);
+                        this.uploadedContentImages.push({
+                            file,
+                            src: reader.result,
+                        });
+                    };
+                    input.value = "";
+                };
+                input.click();
+            }
+        },
         onEditorChange({ quill, html, text }) {
             if (this.debounceTimeout) {
                 clearTimeout(this.debounceTimeout);
             }
+
             this.debounceTimeout = setTimeout(() => {
+                const imgs = [...quill.root.querySelectorAll("img")];
+                const imagesSrc = imgs.map((img) => img.src);
+                console.log(imagesSrc);
+                // 把this.uploadedContentImages 裡面的物件，物件的src如果不包含在imagesSrc裡面，就刪除
+                this.uploadedContentImages = this.uploadedContentImages.filter(
+                    (img) => imagesSrc.includes(img.src)
+                );
+                console.log(this.uploadedContentImages);
                 this.editedPost.content = html;
             }, 500);
         },

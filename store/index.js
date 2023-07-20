@@ -127,8 +127,8 @@ export const actions = {
 
       Cookie.set(`userData`, JSON.stringify(userData));
       Cookie.set('jwt', token);
-      localStorage.setItem('token', token);
       Cookie.set("signinWithGoogle", true);
+      localStorage.setItem('token', token);
       localStorage.setItem("signinWithGoogle", true);
       vuexContext.commit('user/setUserData', userData);
       vuexContext.commit('setToken', token);
@@ -190,7 +190,7 @@ export const actions = {
     let signinWithGoogle = false;
 
     if (process.client) {
-      signinWithGoogle = Boolean(localStorage.getItem("signinWithGoogle"));
+      signinWithGoogle = Boolean(Cookie.get("signinWithGoogle"));
       vuexContext.commit("setsigninWithGoogle", signinWithGoogle);
     }
 
@@ -214,6 +214,10 @@ export const actions = {
       vuexContext.dispatch("onLogout");
       return;
     }
+    // if (!signinWithGoogle && new Date().getTime() > 1000) {
+    //   vuexContext.dispatch("onLogout");
+    //   return;
+    // }
 
     vuexContext.commit("setToken", token);
   },
@@ -245,7 +249,7 @@ export const getters = {
     return state.searchText;
   },
   signinWithGoogle(state) {
-    return Boolean(localStorage.getItem("signinWithGoogle")) || state.signinWithGoogle;
+    return Boolean(localStorage.getItem("signinWithGoogle")) && state.signinWithGoogle;
   }
 }
 

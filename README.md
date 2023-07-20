@@ -53,3 +53,18 @@ https://www.letswrite.tw/firebase-auth-google-fb/
 
 ## nuxt firebase
 [Title](https://firebase.nuxtjs.org/guide/usage.html)
+
+
+# quill image
+// 取得圖片元素
+const img = quill.getLeaf(position)[0].domNode;
+// 將圖片元素的ID設為file name
+img.setAttribute("id", fileId);
+console.log(img);
+
+# 更新圖片流程(add post):
+1. 上傳的圖檔、base64 url，push到this.uploadedContentImages
+2. 等到form submit的時候，先新增post並取得post ID
+3. 把this.uploadedContentImages的圖片轉為blob，並且上傳到firebase post ID storage
+4. 等firebase storage上傳完成後，再把圖片的url改為firebase storage的url
+5. 更新post的資料庫的post content
