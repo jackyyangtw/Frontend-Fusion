@@ -73,6 +73,11 @@ export default {
                     postData.uploadedContentImages;
 
                 if (uploadedContentImagesFiles.length > 0) {
+                    this.toast = {
+                        showToast: true,
+                        message: "正在上傳文章圖片...",
+                        type: "loading",
+                    };
                     const storageRef = this.$storage.ref(
                         `images/posts/${postId}/content`
                     );
@@ -87,7 +92,7 @@ export default {
                         await imageRef.put(image.file);
                         const url = await imageRef.getDownloadURL();
                         // 替換所有content中的圖片路徑，只替換img tag的src，其他的HTML CODE 字串要保持原樣
-                        updateData.content = content.replace(
+                        updateData.content = updateData.content.replace(
                             `src="${image.src}"`,
                             `src="${url}"`
                         );
@@ -110,15 +115,6 @@ export default {
                 };
             }
         },
-        // onPreviewImgChange(data) {
-        //     const { previewImageFile, previewImgUrl } = data;
-        //     this.post.previewImageFile = previewImageFile;
-        //     this.post.previewImgUrl = previewImgUrl;
-        // },
-        // onContentChange(data) {
-        //     const { content } = data;
-        //     this.post.content = content;
-        // },
     },
     computed: {
         userData() {

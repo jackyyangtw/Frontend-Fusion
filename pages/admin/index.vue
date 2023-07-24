@@ -98,16 +98,19 @@ export default {
         },
     },
     async created() {
-        // 加入條件，只在第一次載入時才會執行
-        this.loadingCard = true;
-        this.loadingPosts = true;
-        await this.$store.dispatch("user/setUserData");
-        setTimeout(() => {
-            this.loadingCard = false;
+        if (this.$store.state.user.fetchedUSerCount === 0) {
+            this.loadingPosts = true;
+            this.loadingCard = true;
+            await this.$store.dispatch("user/setUserData", () => {
+                setTimeout(() => {
+                    this.loadingCard = false;
+                    this.loadingPosts = false;
+                }, 1000);
+            });
+        } else {
             this.loadingPosts = false;
-        }, 1000);
-
-        // this.$store.dispatch("checkUserLoggedInWithGoogle",{ router: this.$router });
+            this.loadingCard = false;
+        }
     },
 };
 </script>

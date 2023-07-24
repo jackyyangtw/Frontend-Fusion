@@ -30,7 +30,7 @@ export const actions = {
         for (const key in data) {
           postArr.push({ ...data[key], id: key });
         }
-        vuexContext.commit("post/setPosts", postArr);
+        vuexContext.dispatch("post/setPosts", postArr);
       })
       .catch(e => context.error(e));
   },
@@ -150,40 +150,6 @@ export const actions = {
       console.log(e);
     }
   },
-  // initAuth(vuexContext, req) {
-  //   let token;
-  //   let expirationDate;
-  //   let signinWithGoogle;
-  //   if (process.client) {
-  //     signinWithGoogle = Boolean(localStorage.getItem("signinWithGoogle"));
-  //     vuexContext.commit("setsigninWithGoogle", signinWithGoogle);
-  //   }
-  //   if (req) {
-  //     if (!req.headers.cookie) return;
-  //     token = req.headers.cookie
-  //       .split(";")
-  //       .find(cookie => cookie.trim().startsWith("jwt="))
-  //       .split("=")[1];
-  //     expirationDate = req.headers.cookie
-  //       .split(";")
-  //       .find(cookie => cookie.trim().startsWith("tokenExpiration="))
-  //       ?.split("=")[1];
-  //   } else if (process.client) {
-  //     token = localStorage.getItem("token");
-  //     if (!vuexContext.state.signinWithGoogle) {
-  //       expirationDate = localStorage.getItem("tokenExpiration");
-  //     } else {
-  //       expirationDate = null;
-  //     }
-  //   }
-  //   if (!vuexContext.state.signinWithGoogle && !signinWithGoogle) {
-  //     if (new Date().getTime() > +expirationDate || !token) {
-  //       vuexContext.dispatch("onLogout");
-  //       return;
-  //     }
-  //   }
-  //   vuexContext.commit("setToken", token);
-  // },
   initAuth(vuexContext, req) {
     let token;
     let expirationDate;
@@ -207,6 +173,15 @@ export const actions = {
       token = localStorage.getItem("token");
       if (!signinWithGoogle) {
         expirationDate = localStorage.getItem("tokenExpiration");
+      } else {
+        this.$firebase.auth().onAuthStateChanged(async (user) => {
+          if (user) {
+            const token = await user.getIdToken();
+            localStorage.setItem("token", token);
+            const expirationTime = new Date().getTime() + 3600 * 1000;
+            localStorage.setItem("tokenExpiration", expirationTime);
+          }
+        });
       }
     }
 
@@ -214,10 +189,6 @@ export const actions = {
       vuexContext.dispatch("onLogout");
       return;
     }
-    // if (!signinWithGoogle && new Date().getTime() > 1000) {
-    //   vuexContext.dispatch("onLogout");
-    //   return;
-    // }
 
     vuexContext.commit("setToken", token);
   },

@@ -6,7 +6,7 @@
             class="w-full pt-0 lg:pt-6 p-6 flex flex-wrap items-center justify-start container mx-auto"
             v-if="loadingPosts"
         >
-            <PostPreviewSkeleton v-for="i in 3" :key="i" />
+            <PostPreviewSkeleton v-for="i in posts.length" :key="i" />
         </div>
         <post-preview
             v-else

@@ -4,11 +4,19 @@ export const state = () => ({
     // isManager: false,
     userData: null,
     userPosts: [],
+    fetchedUSerCount: 0,
+    fetchedUserPostsCount: 0,
 })
 
 export const mutations = {
     setUserData(state, userData) {
         state.userData = userData;
+    },
+    setFetchedUserCount(state) {
+        state.fetchedUSerCount++;
+    },
+    setFetchedUserPostsCount(state) {
+        state.fetchedUserPostsCount++;
     },
     setUserPosts(state, userPosts) {
         state.userPosts = userPosts;
@@ -34,7 +42,7 @@ export const mutations = {
 }
 
 export const actions = {
-    async setUserData(vuexContext) {
+    async setUserData(vuexContext, handler) {
         const userDataString = Cookie.get('userData');
         if (!userDataString) {
             vuexContext.commit("setUserData", {});
@@ -45,8 +53,11 @@ export const actions = {
         const { data: dbUserData } = await this.$axios.get(`/users/${userData.id}.json`);
         const isManager = dbUserData?.isManager;
         vuexContext.commit("setUserData", { ...userData, isManager });
+        vuexContext.commit("setFetchedUserCount");
+        if (!handler) return
+        handler();
     },
-    async setUserPosts(vuexContext) {
+    async setUserPosts(vuexContext, handler) {
         const userDataString = Cookie.get('userData');
         if (!userDataString) return;
 
@@ -56,6 +67,9 @@ export const actions = {
         const userPosts = await this.$axios.$get(`/posts.json`);
         const filteredPosts = Object.values(userPosts).filter(post => post.userId === userId);
         vuexContext.commit("setUserPosts", filteredPosts);
+        vuexContext.commit("setFetchedUserPostsCount");
+        if (!handler) return
+        handler();
     },
     async updateUserPhoto(vuexContext, photo) {
         const storageRef = this.$storage.ref();

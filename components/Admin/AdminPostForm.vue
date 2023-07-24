@@ -149,7 +149,6 @@ export default {
             debounceTimeout: null,
             previewImageFile: null,
             uploadedContentImages: [],
-            updateImageCount: 0,
             editorOption: {
                 modules: {
                     toolbar: {
@@ -283,16 +282,12 @@ export default {
                 const input = document.getElementById("getFile");
                 input.click();
             } else {
-                this.updateImageCount++;
                 const quill = this.myQuillEditor;
                 const input = document.createElement("input");
                 input.setAttribute("type", "file");
                 input.setAttribute("accept", "image/*");
                 input.onchange = () => {
                     const file = input.files[0];
-
-                    // 將file name去除檔案格式，並且去除空格存成ID
-                    // const fileId = file.name.split(".")[0].replace(/\s/g, "");
 
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
@@ -330,6 +325,7 @@ export default {
         },
         uploadContentImage(e) {
             if (!this.post) {
+                return;
             }
             if (this.post) {
                 var form = new FormData();
@@ -340,7 +336,6 @@ export default {
                     `images/posts/${postId}/content/${fileName}`
                 );
                 const uploadTask = storageRef.put(e.target.files[0]);
-
                 uploadTask.on(
                     "state_changed",
                     (snapshot) => {
@@ -348,20 +343,20 @@ export default {
                         const progress =
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
-                        // this.toast = {
-                        //     showToast: true,
-                        //     message: `上傳進度：${progress.toFixed(2)}%`,
-                        //     type: "loading",
-                        // };
+                        this.toast = {
+                            showToast: true,
+                            message: `上傳進度：${progress.toFixed(2)}%`,
+                            type: "loading",
+                        };
                     },
                     (error) => {
                         // error
                         console.log(error);
-                        // this.toast = {
-                        //     showToast: true,
-                        //     message: `上傳失敗：${error.message}`,
-                        //     type: "error",
-                        // };
+                        this.toast = {
+                            showToast: true,
+                            message: `上傳失敗：${error.message}`,
+                            type: "error",
+                        };
                     },
                     () => {
                         // complete
@@ -373,15 +368,15 @@ export default {
                                     "image",
                                     downloadURL
                                 );
-                                // this.toast = {
-                                //     showToast: true,
-                                //     message: `上傳成功`,
-                                //     type: "success",
-                                // };
-                                // setTimeout(() => {
-                                //     this.toast.showToast = false;
-                                // }, 3000);
                             });
+                        this.toast = {
+                            showToast: true,
+                            message: `上傳成功`,
+                            type: "success",
+                        };
+                        setTimeout(() => {
+                            this.toast.showToast = false;
+                        }, 3000);
                     }
                 );
             }

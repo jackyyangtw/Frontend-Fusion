@@ -1,10 +1,14 @@
 export const state = () => ({
     loadedPosts: [],
+    isLoadingPosts: true,
 })
 
 export const mutations = {
     setPosts(state, posts) {
         state.loadedPosts = posts;
+    },
+    setIsLoadingPosts(state, isLoadingPosts) {
+        state.isLoadingPosts = isLoadingPosts;
     },
     addPost(state, post) {
         state.loadedPosts.push(post);
@@ -24,16 +28,24 @@ export const mutations = {
 }
 
 export const actions = {
+    async loadAllPosts({ commit }) {
+        try {
+            const response = await axios.get("/api/posts");
+            const posts = response.data;
+            commit("setLoadedPosts", posts);
+        } catch (error) {
+            console.error(error);
+        }
+    },
     setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);
+        vuexContext.commit('setIsLoadingPosts', false);
     },
     async addPost(vuexContext, postData) {
         const createdPost = {
             ...postData,
             updatedDate: new Date()
         };
-        const signinWithGoogle = vuexContext.rootState.signinWithGoogle;
-        console.log(signinWithGoogle);
         const commitDataToVuex = (updatedData) => {
             vuexContext.commit("addPost", updatedData);
             vuexContext.commit("user/addUserPost", updatedData, { root: true });
@@ -103,5 +115,8 @@ export const actions = {
 export const getters = {
     loadedPosts(state) {
         return state.loadedPosts;
+    },
+    isLoadingPosts(state) {
+        return state.isLoadingPosts;
     }
 }
