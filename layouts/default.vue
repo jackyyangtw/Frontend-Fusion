@@ -43,7 +43,7 @@ export default {
             this.$store.commit("ui/initSetDark");
             this.$vuetify.theme.dark = this.isDark;
             // this.$store.dispatch("user/setUserData");
-            this.$store.dispatch("user/setUserPosts");
+            // this.$store.dispatch("user/setUserPosts");
             this.$store.dispatch("tag/getTags");
             this.$store.dispatch("initAuth");
         }

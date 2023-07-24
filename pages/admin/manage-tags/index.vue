@@ -121,9 +121,6 @@ export default {
             this.tag.name = "";
             this.tag.style = "";
         },
-        getTags() {
-            this.$store.dispatch("tag/getTags");
-        },
         deleteTag(id) {
             this.selectedTagId = id;
             this.openDialog = true;
@@ -140,7 +137,7 @@ export default {
         },
     },
     created() {
-        this.getTags();
+        this.$store.dispatch("tag/getTags");
         this.$store.dispatch("user/setUserData");
     },
 };

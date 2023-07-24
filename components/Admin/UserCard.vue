@@ -1,17 +1,16 @@
 <template>
     <div>
         <UserCardSkeleton v-if="loadingCard" />
-        <transition name="vagueIn" >        
-            <div 
+        <transition name="vagueIn">
+            <div
                 v-if="!loadingCard"
                 class="w-full mt-5 max-w-lg mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
             >
                 <div class="flex flex-col items-center py-10">
                     <div class="relative">
                         <div class="overflow-hidden">
-                            <transition name="vagueIn">                            
+                            <transition name="vagueIn">
                                 <img
-                                    v-if="userData.photoURL"
                                     class="w-24 h-24 mb-3 rounded-full"
                                     :src="
                                         userData.photoURL ||
@@ -21,7 +20,7 @@
                                 />
                             </transition>
                         </div>
-    
+
                         <form class="absolute right-[-15px] top-[-15px]">
                             <label
                                 for="photo"
@@ -41,14 +40,16 @@
                             />
                         </form>
                     </div>
-    
+
                     <h5
                         class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
                     >
                         {{ userData.name }}
                     </h5>
                     <span class="text-sm text-gray-500 dark:text-gray-400">
-                        @{{ userData.email ? userData.email.split("@")[0] : "" }}
+                        @{{
+                            userData.email ? userData.email.split("@")[0] : ""
+                        }}
                     </span>
                     <div class="flex mt-4 space-x-3 md:mt-6">
                         <AppButton

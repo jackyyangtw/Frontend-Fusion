@@ -67,14 +67,14 @@ export default {
         updatePhoto(showToast) {
             if (showToast.show) {
                 this.toast.showToast = true;
-                this.toast.message = "更新圖片中...";
+                this.toast.message = "更新頭像中...";
                 this.toast.type = "loading";
             } else if (showToast.type === "error") {
                 this.toast.message = showToast.msg;
                 this.toast.type = "error";
             } else if (!showToast.show) {
                 setTimeout(() => {
-                    this.toast.message = "更新圖片成功!";
+                    this.toast.message = "更新頭像成功!";
                     this.toast.type = "success";
                 }, 2000);
                 setTimeout(() => {
@@ -104,6 +104,10 @@ export default {
             await this.$store.dispatch("user/setUserData", () => {
                 setTimeout(() => {
                     this.loadingCard = false;
+                }, 1000);
+            });
+            await this.$store.dispatch("user/setUserPosts", () => {
+                setTimeout(() => {
                     this.loadingPosts = false;
                 }, 1000);
             });
