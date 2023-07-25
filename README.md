@@ -17,6 +17,7 @@
 -   隔一天後cookie data會被刪除，但是依然保持登入狀態
 -   ~重整頁面後應該要重新抓userData，可以在最外層抓，而不是在每個頁面抓(目前admin兩個表單頁面都有手動寫抓資料)~
 -   ~處理新增文章時，先將圖片轉成base64，等到按下submit時再上傳到firebase storage~
+-   新增文章頁面、編輯文章頁面，如果太久沒動作會無法上傳圖片跟文章，可能原因是firebase token過期
 
 
 ## features:

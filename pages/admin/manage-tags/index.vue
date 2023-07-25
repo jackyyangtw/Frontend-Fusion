@@ -100,6 +100,11 @@
 </template>
 <script>
 export default {
+    head() {
+        return {
+            title: "Tag管理",
+        };
+    },
     data() {
         return {
             tag: {
@@ -111,9 +116,6 @@ export default {
         };
     },
     middleware: ["check-auth", "auth"],
-    // components: {
-    //     TailwindColor,
-    // },
     methods: {
         addTag() {
             const tagData = { ...this.tag };

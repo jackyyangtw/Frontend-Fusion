@@ -11,29 +11,32 @@
                 <figure
                     class="post-thumbnail relative h-[180px] md:h-[200px] xl:h-[250px]"
                 >
-                    <img
+                    <nuxt-img
+                        :preload="index === 0"
                         class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
                         :src="previewImg"
                         alt=""
                     />
                 </figure>
                 <div
-                    class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1]"
+                    class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1] min-h-[150px] flex flex-col justify-center"
                 >
-                    <h2
-                        class="font-bold text-xl mb-2 text-black dark:text-white"
-                    >
-                        {{ title }}
-                    </h2>
-                    <p class="text-base pb-1 text-gray-700 dark:text-white">
-                        {{ previewText }}
-                    </p>
-                    <PostBadge
-                        v-for="tag in tags"
-                        :key="tag"
-                        :badgeName="tag"
-                        :classes="getBadgeClass(tag)"
-                    ></PostBadge>
+                    <div>
+                        <h2
+                            class="font-bold text-xl mb-2 text-black dark:text-white"
+                        >
+                            {{ title }}
+                        </h2>
+                        <p class="text-base pb-1 text-gray-700 dark:text-white">
+                            {{ previewText }}
+                        </p>
+                        <PostBadge
+                            v-for="tag in tags"
+                            :key="tag"
+                            :badgeName="tag"
+                            :classes="getBadgeClass(tag)"
+                        ></PostBadge>
+                    </div>
                 </div>
             </div>
         </nuxt-link>
@@ -90,6 +93,10 @@ export default {
         previewImgUrl: {
             type: String,
             required: false,
+        },
+        index: {
+            type: Number,
+            required: true,
         },
     },
     computed: {

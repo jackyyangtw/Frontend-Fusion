@@ -1,10 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-// import "firebase/firestore";
 import "firebase/storage";
 import "firebase/database";
 
-// copy the config from the console https://console.firebase.google.com/u/0/project/sign-11111/settings/general/
 const firebaseConfig = {
     apiKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
     authDomain: "nuxt-blog-b5610.firebaseapp.com",
@@ -25,10 +23,11 @@ if (!firebase.apps.length) {
 
 const db = firebase.database();
 const storage = firebase.storage();
-
+const auth = firebase.auth();
 
 export default (ctx, inject) => {
-    inject('firebase', firebase)
-    inject('db', db)
-    inject('storage', storage)
+    inject('firebase', firebase);
+    inject('db', db);
+    inject('storage', storage);
+    inject('auth', auth);
 }

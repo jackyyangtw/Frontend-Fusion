@@ -38,12 +38,9 @@ export default {
         },
     },
     created() {
-        if (process.client) {
-            this.$store.commit("ui/initSetDark");
-            this.$vuetify.theme.dark = this.isDark;
-            this.$store.dispatch("tag/getTags");
-            this.$store.dispatch("initAuth");
-        }
+        this.$store.dispatch("ui/initSetDark", this);
+        this.$store.dispatch("tag/getTags");
+        this.$store.dispatch("initAuth");
     },
 };
 </script>

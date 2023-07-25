@@ -10,8 +10,8 @@
         </div>
         <post-preview
             v-else
+            v-for="(post, index) in posts"
             :is-admin="isAdmin"
-            v-for="post in posts"
             :key="post.id"
             :id="post.id"
             :title="post.title"
@@ -19,6 +19,7 @@
             :thumbnail="post.thumbnail"
             :tags="post.tags"
             :previewImgUrl="post.previewImgUrl"
+            :index="index"
         >
         </post-preview>
     </section>

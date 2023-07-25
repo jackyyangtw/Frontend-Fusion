@@ -1,5 +1,5 @@
 <template>
-    <v-app class="rounded p-5 max-w-[750px] mx-auto">
+    <v-app class="rounded p-5 max-w-[900px] mx-auto">
         <v-form
             ref="form"
             v-model="valid"

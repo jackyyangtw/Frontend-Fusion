@@ -110,11 +110,6 @@ export default {
                 this.$router.push("/admin");
             }, 3000);
         },
-        // onPreviewImgChange(data) {
-        //     const { previewImageFile, previewImgUrl } = data;
-        //     this.loadedPost.previewImageFile = previewImageFile;
-        //     this.loadedPost.previewImgUrl = previewImgUrl;
-        // },
     },
     computed: {
         userData() {

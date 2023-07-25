@@ -1,6 +1,6 @@
 <template>
     <div class="single-post-page container">
-        <div class="w-full md:w-[60%] lg:w-[750px] mx-auto">
+        <div class="w-full md:w-[60%] lg:w-[900px] mx-auto">
             <section class="post">
                 <h1
                     class="post-title text-sky-500 dark:text-pink-500 text-4xl font-bold pb-2"

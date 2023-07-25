@@ -20,6 +20,11 @@ export default {
     components: {
         AdminPostForm,
     },
+    head() {
+        return {
+            title: "新增文章",
+        };
+    },
     data() {
         return {
             toast: {

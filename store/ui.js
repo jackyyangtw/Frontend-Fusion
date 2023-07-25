@@ -8,8 +8,12 @@ export const state = () => ({
 })
 
 export const mutations = {
-    setDark(state) {
-        state.isDark = !state.isDark;
+    setDark(state, payload) {
+        if (payload) {
+            state.isDark = payload;
+        } else {
+            state.isDark = !state.isDark;
+        }
     },
     setErrorMsg(state, errorMsg) {
         state.errorMsg = errorMsg;
@@ -18,6 +22,7 @@ export const mutations = {
         state.headerHeight = height;
     },
     initSetDark(state) {
+        if (!process.client) return;
         if (localStorage.getItem('isDark') === null) {
             localStorage.setItem('isDark', state.isDark);
         } else {
@@ -44,10 +49,32 @@ export const actions = {
     setErrorMsg(vuexContext, errorMsg) {
         vuexContext.commit("setErrorMsg", errorMsg);
     },
-    toggleDarkMode(vuexContext) {
-        vuexContext.commit('setDark');
-        localStorage.setItem('isDark', vuexContext.state.isDark);
-        if (vuexContext.state.isDark) {
+    initSetDark(vuexContext, Nuxt) {
+        if (process.client) {
+            const { state, commit } = vuexContext;
+            const localIsDark = localStorage.getItem('isDark');
+            localStorage.setItem('isDark', localIsDark);
+            if (localIsDark === 'true') {
+                commit('setDark', true);
+            } else {
+                commit('setDark', false);
+            }
+            if (localIsDark === 'true') {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+            }
+            document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
+            Nuxt.$vuetify.theme.dark = state.isDark;
+        }
+    },
+    toggleDarkMode(vuexContext, Nuxt) {
+        const { state, commit } = vuexContext;
+        commit('setDark');
+        localStorage.setItem('isDark', state.isDark);
+        if (Boolean(state.isDark)) {
             document.documentElement.classList.add('dark');
             document.documentElement.classList.remove('light');
         } else {
@@ -55,6 +82,7 @@ export const actions = {
             document.documentElement.classList.remove('dark')
         }
         document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
+        Nuxt.$vuetify.theme.dark = state.isDark;
     },
     setLoading(vuexContext, loading) {
         vuexContext.commit("setLoading", loading);

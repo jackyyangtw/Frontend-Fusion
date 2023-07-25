@@ -2,19 +2,11 @@ const pkg = require("./package");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 
-// const clientId = {
-//   google:''
-// }
 module.exports = {
-  // mode: "universal",
-  // color-mode 設定dark mode
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
 
   head: {
     title: pkg.name,
-    // htmlAttrs: {
-    //   class:'dark',
-    // },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -40,8 +32,9 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: "#54B4D3" },
-
+  loading: {
+    color: "#54B4D3",
+  },
   /*
    ** Global CSS
    */
@@ -64,12 +57,12 @@ module.exports = {
   ],
 
 
-
   colorMode: {
     classSuffix: "",
     preference: 'dark',
     fallback: 'light',
   },
+
   vuetify: {
     theme: {
       dark: true,
