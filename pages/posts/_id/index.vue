@@ -114,7 +114,7 @@ export default {
     },
     computed: {
         userEmail() {
-            return this.userData.email;
+            return this.userData.email || "";
         },
         userEmailMain() {
             const email = this.userData.email;
@@ -122,7 +122,7 @@ export default {
             return email.split("@")[0];
         },
         userData() {
-            return this.$store.getters["user/userData"];
+            return this.$store.getters["user/userData"] || "";
         },
     },
     created() {

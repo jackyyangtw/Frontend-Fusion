@@ -41,12 +41,17 @@ export const actions = {
       : `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbAPIKey}`;
 
     try {
-      const { data } = await this.$axios.post(authUrl, {
+      const res = await this.$axios.post(authUrl, {
         email: payload.email,
         password: payload.password,
         returnSecureToken: true,
       });
 
+      if (res.status !== 200) {
+        throw new Error('認證失敗');
+      }
+
+      const { data } = res
       const { idToken, expiresIn, localId } = data;
 
       vuexContext.commit('setToken', idToken);

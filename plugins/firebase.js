@@ -26,9 +26,6 @@ if (!firebase.apps.length) {
 const db = firebase.database();
 const storage = firebase.storage();
 
-// const 
-
-
 
 export default (ctx, inject) => {
     inject('firebase', firebase)
