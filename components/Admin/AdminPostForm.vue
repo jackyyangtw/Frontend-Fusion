@@ -224,9 +224,6 @@ export default {
     },
     methods: {
         onSave() {
-            // 找出所有this.editedPost.content中的圖片
-            // 將圖片的src存成陣列
-            // 把this.uploadedContentImages 裡面的物件，物件的src如果不包含在imagesSrc裡面，就刪除
             this.$emit("submit", {
                 ...this.editedPost,
                 previewImgUrl: "",
@@ -249,10 +246,6 @@ export default {
             const reader = new FileReader();
             reader.readAsDataURL(files);
             reader.onload = () => {
-                this.$emit("previewImgChange", {
-                    previewImgUrl: reader.result,
-                    previewImageFile: files,
-                });
                 this.editedPost.previewImgUrl = reader.result;
                 this.previewImageFile = files;
             };
@@ -314,12 +307,10 @@ export default {
             this.debounceTimeout = setTimeout(() => {
                 const imgs = [...quill.root.querySelectorAll("img")];
                 const imagesSrc = imgs.map((img) => img.src);
-                console.log(imagesSrc);
                 // 把this.uploadedContentImages 裡面的物件，物件的src如果不包含在imagesSrc裡面，就刪除
                 this.uploadedContentImages = this.uploadedContentImages.filter(
                     (img) => imagesSrc.includes(img.src)
                 );
-                console.log(this.uploadedContentImages);
                 this.editedPost.content = html;
             }, 500);
         },

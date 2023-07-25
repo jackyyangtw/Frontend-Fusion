@@ -22,17 +22,17 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit(vuexContext, context) {
-    return context.app.$axios
-      .$get("/posts.json")
-      .then(data => {
-        const postArr = [];
-        for (const key in data) {
-          postArr.push({ ...data[key], id: key });
-        }
-        vuexContext.dispatch("post/setPosts", postArr);
-      })
-      .catch(e => context.error(e));
+  async nuxtServerInit(vuexContext, context) {
+    try {
+      const data = await context.app.$axios.$get("/posts.json");
+      const postArr = [];
+      for (const key in data) {
+        postArr.push({ ...data[key], id: key });
+      }
+      vuexContext.dispatch("post/setPosts", postArr);
+    } catch (e) {
+      context.error(e);
+    }
   },
   async authenticateUserWithEMail(vuexContext, payload) {
     // payload.isLogin 是從 auth頁面tab傳過來的，判斷是否為登入模式
@@ -140,17 +140,6 @@ export const actions = {
       vuexContext.dispatch('user/setUserPosts');
 
       await this.$firebase.auth().signInWithRedirect(provider);
-    } catch (e) {
-      console.log(e);
-    }
-  },
-  async checkUserLoggedInWithGoogle(vuexContext, { router }) {
-    try {
-      await this.$firebase.auth().setPersistence(this.$firebase.auth.Auth.Persistence.LOCAL);
-      const user = await this.$firebase.auth().currentUser;
-      if (!user) {
-        router.push('/admin/auth');
-      }
     } catch (e) {
       console.log(e);
     }

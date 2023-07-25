@@ -13,29 +13,28 @@ export default {
     props: {
         post: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
     data() {
         return {
-            comment: ''
-        }
+            comment: "",
+        };
     },
     computed: {
         user() {
-            return this.$store.getters['user/userData']
-        }
+            return this.$store.getters["user/userData"];
+        },
     },
     methods: {
         async addComment() {
-            this.$store.dispatch('comments/addComment', {
+            this.$store.dispatch("comments/addComment", {
                 name: this.user.name,
                 email: this.user.email,
                 commentText: this.comment,
                 postId: this.post.id,
-                // userId
-            })
-        }
-    }
-}
+            });
+        },
+    },
+};
 </script>

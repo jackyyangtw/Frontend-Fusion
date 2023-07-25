@@ -101,20 +101,20 @@ export default {
         if (this.$store.state.user.fetchedUSerCount === 0) {
             this.loadingPosts = true;
             this.loadingCard = true;
-            await this.$store.dispatch("user/setUserData", () => {
-                setTimeout(() => {
-                    this.loadingCard = false;
-                }, 1000);
-            });
-            await this.$store.dispatch("user/setUserPosts", () => {
-                setTimeout(() => {
-                    this.loadingPosts = false;
-                }, 1000);
-            });
         } else {
             this.loadingPosts = false;
             this.loadingCard = false;
         }
+        await this.$store.dispatch("user/setUserData", () => {
+            setTimeout(() => {
+                this.loadingCard = false;
+            }, 1000);
+        });
+        await this.$store.dispatch("user/setUserPosts", () => {
+            setTimeout(() => {
+                this.loadingPosts = false;
+            }, 1000);
+        });
     },
 };
 </script>

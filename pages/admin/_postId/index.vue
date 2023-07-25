@@ -12,7 +12,6 @@
                 :userData="userData"
                 @submit="updatePost"
                 @delete="deletePost"
-                @previewImgChange="onPreviewImgChange"
             ></admin-post-form>
         </section>
     </div>
@@ -111,11 +110,11 @@ export default {
                 this.$router.push("/admin");
             }, 3000);
         },
-        onPreviewImgChange(data) {
-            const { previewImageFile, previewImgUrl } = data;
-            this.loadedPost.previewImageFile = previewImageFile;
-            this.loadedPost.previewImgUrl = previewImgUrl;
-        },
+        // onPreviewImgChange(data) {
+        //     const { previewImageFile, previewImgUrl } = data;
+        //     this.loadedPost.previewImageFile = previewImageFile;
+        //     this.loadedPost.previewImgUrl = previewImgUrl;
+        // },
     },
     computed: {
         userData() {
@@ -132,7 +131,6 @@ export default {
     created() {
         this.$store.dispatch("user/setUserData");
     },
-    mounted() {},
 };
 </script>
 

@@ -19,7 +19,6 @@ export default {
         TheHeader,
         TheSidenav,
     },
-    // middleware: ["check-auth", "auth"],
     data() {
         return {
             displaySideNav: false,

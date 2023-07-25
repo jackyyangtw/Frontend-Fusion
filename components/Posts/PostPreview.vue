@@ -8,7 +8,6 @@
             <div
                 class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
             >
-                <!-- :style="{ backgroundImage: `url(${thumbnail})` }" -->
                 <figure
                     class="post-thumbnail relative h-[180px] md:h-[200px] xl:h-[250px]"
                 >
@@ -120,11 +119,7 @@ a {
 .post-thumbnail {
     margin: 0;
     width: 100%;
-    /* height: 230px; */
     overflow: hidden;
-    /* background-position: center;
-    background-size: cover; */
-    /* background-image: url(http://rocketai.org/wp-content/uploads/2021/06/Hi-Tech-Platforms-Information-Services.jpg); */
 }
 
 .badge-style {

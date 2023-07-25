@@ -38,12 +38,9 @@ export default {
         },
     },
     created() {
-        // 依照loacalStorage isDark值來決定是否要切換成深色模式
         if (process.client) {
             this.$store.commit("ui/initSetDark");
             this.$vuetify.theme.dark = this.isDark;
-            // this.$store.dispatch("user/setUserData");
-            // this.$store.dispatch("user/setUserPosts");
             this.$store.dispatch("tag/getTags");
             this.$store.dispatch("initAuth");
         }

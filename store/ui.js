@@ -14,9 +14,6 @@ export const mutations = {
     setErrorMsg(state, errorMsg) {
         state.errorMsg = errorMsg;
     },
-    addTag(state, tags) {
-        state.tags = tags;
-    },
     setHeaderHeight(state, height) {
         state.headerHeight = height;
     },
@@ -61,17 +58,6 @@ export const actions = {
     },
     setLoading(vuexContext, loading) {
         vuexContext.commit("setLoading", loading);
-    },
-    addTag(vuexContext, tagData) {
-        const addedTag = {
-            ...tagData,
-        };
-        return this.$axios
-            .$post(`/tags.json?auth=${vuexContext.rootState.token}`, addedTag)
-            .then(() => {
-                vuexContext.commit("addTag", { ...addedTag })
-            })
-            .catch(err => console.log(err));
     },
 }
 

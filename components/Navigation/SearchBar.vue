@@ -1,47 +1,67 @@
 <template>
     <div class="flex flex-auto max-w-full justify-center items-center px-3">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-slate-600 dark:stroke-white cursor-pointer" @click="search">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            class="w-6 h-6 stroke-slate-600 dark:stroke-white cursor-pointer"
+            @click="search"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            />
         </svg>
-        <div class="flex-auto max-w-full search-bar text-slate-700 md:max-w-[350px]
-        dark:text-white
-        ">
-            <input class="text-slate-700 border border-indigo-600
-            placeholder-slate-700
-            dark:placeholder-white dark:border-white dark:text-white dark:focus:text-slate-950
-            " 
-            type="text" placeholder="搜尋" v-model="searchText" @keyup.enter="search" ref="searchInput" @focus="searchText = ''"/>
+        <div
+            class="flex-auto max-w-full search-bar text-slate-700 md:max-w-[350px] dark:text-white"
+        >
+            <input
+                class="text-slate-700 border border-indigo-600 placeholder-slate-700 dark:placeholder-white dark:border-white dark:text-white dark:focus:text-slate-950"
+                type="text"
+                placeholder="搜尋"
+                v-model="searchText"
+                @keyup.enter="search"
+                ref="searchInput"
+                @focus="searchText = ''"
+            />
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "SearchBar",
-        components: {},
-        data() {
-            return {
-                searchText:''
-            };
+export default {
+    name: "SearchBar",
+    components: {},
+    data() {
+        return {
+            searchText: "",
+        };
+    },
+    methods: {
+        search() {
+            if (
+                !this.searchText ||
+                this.searchText === this.$store.getters.searchText
+            )
+                return;
+            // debounce
+            const searchText = this.searchText;
+            this.$store.dispatch("ui/setLoading", true);
+            setTimeout(() => {
+                if (searchText === this.searchText) {
+                    this.$store.commit("setSearchText", this.searchText);
+                    this.$router.push({
+                        name: "search",
+                        params: { searchText: this.searchText },
+                    });
+                    this.$refs.searchInput.blur();
+                }
+            }, 1000);
         },
-        methods: {
-            search() {
-                if (!this.searchText || this.searchText === this.$store.getters.searchText) return;
-                // debounce
-                const searchText = this.searchText;
-                this.$store.dispatch("ui/setLoading", true);
-                setTimeout(() => {
-                    if (searchText === this.searchText) {
-                        this.$store.commit("setSearchText", this.searchText);
-                        this.$router.push({ name: "search", params: { searchText: this.searchText } });
-                        // this.searchText = '';
-                        this.$refs.searchInput.blur();
-                    }
-                }, 1000);
-            }
-        }
-        
-    }
+    },
+};
 </script>
 
 <style scoped>
@@ -51,11 +71,9 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* background-color: rgb(255, 255, 255,0.3); */
     z-index: 100;
     box-sizing: border-box;
     padding-left: 10px;
-    /* color: white; */
     font-size: 1rem;
     border-radius: 30px;
 }
@@ -83,5 +101,4 @@
 .search-bar input:focus {
     background-color: white;
 }
-
 </style>
