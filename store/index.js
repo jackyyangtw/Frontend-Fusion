@@ -103,13 +103,13 @@ export const actions = {
   },
   async signinWithGoogleAction(vuexContext) {
     vuexContext.commit('setsigninWithGoogle', true);
-    const provider = new this.$firebase.auth.GoogleAuthProvider();
+    const provider = new this.$auth.GoogleAuthProvider();
     try {
-      await this.$firebase.auth().setPersistence(this.$firebase.auth.Auth.Persistence.LOCAL);
-      const res = await this.$firebase.auth().signInWithPopup(provider);
+      await this.$authModule.setPersistence(this.$auth.Auth.Persistence.LOCAL);
+      const res = await this.$authModule.signInWithPopup(provider);
 
       const { displayName, email, photoURL, uid } = res.user;
-      const user = this.$firebase.auth().currentUser;
+      const user = this.$authModule.currentUser;
       const token = await user.getIdToken();
       const { data: userDataFromFire } = await this.$axios.get(`/users/${uid}.json?auth=${token}`)
       let userData;
@@ -139,7 +139,7 @@ export const actions = {
       vuexContext.commit('setToken', token);
       vuexContext.dispatch('user/setUserPosts');
 
-      await this.$firebase.auth().signInWithRedirect(provider);
+      await this.$authModule.signInWithRedirect(provider);
     } catch (e) {
       console.log(e);
     }
@@ -168,12 +168,14 @@ export const actions = {
       if (!signinWithGoogle) {
         expirationDate = localStorage.getItem("tokenExpiration");
       } else {
-        this.$firebase.auth().onAuthStateChanged(async (user) => {
+        this.$authModule.onAuthStateChanged(async (user) => {
           if (user) {
             const token = await user.getIdToken();
             localStorage.setItem("token", token);
+            // Cookie.set('jwt', token);
             const expirationTime = new Date().getTime() + 3600 * 1000;
             localStorage.setItem("tokenExpiration", expirationTime);
+            // Cookie.set('tokenExpiration', expirationTime);
           }
         });
       }
@@ -185,6 +187,19 @@ export const actions = {
     }
 
     vuexContext.commit("setToken", token);
+  },
+  refreshToken() {
+    const timeout = 3600 * 1000
+    const refreshToken = async () => {
+      const user = this.$authModule.currentUser;
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
+      // Cookie.set('jwt', token);
+      const expirationTime = new Date().getTime() + timeout;
+      localStorage.setItem("tokenExpiration", expirationTime);
+      // Cookie.set('tokenExpiration', expirationTime);
+    }
+    setInterval(refreshToken, timeout);
   },
   onLogout(vuexContext) {
     vuexContext.dispatch("clearCookie");

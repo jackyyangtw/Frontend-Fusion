@@ -23,11 +23,12 @@ if (!firebase.apps.length) {
 
 const db = firebase.database();
 const storage = firebase.storage();
-const auth = firebase.auth();
+const authModule = firebase.auth();
+const auth = firebase.auth;
 
 export default (ctx, inject) => {
-    inject('firebase', firebase);
     inject('db', db);
     inject('storage', storage);
+    inject('authModule', authModule);
     inject('auth', auth);
 }

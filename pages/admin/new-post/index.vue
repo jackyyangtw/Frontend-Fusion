@@ -130,8 +130,10 @@ export default {
             return this.userData.name || "";
         },
     },
+    // layout: "admin",
     created() {
         this.$store.dispatch("user/setUserData");
+        this.$store.dispatch("refreshToken");
     },
 };
 </script>

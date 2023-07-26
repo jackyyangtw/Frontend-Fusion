@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="relative">
         <the-header
             @sidenavToggle="displaySideNav = !displaySideNav"
         ></the-header>
@@ -23,6 +23,12 @@ export default {
         return {
             displaySideNav: false,
         };
+    },
+    created() {
+        this.$store.dispatch("user/setUserData");
+        this.$store.dispatch("ui/initSetDark", this);
+        this.$store.dispatch("tag/getTags");
+        this.$store.dispatch("initAuth");
     },
 };
 </script>
