@@ -28,7 +28,7 @@
                             {{ title }}
                         </h2>
                         <p class="text-base pb-1 text-gray-700 dark:text-white">
-                            {{ previewText }}
+                            {{ maxPreviewText }}
                         </p>
                         <PostBadge
                             v-for="tag in tags"
@@ -104,11 +104,19 @@ export default {
             return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
         },
         previewImg() {
-            return this.previewImgUrl
-                ? this.previewImgUrl
-                : this.thumbnail
-                ? this.thumbnail
-                : require("@/assets/images/post-preview-picture.png");
+            return (
+                this.previewImgUrl ||
+                this.thumbnail ||
+                `/images/post-preview-picture.png`
+            );
+        },
+        maxPreviewText() {
+            const maxNum = 55;
+            // 將previewText的字數限制在150字以內，其餘用...取代
+            if (this.previewText.length >= maxNum) {
+                return this.previewText.slice(0, maxNum) + "...";
+            }
+            return this.previewText;
         },
     },
     mounted() {

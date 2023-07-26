@@ -6,7 +6,7 @@ import NuxtError from '..\\layouts\\error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import '..\\assets\\css\\main.css'
+import '..\\static\\css\\main.css'
 
 import '..\\node_modules\\quill\\dist\\quill.bubble.css'
 

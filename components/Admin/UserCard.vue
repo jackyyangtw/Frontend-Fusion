@@ -14,7 +14,7 @@
                                     class="w-24 h-24 mb-3 rounded-full"
                                     :src="
                                         userData.photoURL ||
-                                        require('@/assets/images/no-user-image.gif')
+                                        require('@/static/images/no-user-image.gif')
                                     "
                                     alt="user photo"
                                 />
@@ -27,7 +27,7 @@
                                 class="cursor-pointer w-10 h-10 p-2 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-300"
                                 ><img
                                     :src="
-                                        require('@/assets/images/edit-pen-icon.svg')
+                                        require('@/static/images/edit-pen-icon.svg')
                                     "
                                     alt=""
                             /></label>

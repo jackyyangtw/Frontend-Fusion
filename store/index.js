@@ -55,11 +55,6 @@ export const actions = {
       const { idToken, expiresIn, localId } = data;
 
       vuexContext.commit('setToken', idToken);
-      localStorage.setItem('token', idToken);
-      localStorage.setItem(
-        'tokenExpiration',
-        new Date().getTime() + Number.parseInt(expiresIn) * 1000
-      );
       Cookie.set('jwt', idToken);
       Cookie.set(
         'tokenExpiration',
@@ -102,7 +97,7 @@ export const actions = {
     }
   },
   async signinWithGoogleAction(vuexContext) {
-    vuexContext.commit('setsigninWithGoogle', true);
+
     const provider = new this.$auth.GoogleAuthProvider();
     try {
       await this.$authModule.setPersistence(this.$auth.Auth.Persistence.LOCAL);
@@ -133,13 +128,14 @@ export const actions = {
       Cookie.set(`userData`, JSON.stringify(userData));
       Cookie.set('jwt', token);
       Cookie.set("signinWithGoogle", true);
-      localStorage.setItem('token', token);
-      localStorage.setItem("signinWithGoogle", true);
+      // localStorage.setItem('token', token);
+      // localStorage.setItem("signinWithGoogle", true);
       vuexContext.commit('user/setUserData', userData);
       vuexContext.commit('setToken', token);
       vuexContext.dispatch('user/setUserPosts');
 
       await this.$authModule.signInWithRedirect(provider);
+      vuexContext.commit('setsigninWithGoogle', true);
     } catch (e) {
       console.log(e);
     }
@@ -164,23 +160,19 @@ export const actions = {
         .find(cookie => cookie.trim().startsWith("tokenExpiration="))
         ?.split("=")[1];
     } else if (process.client) {
-      token = localStorage.getItem("token");
-      if (!signinWithGoogle) {
-        expirationDate = localStorage.getItem("tokenExpiration");
-      } else {
+      token = Cookie.get("jwt");
+      expirationDate = Cookie.get("tokenExpiration");
+      if (signinWithGoogle) {
         this.$authModule.onAuthStateChanged(async (user) => {
           if (user) {
             const token = await user.getIdToken();
-            localStorage.setItem("token", token);
-            // Cookie.set('jwt', token);
+            Cookie.set('jwt', token);
             const expirationTime = new Date().getTime() + 3600 * 1000;
-            localStorage.setItem("tokenExpiration", expirationTime);
-            // Cookie.set('tokenExpiration', expirationTime);
+            Cookie.set('tokenExpiration', expirationTime);
           }
         });
       }
     }
-
     if (!signinWithGoogle && new Date().getTime() > +expirationDate) {
       vuexContext.dispatch("onLogout");
       return;
@@ -188,26 +180,24 @@ export const actions = {
 
     vuexContext.commit("setToken", token);
   },
-  refreshToken() {
-    const timeout = 3600 * 1000
+  refreshToken({ commit }) {
+    const timeout = 1000 * 3600;
     const refreshToken = async () => {
-      const user = this.$authModule.currentUser;
-      const token = await user.getIdToken();
-      localStorage.setItem("token", token);
-      // Cookie.set('jwt', token);
-      const expirationTime = new Date().getTime() + timeout;
-      localStorage.setItem("tokenExpiration", expirationTime);
-      // Cookie.set('tokenExpiration', expirationTime);
+      if (!process.client) return;
+      this.$authModule.onAuthStateChanged(async (user) => {
+        if (user) {
+          const token = await user.getIdToken();
+          Cookie.set('jwt', token);
+          const expirationTime = new Date().getTime() + 3600 * 1000;
+          Cookie.set('tokenExpiration', expirationTime);
+          commit("setToken", token);
+        }
+      });
     }
     setInterval(refreshToken, timeout);
   },
   onLogout(vuexContext) {
     vuexContext.dispatch("clearCookie");
-    if (process.client) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("tokenExpiration");
-      localStorage.removeItem("signinWithGoogle");
-    }
   },
   clearCookie(vuexContext) {
     Cookie.remove("jwt");
@@ -229,7 +219,7 @@ export const getters = {
     return state.searchText;
   },
   signinWithGoogle(state) {
-    return Boolean(localStorage.getItem("signinWithGoogle")) && state.signinWithGoogle;
+    const signinWithGoogle = Boolean(Cookie.get("signinWithGoogle"));
+    return signinWithGoogle && state.signinWithGoogle;
   }
 }
-

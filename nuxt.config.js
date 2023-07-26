@@ -39,7 +39,7 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    "@/assets/css/main.css",
+    "@/static/css/main.css",
     'quill/dist/quill.bubble.css',
     'quill/dist/quill.snow.css',
     'quill/dist/quill.core.css',

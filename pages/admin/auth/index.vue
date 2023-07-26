@@ -70,7 +70,7 @@
                                 <img
                                     class="w-10 h-10 mr-2 p-2"
                                     :src="
-                                        require(`@/assets/images/google-white.svg`)
+                                        require(`@/static/images/google-white.svg`)
                                     "
                                 />
                                 <div>使用Google登入</div>

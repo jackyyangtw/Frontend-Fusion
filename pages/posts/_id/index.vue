@@ -2,16 +2,24 @@
     <div class="single-post-page container">
         <div class="w-full md:w-[60%] lg:w-[900px] mx-auto">
             <section class="post">
+                <figure class="pb-5">
+                    <nuxt-img
+                        preload
+                        class="object-cover"
+                        :src="previewImg"
+                        alt=""
+                    />
+                </figure>
                 <h1
                     class="post-title text-sky-500 dark:text-pink-500 text-4xl font-bold pb-2"
                 >
                     {{ loadedPost.title }}
                 </h1>
-                <p
+                <h2
                     class="post-content text-black dark:text-white text-xl font-bold pb-3"
                 >
                     {{ loadedPost.previewText }}
-                </p>
+                </h2>
                 <div class="post-details mb-5">
                     <div class="text-gray-400 dark:text-gray-500 mr-3">
                         Last updated on {{ loadedPost.updatedDate | date }}
@@ -78,22 +86,16 @@ export default {
                 "@context": "http://schema.org",
                 "@type": "Article",
                 headline: postData.title,
-                image: "https://example.com/article-image.jpg",
+                image: postData.previewImgUrl || postData.thumbnail || "",
                 author: {
                     "@type": "Person",
                     name: postData.author,
                 },
-                publisher: {
-                    "@type": "Organization",
-                    name: "Jacky",
-                    logo: {
-                        "@type": "ImageObject",
-                        url: "https://example.com/publisher-logo.jpg",
-                    },
-                },
-                datePublished: "2022-05-01T08:00:00+08:00",
-                dateModified: "2022-05-10T10:00:00+08:00",
-                articleBody: postData.previewText,
+                datePublished: postData.updatedDate || "",
+                url: context.req
+                    ? `https://${context.req.headers.host}${context.route.path}`
+                    : "",
+                description: postData.previewText,
             };
         };
         if (context.payload) {
@@ -123,6 +125,13 @@ export default {
         },
         userData() {
             return this.$store.getters["user/userData"] || "";
+        },
+        previewImg() {
+            return (
+                this.loadedPost.previewImgUrl ||
+                this.loadedPost.thumbnail ||
+                `/images/post-preview-picture.png`
+            );
         },
     },
     created() {
