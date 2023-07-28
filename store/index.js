@@ -185,16 +185,18 @@ export const actions = {
     const refreshToken = async () => {
       if (!process.client) return;
       this.$authModule.onAuthStateChanged(async (user) => {
+        console.log('times up');
         if (user) {
           const token = await user.getIdToken();
           Cookie.set('jwt', token);
-          const expirationTime = new Date().getTime() + 3600 * 1000;
+          const expirationTime = new Date().getTime() + timeout;
           Cookie.set('tokenExpiration', expirationTime);
           commit("setToken", token);
         }
       });
     }
-    setInterval(refreshToken, timeout);
+    refreshToken();
+    setInterval(refreshToken, timeout + 1000);
   },
   onLogout(vuexContext) {
     vuexContext.dispatch("clearCookie");
