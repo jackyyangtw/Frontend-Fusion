@@ -7,6 +7,7 @@
                 class="logo hidden md:flex text-slate-700 dark:text-white"
             >
                 <nuxt-img
+                    provider="static"
                     class="max-w-[30px] mr-3"
                     src="/images/site-icon.svg"
                 />

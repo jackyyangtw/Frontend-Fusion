@@ -4,6 +4,7 @@
             <section class="post">
                 <figure class="pb-5">
                     <nuxt-img
+                        :provider="imgProvider"
                         preload
                         class="object-cover"
                         :src="previewImg"
@@ -128,6 +129,11 @@ export default {
                 this.loadedPost.thumbnail ||
                 `/images/post-preview-picture.png`
             );
+        },
+        imgProvider() {
+            return this.loadedPost.previewImgUrl || this.loadedPost.thumbnail
+                ? false
+                : "static";
         },
     },
     created() {

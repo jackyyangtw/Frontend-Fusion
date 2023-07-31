@@ -6,6 +6,7 @@
                 <ul class="nav-list" @click="$emit('close')">
                     <li>
                         <nuxt-img
+                            provider="static"
                             class="max-w-[60px]"
                             src="/images/site-icon.svg"
                         />

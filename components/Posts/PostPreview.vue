@@ -12,6 +12,7 @@
                     class="post-thumbnail relative h-[180px] md:h-[200px] xl:h-[250px]"
                 >
                     <nuxt-img
+                        :provider="imgProvider"
                         :preload="index === 0"
                         class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
                         :src="previewImg"
@@ -118,9 +119,14 @@ export default {
             }
             return this.previewText;
         },
+        imgProvider() {
+            return this.previewImgUrl || this.thumbnail ? false : "static";
+        },
     },
     mounted() {
         this.isMounted = true;
+        // get nuxt img provider
+        // console.log(this.$nuxt.$img.provider);
     },
 };
 </script>

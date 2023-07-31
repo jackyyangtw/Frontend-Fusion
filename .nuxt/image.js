@@ -18,9 +18,7 @@ const imageOptions = {
   },
   "presets": {},
   "provider": "ipx",
-  "domains": [
-    "avatars0.githubusercontent.com"
-  ],
+  "domains": [],
   "alias": {}
 }
 

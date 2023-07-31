@@ -35,15 +35,19 @@ module.exports = {
   loading: {
     color: "#54B4D3",
   },
-  /*
-   ** Global CSS
-   */
+
   css: [
     "@/static/css/main.css",
     'quill/dist/quill.bubble.css',
     'quill/dist/quill.snow.css',
     'quill/dist/quill.core.css',
   ],
+
+  image: {
+    firebase: {
+      baseURL: 'https://firebasestorage.googleapis.com/v0/b/nuxt-blog-b5610.appspot.com'
+    }
+  },
 
   /*
    ** Plugins to load before mounting the App
@@ -55,11 +59,6 @@ module.exports = {
     { src: "~plugins/vue-quill-editor.js", ssr: false },
     "~plugins/firebase.js"
   ],
-  image: {
-    domains: [
-      'avatars0.githubusercontent.com'
-    ]
-  },
 
   colorMode: {
     classSuffix: "",
