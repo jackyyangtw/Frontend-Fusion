@@ -128,8 +128,6 @@ export const actions = {
       Cookie.set(`userData`, JSON.stringify(userData));
       Cookie.set('jwt', token);
       Cookie.set("signinWithGoogle", true);
-      // localStorage.setItem('token', token);
-      // localStorage.setItem("signinWithGoogle", true);
       vuexContext.commit('user/setUserData', userData);
       vuexContext.commit('setToken', token);
       vuexContext.dispatch('user/setUserPosts');

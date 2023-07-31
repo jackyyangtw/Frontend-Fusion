@@ -79,7 +79,11 @@ export const actions = {
         const storageRef = this.$storage.ref();
         const previewImgRef = storageRef.child(`${IMAGES_PATH}/${deletePostId}/${PREVIEW_IMG_PATH}`);
         const contentImgRef = storageRef.child(`${IMAGES_PATH}/${deletePostId}/${CONTENT_IMG_PATH}`);
-
+        async function deleteImage(ref) {
+            const res = await ref.listAll();
+            if (res.items.length === 0) return;
+            await Promise.all(res.items.map(item => item.delete()));
+        }
         try {
             await this.$axios.$delete(`/posts/${deletePostId}.json?auth=${rootState.token}`);
             await Promise.all([deleteImage(previewImgRef), deleteImage(contentImgRef)]);
@@ -92,11 +96,7 @@ export const actions = {
     },
 }
 
-async function deleteImage(ref) {
-    const res = await ref.listAll();
-    if (res.items.length === 0) return;
-    await Promise.all(res.items.map(item => item.delete()));
-}
+
 
 export const getters = {
     loadedPosts(state) {
