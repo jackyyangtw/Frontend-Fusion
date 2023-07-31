@@ -43,12 +43,6 @@ module.exports = {
     'quill/dist/quill.core.css',
   ],
 
-  image: {
-    firebase: {
-      baseURL: 'https://firebasestorage.googleapis.com/v0/b/nuxt-blog-b5610.appspot.com'
-    }
-  },
-
   /*
    ** Plugins to load before mounting the App
    */
