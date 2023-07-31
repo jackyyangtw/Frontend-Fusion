@@ -195,7 +195,10 @@ export const actions = {
         }
       });
     }
-    refreshToken();
+    const tokenExpiration = Cookie.get('tokenExpiration');
+    if (tokenExpiration && new Date().getTime() < tokenExpiration) {
+      refreshToken();
+    }
     setInterval(refreshToken, timeout + 1000);
   },
   onLogout(vuexContext) {

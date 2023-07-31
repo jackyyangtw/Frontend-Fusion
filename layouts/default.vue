@@ -41,6 +41,7 @@ export default {
         this.$store.dispatch("ui/initSetDark", this);
         this.$store.dispatch("tag/getTags");
         this.$store.dispatch("initAuth");
+        this.$store.dispatch("refreshToken");
     },
 };
 </script>

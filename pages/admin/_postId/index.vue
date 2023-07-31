@@ -126,7 +126,7 @@ export default {
     // layout: "admin",
     created() {
         this.$store.dispatch("user/setUserData");
-        this.$store.dispatch("refreshToken");
+        // this.$store.dispatch("refreshToken");
     },
 };
 </script>
