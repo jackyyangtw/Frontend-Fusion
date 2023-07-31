@@ -2,9 +2,16 @@
     <div class="h-[60px] fixed z-10 w-full bg-white dark:bg-gray-900">
         <header class="the-header" ref="theHeader">
             <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
-            <div class="logo hidden md:block text-slate-700 dark:text-white">
-                <nuxt-link to="/">Frontend Fusion</nuxt-link>
-            </div>
+            <nuxt-link
+                to="/"
+                class="logo hidden md:flex text-slate-700 dark:text-white"
+            >
+                <nuxt-img
+                    class="max-w-[30px] mr-3"
+                    src="/images/site-icon.svg"
+                />
+                Frontend Fusion
+            </nuxt-link>
             <SearchBar></SearchBar>
             <ModeSwitcher></ModeSwitcher>
             <div class="navigation-items">

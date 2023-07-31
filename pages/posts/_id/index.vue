@@ -41,10 +41,6 @@
                     ></div>
                 </div>
             </section>
-            <section class="comments mt-20">
-                <!-- <comment-form :post="loadedPost" /> -->
-                <!-- <comment-list :comments="loadedPost.comments" /> -->
-            </section>
         </div>
     </div>
 </template>
@@ -62,7 +58,7 @@ export default {
             title: this.loadedPost.title,
             meta: [
                 {
-                    hid: "description", // unique id for this meta
+                    hid: "description",
                     name: "description",
                     content: this.loadedPost.previewText,
                 },
