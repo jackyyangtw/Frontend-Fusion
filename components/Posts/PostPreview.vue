@@ -99,6 +99,10 @@ export default {
             type: Number,
             required: true,
         },
+        updatedDate: {
+            type: String,
+            required: true,
+        },
     },
     computed: {
         postLink() {
@@ -113,20 +117,17 @@ export default {
         },
         maxPreviewText() {
             const maxNum = 55;
-            // 將previewText的字數限制在150字以內，其餘用...取代
             if (this.previewText.length >= maxNum) {
                 return this.previewText.slice(0, maxNum) + "...";
             }
             return this.previewText;
         },
         imgProvider() {
-            return this.previewImgUrl || this.thumbnail ? false : "static";
+            return this.previewImgUrl || this.thumbnail ? "" : "static";
         },
     },
     mounted() {
         this.isMounted = true;
-        // get nuxt img provider
-        // console.log(this.$nuxt.$img.provider);
     },
 };
 </script>

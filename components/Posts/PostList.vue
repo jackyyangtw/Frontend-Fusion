@@ -19,6 +19,7 @@
             :thumbnail="post.thumbnail"
             :tags="post.tags"
             :previewImgUrl="post.previewImgUrl"
+            :updatedDate="post.updatedDate"
             :index="index"
         >
         </post-preview>

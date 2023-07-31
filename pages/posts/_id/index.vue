@@ -132,7 +132,7 @@ export default {
         },
         imgProvider() {
             return this.loadedPost.previewImgUrl || this.loadedPost.thumbnail
-                ? false
+                ? ""
                 : "static";
         },
     },

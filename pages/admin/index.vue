@@ -14,14 +14,17 @@
         />
 
         <section class="pt-8">
-            <h1
+            <h2
                 class="text-center text-blue-400 dark:text-pink-400 text-3xl font-bold"
             >
                 {{ userPosts.length > 0 ? "現有的文章" : "目前沒有文章" }}
-            </h1>
+            </h2>
+            <div class="max-w-[200px] pl-6">
+                <AppSelect :options="selectOptions" />
+            </div>
             <post-list
                 isAdmin
-                :posts="userPosts"
+                :posts="sorteduserPosts"
                 :loadingPosts="loadingPosts"
             ></post-list>
         </section>
@@ -58,6 +61,17 @@ export default {
                 message: "",
                 type: "success",
             },
+            selectOptions: [
+                {
+                    name: "最新",
+                    value: "new",
+                },
+                {
+                    name: "最舊",
+                    value: "old",
+                },
+            ],
+            selectedOption: "new",
         };
     },
     methods: {
@@ -82,11 +96,11 @@ export default {
                 }, 4000);
             }
         },
+        handleSelect(value) {
+            this.selectedOption = value;
+        },
     },
     computed: {
-        loadedPosts() {
-            return this.$store.getters["post/loadedPosts"];
-        },
         userPosts() {
             return this.$store.getters["user/userPosts"] || [];
         },
@@ -95,6 +109,19 @@ export default {
         },
         isManager() {
             return this.userData.isManager || false;
+        },
+        sorteduserPosts() {
+            const userPosts = this.$store.getters["user/userPosts"] || [];
+            if (this.selectedOption === "new") {
+                return userPosts.sort((a, b) => {
+                    return a.updatedDate > b.updatedDate ? -1 : 1;
+                });
+            } else if (this.selectedOption === "old") {
+                return userPosts.sort((a, b) => {
+                    return a.updatedDate > b.updatedDate ? 1 : -1;
+                });
+            }
+            return userPosts;
         },
     },
     async created() {
