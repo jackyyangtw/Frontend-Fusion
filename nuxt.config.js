@@ -55,7 +55,11 @@ module.exports = {
     { src: "~plugins/vue-quill-editor.js", ssr: false },
     "~plugins/firebase.js"
   ],
-
+  image: {
+    domains: [
+      'avatars0.githubusercontent.com'
+    ]
+  },
 
   colorMode: {
     classSuffix: "",
