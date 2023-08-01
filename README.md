@@ -5,3 +5,7 @@
 - 使用Tailwindcss進行樣式設定。 使用Vuetify的modern form component和vee-validate進行表單驗證。
 - 可切換夜間模式和白天模式。
 - 有Post搜尋功能。
+
+## test
+- 需測試更新頭象後，POST資料會不會被蓋掉
+- 新增post preview 的 頭像、更新日期、作者

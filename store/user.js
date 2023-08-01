@@ -95,9 +95,22 @@ export const actions = {
             await this.$axios.$put(`/users/${uid}.json?auth=${token}`, updatedData);
             vuexContext.commit("setUserData", updatedData);
             Cookie.set('userData', JSON.stringify(updatedData));
+            return url;
         } catch (error) {
             console.error(error);
         }
+    },
+    async updateAllUserPostsPhoto({ state, rootState, dispatch }, photoURL) {
+        if (!photoURL || state.userPosts.length === 0) return;
+        const promises = state.userPosts.map(post => {
+            const updatedData = {
+                ...post,
+                photoURL: photoURL
+            }
+            return this.$axios.$put(`/posts/${post.id}.json?auth=${rootState.token}`, updatedData);
+        });
+        await Promise.all(promises);
+        dispatch("setUserPosts");
     }
 }
 

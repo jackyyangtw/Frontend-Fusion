@@ -227,7 +227,8 @@ export default {
             this.$emit("submit", {
                 ...this.editedPost,
                 previewImgUrl: "",
-                userId: this.$store.getters["user/userData"].id,
+                userId: this.userData.id,
+                photoURL: this.userData.photoURL || "",
                 previewImageFile: this.previewImageFile,
                 uploadedContentImages: this.post
                     ? []

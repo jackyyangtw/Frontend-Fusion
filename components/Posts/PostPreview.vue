@@ -100,7 +100,7 @@ export default {
             required: true,
         },
         updatedDate: {
-            type: String,
+            type: [String, Date],
             required: true,
         },
     },

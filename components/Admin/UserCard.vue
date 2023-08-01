@@ -113,11 +113,22 @@ export default {
             }
             this.$emit("showToast", {
                 show: true,
-                msg: "上傳中...",
+                msg: "正在上傳頭像...",
                 type: "loading",
             });
             try {
-                await this.$store.dispatch("user/updateUserPhoto", file);
+                const updatedUrl = await this.$store.dispatch(
+                    "user/updateUserPhoto",
+                    file
+                );
+                await this.$store.dispatch(
+                    "user/updateAllUserPostsPhoto",
+                    updatedUrl
+                );
+                this.$emit("showToast", {
+                    show: true,
+                    msg: "正在更新文章頭像...",
+                });
             } catch (err) {
                 this.$emit("showToast", {
                     show: true,
