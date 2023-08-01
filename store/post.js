@@ -29,13 +29,20 @@ export const mutations = {
         );
         state.loadedPosts.splice(deletedIndex, 1);
     },
+    sortPosts(state) {
+        state.loadedPosts.sort((a, b) => {
+            const dateA = new Date(a.updatedDate).getTime();
+            const dateB = new Date(b.updatedDate).getTime();
+            return dateB - dateA
+        });
+    },
 }
 
 
 export const actions = {
-    setPosts(vuexContext, posts) {
-        vuexContext.commit("setPosts", posts);
-        vuexContext.commit('setIsLoadingPosts', false);
+    setPosts({ commit }, posts) {
+        commit("setPosts", posts);
+        commit('setIsLoadingPosts', false);
     },
     async addPost({ commit, rootState }, postData) {
         const createdPost = {
@@ -95,7 +102,6 @@ export const actions = {
         }
     },
 }
-
 
 
 export const getters = {

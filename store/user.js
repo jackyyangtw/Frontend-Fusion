@@ -39,6 +39,18 @@ export const mutations = {
         );
         state.userPosts[postIndex] = editedPost;
     },
+    sortUserPosts(state, { order }) {
+        state.userPosts.sort((a, b) => {
+            if (!order) return 0;
+            const dateA = new Date(a.updatedDate).getTime();
+            const dateB = new Date(b.updatedDate).getTime();
+            if (order === "new") {
+                return dateB - dateA
+            } else if (order === "old") {
+                return dateA - dateB
+            }
+        });
+    },
 }
 
 export const actions = {

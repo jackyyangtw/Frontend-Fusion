@@ -19,12 +19,12 @@
             >
                 {{ userPosts.length > 0 ? "現有的文章" : "目前沒有文章" }}
             </h2>
-            <div class="max-w-[200px] pl-6">
-                <AppSelect :options="selectOptions" />
+            <div class="max-w-[200px] pl-6" v-if="userPosts.length > 2">
+                <AppSelect :options="selectOptions" @select="handleSelect" />
             </div>
             <post-list
                 isAdmin
-                :posts="sorteduserPosts"
+                :posts="userPosts"
                 :loadingPosts="loadingPosts"
             ></post-list>
         </section>
@@ -63,7 +63,7 @@ export default {
             },
             selectOptions: [
                 {
-                    name: "最新",
+                    name: "最新(預設)",
                     value: "new",
                 },
                 {
@@ -98,6 +98,12 @@ export default {
         },
         handleSelect(value) {
             this.selectedOption = value;
+            if (this.userPosts.length === 0) return;
+            if (this.selectedOption === "new") {
+                this.$store.commit("user/sortUserPosts", { order: "new" });
+            } else if (this.selectedOption === "old") {
+                this.$store.commit("user/sortUserPosts", { order: "old" });
+            }
         },
     },
     computed: {
@@ -109,19 +115,6 @@ export default {
         },
         isManager() {
             return this.userData.isManager || false;
-        },
-        sorteduserPosts() {
-            const userPosts = this.$store.getters["user/userPosts"] || [];
-            if (this.selectedOption === "new") {
-                return userPosts.sort((a, b) => {
-                    return a.updatedDate > b.updatedDate ? -1 : 1;
-                });
-            } else if (this.selectedOption === "old") {
-                return userPosts.sort((a, b) => {
-                    return a.updatedDate > b.updatedDate ? 1 : -1;
-                });
-            }
-            return userPosts;
         },
     },
     async created() {
@@ -141,6 +134,9 @@ export default {
             setTimeout(() => {
                 this.loadingPosts = false;
             }, 1000);
+        });
+        this.$store.commit("user/sortUserPosts", {
+            order: this.selectedOption,
         });
     },
 };

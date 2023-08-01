@@ -42,6 +42,7 @@ export default {
         this.$store.dispatch("tag/getTags");
         this.$store.dispatch("initAuth");
         this.$store.dispatch("refreshToken");
+        this.$store.commit("post/sortPosts");
     },
 };
 </script>
