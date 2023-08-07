@@ -6,6 +6,5 @@
 - 可切換夜間模式和白天模式。
 - 有Post搜尋功能。
 
-## test
-- 需測試更新頭象後，POST資料會不會被蓋掉
-- 新增post preview 的 頭像、更新日期、作者
+## bug
+- deploy後，文章圖片無法顯示，但開發時卻可以顯示。(nuxt-img provider問題，正式環境沒有ipx provider) (錯誤頁面: https://frontend-fusion-7wf7h007q-jackyyangtw.vercel.app/)(參考: https://v0.image.nuxtjs.org/providers/vercel)
