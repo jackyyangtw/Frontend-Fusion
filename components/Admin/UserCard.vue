@@ -112,8 +112,8 @@ export default {
                 return;
             }
             this.$emit("showToast", {
-                show: true,
-                msg: "正在上傳頭像...",
+                showToast: true,
+                message: "正在上傳頭像...",
                 type: "loading",
             });
             try {
@@ -126,13 +126,13 @@ export default {
                     updatedUrl
                 );
                 this.$emit("showToast", {
-                    show: true,
-                    msg: "正在更新文章頭像...",
+                    showToast: true,
+                    message: "正在更新文章頭像...",
                 });
             } catch (err) {
                 this.$emit("showToast", {
-                    show: true,
-                    msg: err.message,
+                    showToast: true,
+                    message: err.message,
                     type: "error",
                 });
             }

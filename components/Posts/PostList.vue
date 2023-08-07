@@ -21,6 +21,8 @@
             :previewImgUrl="post.previewImgUrl"
             :updatedDate="post.updatedDate"
             :index="index"
+            :photoURL="post.photoURL"
+            :author="post.author"
         >
         </post-preview>
     </section>

@@ -94,7 +94,7 @@
                     type="submit"
                     color="success"
                     class="mr-3"
-                    :disabled="checkboxs.length === 0 || !valid"
+                    :disabled="checkboxs.length === 0 || !valid || isSubmitting"
                     >儲存</v-btn
                 >
                 <v-btn
@@ -146,6 +146,8 @@ export default {
     },
     data() {
         return {
+            isSubmitting: false,
+            submitDebounceTimeout: null,
             debounceTimeout: null,
             previewImageFile: null,
             uploadedContentImages: [],
@@ -166,25 +168,14 @@ export default {
             },
             selectedCheckbox: [],
             editedPost: {
-                author: this.userName,
+                author: "",
                 title: "",
                 thumbnail: "",
                 content: ``,
                 previewText: "",
                 tags: [],
-                previewImgUrl: "",
+                previewImgUrl: process.env.DEFAULT_PREVIEW_IMG_URL,
             },
-            // editedPost: this.post
-            //     ? { ...this.post }
-            //     : {
-            //           author: this.userName,
-            //           title: "",
-            //           thumbnail: "",
-            //           content: ``,
-            //           previewText: "",
-            //           tags: [],
-            //           previewImgUrl: "",
-            //       },
             dialog: false,
             isDialogShow: false,
             valid: false,
@@ -224,20 +215,26 @@ export default {
     },
     methods: {
         onSave() {
-            this.$emit("submit", {
-                ...this.editedPost,
-                previewImgUrl: "",
-                userId: this.userData.id,
-                photoURL: this.userData.photoURL || "",
-                previewImageFile: this.previewImageFile,
-                uploadedContentImages: this.post
-                    ? []
-                    : this.uploadedContentImages,
-            });
+            if (this.submitDebounceTimeout) {
+                clearTimeout(this.submitDebounceTimeout);
+            }
+            this.submitDebounceTimeout = setTimeout(() => {
+                this.isSubmitting = true;
+                this.$emit("submit", {
+                    ...this.editedPost,
+                    userId: this.userData.id,
+                    photoURL: this.userData.photoURL || "",
+                    previewImageFile: this.previewImageFile,
+                    uploadedContentImages: this.post
+                        ? []
+                        : this.uploadedContentImages,
+                });
+            }, 500);
         },
         onPreviewImgChange(files) {
             if (!files) {
-                this.editedPost.previewImgUrl = "";
+                this.editedPost.previewImgUrl =
+                    process.env.DEFAULT_PREVIEW_IMG_URL;
                 return;
             }
             if (files.size > 200000) {
@@ -395,10 +392,12 @@ export default {
             return this.userData.name;
         },
     },
-    created() {
-        this.$store.dispatch("tag/getTags");
+    async created() {
+        await this.$store.dispatch("tag/getTags");
         if (this.post) {
             this.editedPost = this.post;
+        } else {
+            this.editedPost.author = this.userName;
         }
     },
 };
