@@ -199,27 +199,12 @@ export default {
         };
     },
     created() {
-        // if (this.post) {
-        //     this.editedPost = this.post;
-        // } else {
-        //     this.editedPost.author = this.userName;
-        // }
-        // this.$store.dispatch("tag/getTags");
         this.$store.dispatch("tag/getTags");
         if (this.post) {
             this.editedPost = this.post;
-            this.editedPost.content = this.post.content;
-            console.log(this.editedPost);
         }
         this.editedPost.author = this.userName;
     },
-    // async asyncData({ store }) {
-    //     await store.dispatch("tag/getTags");
-    //     const editedPost = {
-    //         author: this.userName
-    //     };
-    //     return { editedPost };
-    // },
     props: {
         post: {
             type: Object,
