@@ -198,12 +198,12 @@ export default {
             },
         };
     },
-    created() {
-        this.$store.dispatch("tag/getTags");
+    async created() {
         if (this.post) {
             this.editedPost = { ...this.post };
         }
         this.editedPost.author = this.userName;
+        await this.$store.dispatch("tag/getTags");
     },
     props: {
         post: {

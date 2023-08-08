@@ -7,7 +7,7 @@
         />
         <section class="update-form">
             <admin-post-form
-                v-if="loadedPost.content"
+                v-if="loadedPost"
                 :post="loadedPost"
                 :showDelete="true"
                 :userData="userData"
@@ -37,6 +37,7 @@ export default {
                 type: "success",
             },
             isPreviewImgChange: false,
+            // dialog: false,
         };
     },
     asyncData(context) {
@@ -51,7 +52,6 @@ export default {
                             ? data.previewImgUrl
                             : "",
                     },
-                    dialog: false,
                 };
             })
             .catch((err) => console.log(err));
@@ -125,9 +125,8 @@ export default {
         },
     },
     // layout: "admin",
-    created() {
-        this.$store.dispatch("user/setUserData");
-        // this.$store.dispatch("refreshToken");
+    async created() {
+        await this.$store.dispatch("user/setUserData");
     },
 };
 </script>
