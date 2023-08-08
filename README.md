@@ -9,6 +9,4 @@
 ## bug
 - deploy後，文章圖片無法顯示，但開發時卻可以顯示。(nuxt-img provider問題，正式環境沒有ipx provider) (錯誤頁面: https://frontend-fusion-7wf7h007q-jackyyangtw.vercel.app/)(參考: https://v0.image.nuxtjs.org/providers/vercel)
 
-- deploy後進入編輯頁面，content會消失
-
-- 編輯後作者名稱會消失(author)
+- deploy後進入編輯頁面，content會消失(https://developer.chrome.com/blog/mutation-events-deprecation/)(解決方法可能就是做一個按鈕刷新Data)

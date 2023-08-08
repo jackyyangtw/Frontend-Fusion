@@ -90,12 +90,29 @@
             />
 
             <div class="pb-5">
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            @click="refreshContent"
+                            v-if="showRefreshBtn"
+                            color="blue"
+                            class="mr-3"
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            重新取得內容
+                        </v-btn>
+                    </template>
+                    <span
+                        >重新取得內容後，編輯的內容都會消失，請確認是否重新取得</span
+                    >
+                </v-tooltip>
                 <v-btn
                     type="submit"
                     color="success"
                     class="mr-3"
                     :disabled="checkboxs.length === 0 || !valid || isSubmitting"
-                    >儲存</v-btn
+                    >{{ this.post ? "儲存" : "新增" }}</v-btn
                 >
                 <v-btn
                     color="error"
@@ -206,6 +223,11 @@ export default {
         await this.$store.dispatch("tag/getTags");
     },
     props: {
+        showRefreshBtn: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
         post: {
             type: Object,
             required: false,
@@ -376,6 +398,14 @@ export default {
                     }
                 );
             }
+        },
+        async refreshContent() {
+            const data = await this.$store.dispatch(
+                "post/getSinglePost",
+                this.$route.params.postId
+            );
+            const { content } = data;
+            this.editedPost.content = content;
         },
     },
     computed: {

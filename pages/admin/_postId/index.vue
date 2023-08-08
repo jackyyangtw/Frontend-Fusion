@@ -8,6 +8,7 @@
         <section class="update-form">
             <admin-post-form
                 v-if="loadedPost && userData"
+                :showRefreshBtn="true"
                 :post="loadedPost"
                 :showDelete="true"
                 :userData="userData"

@@ -101,6 +101,15 @@ export const actions = {
             console.error(error);
         }
     },
+    async getSinglePost({ rootState }, postId) {
+        try {
+            const data = await this.$axios.$get(`/posts/${postId}.json?auth=${rootState.token}`);
+            if (!data) return;
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
 }
 
 
