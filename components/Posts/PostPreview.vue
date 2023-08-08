@@ -160,7 +160,12 @@ export default {
             return this.title;
         },
         imgProvider() {
-            return this.previewImgUrl || this.thumbnail ? "ipx" : "static";
+            const hasImg = this.previewImgUrl || this.thumbnail;
+            if (process.env.NODE_ENV === "production") {
+                return hasImg ? "Vercel" : "static";
+            } else {
+                return hasImg ? "ipx" : "static";
+            }
         },
     },
     mounted() {

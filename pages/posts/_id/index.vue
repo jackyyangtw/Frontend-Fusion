@@ -131,9 +131,13 @@ export default {
             );
         },
         imgProvider() {
-            return this.loadedPost.previewImgUrl || this.loadedPost.thumbnail
-                ? "ipx"
-                : "static";
+            const hasImg =
+                this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;
+            if (process.env.NODE_ENV === "production") {
+                return hasImg ? "Vercel" : "static";
+            } else {
+                return hasImg ? "ipx" : "static";
+            }
         },
     },
     created() {
