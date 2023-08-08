@@ -198,7 +198,7 @@ export default {
             },
         };
     },
-    created() {
+    mounted() {
         if (this.post) {
             this.editedPost = this.post;
         } else {
@@ -206,6 +206,13 @@ export default {
         }
         this.$store.dispatch("tag/getTags");
     },
+    // async asyncData({ store }) {
+    //     await store.dispatch("tag/getTags");
+    //     const editedPost = {
+    //         author: this.userName
+    //     };
+    //     return { editedPost };
+    // },
     props: {
         post: {
             type: Object,
