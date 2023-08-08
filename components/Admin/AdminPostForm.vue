@@ -198,13 +198,18 @@ export default {
             },
         };
     },
-    mounted() {
+    created() {
+        // if (this.post) {
+        //     this.editedPost = this.post;
+        // } else {
+        //     this.editedPost.author = this.userName;
+        // }
+        // this.$store.dispatch("tag/getTags");
+        this.$store.dispatch("tag/getTags");
         if (this.post) {
             this.editedPost = this.post;
-        } else {
-            this.editedPost.author = this.userName;
         }
-        this.$store.dispatch("tag/getTags");
+        this.editedPost.author = this.userName;
     },
     // async asyncData({ store }) {
     //     await store.dispatch("tag/getTags");
