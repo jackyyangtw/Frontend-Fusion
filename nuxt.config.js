@@ -5,7 +5,7 @@ const axios = require("axios");
 module.exports = {
   // target: "static",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
-  buildModules: ["@nuxt/image"],
+  // buildModules: ["@nuxt/image"],
   // image: {
   //   domains: [
   //     'avatars0.githubusercontent.com'

@@ -208,6 +208,8 @@ export default {
         this.$store.dispatch("tag/getTags");
         if (this.post) {
             this.editedPost = this.post;
+            this.editedPost.content = this.post.content;
+            console.log(this.editedPost);
         }
         this.editedPost.author = this.userName;
     },
