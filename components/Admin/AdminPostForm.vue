@@ -198,6 +198,14 @@ export default {
             },
         };
     },
+    created() {
+        if (this.post) {
+            this.editedPost = this.post;
+        } else {
+            this.editedPost.author = this.userName;
+        }
+        this.$store.dispatch("tag/getTags");
+    },
     props: {
         post: {
             type: Object,
@@ -391,14 +399,6 @@ export default {
         userName() {
             return this.userData.name;
         },
-    },
-    async created() {
-        if (this.post) {
-            this.editedPost = this.post;
-        } else {
-            this.editedPost.author = this.userName;
-        }
-        await this.$store.dispatch("tag/getTags");
     },
 };
 </script>
