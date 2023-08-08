@@ -7,7 +7,7 @@
             @submit.prevent="onSave"
         >
             <v-text-field
-                v-model="userName"
+                v-model="editedPost.author"
                 :rules="nameRules"
                 label="作者名稱"
                 required
@@ -199,10 +199,10 @@ export default {
         };
     },
     async created() {
+        this.editedPost.author = this.userName;
         if (this.post) {
             this.editedPost = { ...this.post };
         }
-        this.editedPost.author = this.userName;
         await this.$store.dispatch("tag/getTags");
     },
     props: {

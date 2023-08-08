@@ -7,7 +7,7 @@
         />
         <section class="update-form">
             <admin-post-form
-                v-if="loadedPost"
+                v-if="loadedPost && userData"
                 :post="loadedPost"
                 :showDelete="true"
                 :userData="userData"
