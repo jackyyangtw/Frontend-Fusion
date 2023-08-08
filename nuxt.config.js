@@ -28,7 +28,7 @@ module.exports = {
       },
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/images/site-icon.svg" },
+      { rel: "icon", type: "image/x-icon", href: "/static/images/site-icon.svg" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css?family=Open+Sans",
