@@ -8,3 +8,5 @@
 
 ## bug
 - deploy後，文章圖片無法顯示，但開發時卻可以顯示。(nuxt-img provider問題，正式環境沒有ipx provider) (錯誤頁面: https://frontend-fusion-7wf7h007q-jackyyangtw.vercel.app/)(參考: https://v0.image.nuxtjs.org/providers/vercel)
+
+- deploy後進入編輯頁面，content會消失

@@ -8,9 +8,7 @@
             <div
                 class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
             >
-                <figure
-                    class="post-thumbnail relative h-[180px] md:h-[200px] xl:h-[250px]"
-                >
+                <figure class="post-thumbnail relative h-[200px] xl:h-[250px]">
                     <nuxt-img
                         :provider="imgProvider"
                         :preload="index === 0"

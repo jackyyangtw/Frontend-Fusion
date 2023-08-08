@@ -297,7 +297,7 @@ export default {
                 input.click();
             }
         },
-        onEditorChange({ quill, html, text }) {
+        onEditorChange({ quill, html }) {
             if (this.debounceTimeout) {
                 clearTimeout(this.debounceTimeout);
             }
@@ -393,12 +393,12 @@ export default {
         },
     },
     async created() {
-        await this.$store.dispatch("tag/getTags");
         if (this.post) {
             this.editedPost = this.post;
         } else {
             this.editedPost.author = this.userName;
         }
+        await this.$store.dispatch("tag/getTags");
     },
 };
 </script>
