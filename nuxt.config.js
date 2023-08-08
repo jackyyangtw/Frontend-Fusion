@@ -6,11 +6,11 @@ module.exports = {
   // target: "static",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   buildModules: ["@nuxt/image"],
-  image: {
-    domains: [
-      'avatars0.githubusercontent.com'
-    ]
-  },
+  // image: {
+  //   domains: [
+  //     'avatars0.githubusercontent.com'
+  //   ]
+  // },
 
   head: {
     title: pkg.name,
@@ -28,7 +28,7 @@ module.exports = {
       },
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/static/images/site-icon.svg" },
+      { rel: "icon", type: "image/x-icon", href: "/images/site-icon.svg" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css?family=Open+Sans",
