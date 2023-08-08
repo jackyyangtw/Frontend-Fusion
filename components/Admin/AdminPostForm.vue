@@ -201,7 +201,7 @@ export default {
     created() {
         this.$store.dispatch("tag/getTags");
         if (this.post) {
-            this.editedPost = this.post;
+            this.editedPost = { ...this.post };
         }
         this.editedPost.author = this.userName;
     },
