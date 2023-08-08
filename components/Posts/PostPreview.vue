@@ -162,7 +162,7 @@ export default {
         imgProvider() {
             const hasImg = this.previewImgUrl || this.thumbnail;
             if (process.env.NODE_ENV === "production") {
-                return hasImg ? "Vercel" : "static";
+                return "static";
             } else {
                 return hasImg ? "ipx" : "static";
             }
