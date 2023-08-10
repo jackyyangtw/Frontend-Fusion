@@ -219,7 +219,7 @@ export default {
     async created() {
         this.editedPost.author = this.userName;
         if (this.post) {
-            this.editedPost = { ...this.post };
+            this.editedPost = this.post;
         }
         await this.$store.dispatch("tag/getTags");
     },
@@ -441,12 +441,6 @@ export default {
         userName() {
             return this.userData.name;
         },
-    },
-    mounted() {
-        if (this.post) {
-            // 更新quill editor的內容
-            this.editedPost.content = this.post.content;
-        }
     },
 };
 </script>
