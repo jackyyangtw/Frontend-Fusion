@@ -332,17 +332,18 @@ export default {
                 this.editorChangeTimes++;
                 return;
             }
+            console.log("onEditorChange");
             if (this.debounceTimeout) {
                 clearTimeout(this.debounceTimeout);
             }
             this.debounceTimeout = setTimeout(() => {
                 const imgs = [...quill.root.querySelectorAll("img")];
                 const imagesSrc = imgs.map((img) => img.src);
-                // 把this.uploadedContentImages 裡面的物件，物件的src如果不包含在imagesSrc裡面，就刪除
                 this.uploadedContentImages = this.uploadedContentImages.filter(
                     (img) => imagesSrc.includes(img.src)
                 );
                 this.editedPost.content = html;
+                // console.log(this.editedPost.content);
             }, 500);
         },
         uploadContentImage(e) {
@@ -412,6 +413,14 @@ export default {
             this.editedPost.content = oriContent;
         },
     },
+    // watch: {
+    //     "uploadedContentImages.length": {
+    //         handler() {
+    //             console.log("uploadedContentImages.length");
+    //             // this.refreshContent();
+    //         },
+    //     },
+    // },
     computed: {
         checkboxRules() {
             return [this.editedPost.tags.length > 0 || "請至少選擇一個Tag"];
@@ -432,6 +441,11 @@ export default {
         userName() {
             return this.userData.name;
         },
+    },
+    mounted() {
+        if (this.post) {
+            console.log(this.post.content);
+        }
     },
 };
 </script>
