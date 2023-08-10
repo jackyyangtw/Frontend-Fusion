@@ -216,12 +216,12 @@ export default {
             editorChangeTimes: 0,
         };
     },
-    async created() {
+    created() {
         this.editedPost.author = this.userName;
         if (this.post) {
             this.editedPost = this.post;
         }
-        await this.$store.dispatch("tag/getTags");
+        this.$store.dispatch("tag/getTags");
     },
     props: {
         showRefreshBtn: {
