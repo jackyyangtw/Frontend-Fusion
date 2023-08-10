@@ -93,8 +93,8 @@
                 <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                            @click="refreshContent"
                             v-if="showRefreshBtn"
+                            @click="refreshContent"
                             color="blue"
                             class="mr-3"
                             v-bind="attrs"
@@ -404,8 +404,10 @@ export default {
                 "post/getSinglePost",
                 this.$route.params.postId
             );
-            const { content } = data;
-            this.editedPost.content = content;
+            const { content: oriContent } = data;
+            console.log(oriContent);
+            this.editedPost.content = oriContent;
+            // 將content注入到quill
         },
     },
     computed: {
