@@ -24,7 +24,6 @@ import AdminPostForm from "@/components/Admin/AdminPostForm.vue";
 export default {
     components: { AdminPostForm },
     middleware: ["check-auth", "auth"],
-    lauout: "admin",
     head() {
         return {
             title: `${this.loadedPost.title} - Admin`,
@@ -53,6 +52,7 @@ export default {
                             ? data.previewImgUrl
                             : "",
                     },
+                    dialog: false,
                 };
             })
             .catch((err) => console.log(err));
@@ -125,7 +125,6 @@ export default {
             }
         },
     },
-    // layout: "admin",
     async created() {
         await this.$store.dispatch("user/setUserData");
     },

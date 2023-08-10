@@ -413,14 +413,6 @@ export default {
             this.editedPost.content = oriContent;
         },
     },
-    // watch: {
-    //     "uploadedContentImages.length": {
-    //         handler() {
-    //             console.log("uploadedContentImages.length");
-    //             // this.refreshContent();
-    //         },
-    //     },
-    // },
     computed: {
         checkboxRules() {
             return [this.editedPost.tags.length > 0 || "請至少選擇一個Tag"];
