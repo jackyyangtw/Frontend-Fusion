@@ -130,10 +130,19 @@ export default {
                 `/images/post-preview-picture.png`
             );
         },
+        // imgProvider() {
+        //     return this.loadedPost.previewImgUrl || this.loadedPost.thumbnail
+        //         ? ""
+        //         : "static";
+        // },
         imgProvider() {
-            return this.loadedPost.previewImgUrl || this.loadedPost.thumbnail
-                ? ""
-                : "static";
+            const hasImg =
+                this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;
+            if (process.env.NODE_ENV === "production") {
+                return "static";
+            } else {
+                return hasImg ? "ipx" : "static";
+            }
         },
     },
     created() {

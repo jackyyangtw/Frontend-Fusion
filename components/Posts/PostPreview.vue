@@ -122,8 +122,16 @@ export default {
             }
             return this.previewText;
         },
+        // imgProvider() {
+        //     return this.previewImgUrl || this.thumbnail ? "" : "static";
+        // },
         imgProvider() {
-            return this.previewImgUrl || this.thumbnail ? "" : "static";
+            const hasImg = this.previewImgUrl || this.thumbnail;
+            if (process.env.NODE_ENV === "production") {
+                return "static";
+            } else {
+                return hasImg ? "ipx" : "static";
+            }
         },
     },
     mounted() {
