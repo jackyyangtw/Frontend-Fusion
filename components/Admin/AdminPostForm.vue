@@ -94,7 +94,7 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
                             v-if="showRefreshBtn"
-                            @click="refreshContent"
+                            @click.prevent="refreshContent"
                             color="blue"
                             class="mr-3"
                             v-bind="attrs"
@@ -213,6 +213,7 @@ export default {
                 message: "",
                 type: "",
             },
+            editorChangeTimes: 0,
         };
     },
     async created() {
@@ -327,10 +328,13 @@ export default {
             }
         },
         onEditorChange({ quill, html }) {
+            if (this.post && this.editorChangeTimes === 0) {
+                this.editorChangeTimes++;
+                return;
+            }
             if (this.debounceTimeout) {
                 clearTimeout(this.debounceTimeout);
             }
-
             this.debounceTimeout = setTimeout(() => {
                 const imgs = [...quill.root.querySelectorAll("img")];
                 const imagesSrc = imgs.map((img) => img.src);
@@ -402,12 +406,10 @@ export default {
         async refreshContent() {
             const data = await this.$store.dispatch(
                 "post/getSinglePost",
-                this.$route.params.postId
+                this.post.id
             );
             const { content: oriContent } = data;
-            console.log(oriContent);
             this.editedPost.content = oriContent;
-            // 將content注入到quill
         },
     },
     computed: {
