@@ -444,7 +444,8 @@ export default {
     },
     mounted() {
         if (this.post) {
-            console.log(this.post.content);
+            // 更新quill editor的內容
+            this.editedPost.content = this.post.content;
         }
     },
 };
