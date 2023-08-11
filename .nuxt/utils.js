@@ -199,7 +199,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: app.router.options.base,
-      env: {"baseUrl":"https://nuxt-blog-b5610-default-rtdb.firebaseio.com","fbAPIKey":"AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os"}
+      env: {"baseUrl":"https://nuxt-blog-b5610-default-rtdb.firebaseio.com","fbAPIKey":"AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os","DEFAULT_PREVIEW_IMG_URL":"/images/post-preview-picture.png"}
     }
     // Only set once
 

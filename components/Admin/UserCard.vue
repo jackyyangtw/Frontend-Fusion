@@ -112,16 +112,27 @@ export default {
                 return;
             }
             this.$emit("showToast", {
-                show: true,
-                msg: "上傳中...",
+                showToast: true,
+                message: "正在上傳頭像...",
                 type: "loading",
             });
             try {
-                await this.$store.dispatch("user/updateUserPhoto", file);
+                const updatedUrl = await this.$store.dispatch(
+                    "user/updateUserPhoto",
+                    file
+                );
+                await this.$store.dispatch(
+                    "user/updateAllUserPostsPhoto",
+                    updatedUrl
+                );
+                this.$emit("showToast", {
+                    showToast: true,
+                    message: "正在更新文章頭像...",
+                });
             } catch (err) {
                 this.$emit("showToast", {
-                    show: true,
-                    msg: err.message,
+                    showToast: true,
+                    message: err.message,
                     type: "error",
                 });
             }

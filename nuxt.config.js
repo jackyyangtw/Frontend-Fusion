@@ -3,7 +3,14 @@ const bodyParser = require("body-parser");
 const axios = require("axios");
 
 module.exports = {
+  // target: "static",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
+  // buildModules: ["@nuxt/image"],
+  // image: {
+  //   domains: [
+  //     'avatars0.githubusercontent.com'
+  //   ]
+  // },
 
   head: {
     title: pkg.name,
@@ -29,9 +36,7 @@ module.exports = {
     ],
   },
 
-  /*
-   ** Customize the progress-bar color
-   */
+
   loading: {
     color: "#54B4D3",
   },
@@ -88,6 +93,7 @@ module.exports = {
       process.env.BASE_URL ||
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
     fbAPIKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
+    DEFAULT_PREVIEW_IMG_URL: "/images/post-preview-picture.png",
   },
   build: {
     /*

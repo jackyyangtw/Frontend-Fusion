@@ -21,22 +21,6 @@ export const mutations = {
     setHeaderHeight(state, height) {
         state.headerHeight = height;
     },
-    initSetDark(state) {
-        if (!process.client) return;
-        if (localStorage.getItem('isDark') === null) {
-            localStorage.setItem('isDark', state.isDark);
-        } else {
-            state.isDark = localStorage.getItem('isDark') === 'true';
-        }
-        if (state.isDark) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-        } else {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-        }
-        document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
-    },
     setLoading(state, loading) {
         state.loading = loading;
     },

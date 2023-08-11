@@ -7,7 +7,7 @@
             @submit.prevent="onSave"
         >
             <v-text-field
-                v-model="userName"
+                v-model="editedPost.author"
                 :rules="nameRules"
                 label="作者名稱"
                 required
@@ -90,12 +90,29 @@
             />
 
             <div class="pb-5">
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            v-if="showRefreshBtn"
+                            @click.prevent="refreshContent"
+                            color="blue"
+                            class="mr-3"
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            重新取得內容
+                        </v-btn>
+                    </template>
+                    <span
+                        >重新取得內容後，編輯的內容都會消失，請確認是否重新取得</span
+                    >
+                </v-tooltip>
                 <v-btn
                     type="submit"
                     color="success"
                     class="mr-3"
-                    :disabled="checkboxs.length === 0 || !valid"
-                    >儲存</v-btn
+                    :disabled="checkboxs.length === 0 || !valid || isSubmitting"
+                    >{{ this.post ? "儲存" : "新增" }}</v-btn
                 >
                 <v-btn
                     color="error"
@@ -146,6 +163,8 @@ export default {
     },
     data() {
         return {
+            isSubmitting: false,
+            submitDebounceTimeout: null,
             debounceTimeout: null,
             previewImageFile: null,
             uploadedContentImages: [],
@@ -166,25 +185,14 @@ export default {
             },
             selectedCheckbox: [],
             editedPost: {
-                author: this.userName,
+                author: "",
                 title: "",
                 thumbnail: "",
                 content: ``,
                 previewText: "",
                 tags: [],
-                previewImgUrl: "",
+                previewImgUrl: process.env.DEFAULT_PREVIEW_IMG_URL,
             },
-            // editedPost: this.post
-            //     ? { ...this.post }
-            //     : {
-            //           author: this.userName,
-            //           title: "",
-            //           thumbnail: "",
-            //           content: ``,
-            //           previewText: "",
-            //           tags: [],
-            //           previewImgUrl: "",
-            //       },
             dialog: false,
             isDialogShow: false,
             valid: false,
@@ -205,9 +213,22 @@ export default {
                 message: "",
                 type: "",
             },
+            editorChangeTimes: 0,
         };
     },
+    created() {
+        this.editedPost.author = this.userName;
+        if (this.post) {
+            this.editedPost = this.post;
+        }
+        this.$store.dispatch("tag/getTags");
+    },
     props: {
+        showRefreshBtn: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
         post: {
             type: Object,
             required: false,
@@ -224,19 +245,26 @@ export default {
     },
     methods: {
         onSave() {
-            this.$emit("submit", {
-                ...this.editedPost,
-                previewImgUrl: "",
-                userId: this.$store.getters["user/userData"].id,
-                previewImageFile: this.previewImageFile,
-                uploadedContentImages: this.post
-                    ? []
-                    : this.uploadedContentImages,
-            });
+            if (this.submitDebounceTimeout) {
+                clearTimeout(this.submitDebounceTimeout);
+            }
+            this.submitDebounceTimeout = setTimeout(() => {
+                this.isSubmitting = true;
+                this.$emit("submit", {
+                    ...this.editedPost,
+                    userId: this.userData.id,
+                    photoURL: this.userData.photoURL || "",
+                    previewImageFile: this.previewImageFile,
+                    uploadedContentImages: this.post
+                        ? []
+                        : this.uploadedContentImages,
+                });
+            }, 500);
         },
         onPreviewImgChange(files) {
             if (!files) {
-                this.editedPost.previewImgUrl = "";
+                this.editedPost.previewImgUrl =
+                    process.env.DEFAULT_PREVIEW_IMG_URL;
                 return;
             }
             if (files.size > 200000) {
@@ -299,19 +327,23 @@ export default {
                 input.click();
             }
         },
-        onEditorChange({ quill, html, text }) {
+        onEditorChange({ quill, html }) {
+            if (this.post && this.editorChangeTimes === 0) {
+                this.editorChangeTimes++;
+                return;
+            }
+            console.log("onEditorChange");
             if (this.debounceTimeout) {
                 clearTimeout(this.debounceTimeout);
             }
-
             this.debounceTimeout = setTimeout(() => {
                 const imgs = [...quill.root.querySelectorAll("img")];
                 const imagesSrc = imgs.map((img) => img.src);
-                // 把this.uploadedContentImages 裡面的物件，物件的src如果不包含在imagesSrc裡面，就刪除
                 this.uploadedContentImages = this.uploadedContentImages.filter(
                     (img) => imagesSrc.includes(img.src)
                 );
                 this.editedPost.content = html;
+                // console.log(this.editedPost.content);
             }, 500);
         },
         uploadContentImage(e) {
@@ -372,6 +404,14 @@ export default {
                 );
             }
         },
+        async refreshContent() {
+            const data = await this.$store.dispatch(
+                "post/getSinglePost",
+                this.post.id
+            );
+            const { content: oriContent } = data;
+            this.editedPost.content = oriContent;
+        },
     },
     computed: {
         checkboxRules() {
@@ -393,12 +433,6 @@ export default {
         userName() {
             return this.userData.name;
         },
-    },
-    created() {
-        this.$store.dispatch("tag/getTags");
-        if (this.post) {
-            this.editedPost = this.post;
-        }
     },
 };
 </script>

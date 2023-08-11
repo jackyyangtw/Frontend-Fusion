@@ -127,7 +127,7 @@ export default {
             return (
                 this.loadedPost.previewImgUrl ||
                 this.loadedPost.thumbnail ||
-                `/images/post-preview-picture.png`
+                process.env.DEFAULT_PREVIEW_IMG_URL
             );
         },
         // imgProvider() {

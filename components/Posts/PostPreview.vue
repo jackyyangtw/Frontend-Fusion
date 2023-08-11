@@ -8,9 +8,7 @@
             <div
                 class="rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 mx-auto"
             >
-                <figure
-                    class="post-thumbnail relative h-[180px] md:h-[200px] xl:h-[250px]"
-                >
+                <figure class="post-thumbnail relative h-[200px] xl:h-[250px]">
                     <nuxt-img
                         :provider="imgProvider"
                         :preload="index === 0"
@@ -20,23 +18,38 @@
                     />
                 </figure>
                 <div
-                    class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1] min-h-[150px] flex flex-col justify-center"
+                    class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1] min-h-[220px] flex flex-col justify-center"
                 >
                     <div>
+                        <div class="flex items-center pb-1">
+                            <img
+                                class="w-8 h-8 mr-3 rounded-full"
+                                :src="
+                                    photoURL ||
+                                    require('/static/images/no-user-image.gif')
+                                "
+                            />
+                            <p class="text-sm text-gray-700 dark:text-white">
+                                {{ author }} •
+                                {{ dateString }}
+                            </p>
+                        </div>
                         <h2
                             class="font-bold text-xl mb-2 text-black dark:text-white"
                         >
-                            {{ title }}
+                            {{ maxTitleText }}
                         </h2>
                         <p class="text-base pb-1 text-gray-700 dark:text-white">
                             {{ maxPreviewText }}
                         </p>
-                        <PostBadge
-                            v-for="tag in tags"
-                            :key="tag"
-                            :badgeName="tag"
-                            :classes="getBadgeClass(tag)"
-                        ></PostBadge>
+                        <div class="mt-2">
+                            <PostBadge
+                                v-for="tag in tags"
+                                :key="tag"
+                                :badgeName="tag"
+                                :classes="getBadgeClass(tag)"
+                            ></PostBadge>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,11 +113,26 @@ export default {
             required: true,
         },
         updatedDate: {
+            type: [String, Date],
+            required: true,
+        },
+        photoURL: {
+            type: String,
+            required: false,
+        },
+        author: {
             type: String,
             required: true,
         },
     },
     computed: {
+        dateString() {
+            return new Date(this.updatedDate).toLocaleString("zh-TW", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+            });
+        },
         postLink() {
             return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
         },
@@ -112,7 +140,7 @@ export default {
             return (
                 this.previewImgUrl ||
                 this.thumbnail ||
-                `/images/post-preview-picture.png`
+                process.env.DEFAULT_PREVIEW_IMG_URL
             );
         },
         maxPreviewText() {
@@ -122,9 +150,13 @@ export default {
             }
             return this.previewText;
         },
-        // imgProvider() {
-        //     return this.previewImgUrl || this.thumbnail ? "" : "static";
-        // },
+        maxTitleText() {
+            const maxNum = 50;
+            if (this.title.length >= maxNum) {
+                return this.title.slice(0, maxNum) + "...";
+            }
+            return this.title;
+        },
         imgProvider() {
             const hasImg = this.previewImgUrl || this.thumbnail;
             if (process.env.NODE_ENV === "production") {

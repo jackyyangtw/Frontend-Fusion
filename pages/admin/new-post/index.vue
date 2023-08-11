@@ -58,7 +58,7 @@ export default {
                     postData
                 );
                 const postId = resData.id;
-                let imgUrl = "";
+                let imgUrl;
                 if (postData.previewImageFile) {
                     imgUrl = await this.$store.dispatch(
                         "post/uploadPreviewImage",
@@ -67,6 +67,8 @@ export default {
                             previewImageFile: postData.previewImageFile,
                         }
                     );
+                } else {
+                    imgUrl = process.env.DEFAULT_PREVIEW_IMG_URL;
                 }
                 const updateData = {
                     ...resData,

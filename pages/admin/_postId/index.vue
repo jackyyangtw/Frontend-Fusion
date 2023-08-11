@@ -7,6 +7,8 @@
         />
         <section class="update-form">
             <admin-post-form
+                v-if="loadedPost && userData"
+                :showRefreshBtn="true"
                 :post="loadedPost"
                 :showDelete="true"
                 :userData="userData"
@@ -22,7 +24,6 @@ import AdminPostForm from "@/components/Admin/AdminPostForm.vue";
 export default {
     components: { AdminPostForm },
     middleware: ["check-auth", "auth"],
-    lauout: "admin",
     head() {
         return {
             title: `${this.loadedPost.title} - Admin`,
@@ -36,6 +37,7 @@ export default {
                 type: "success",
             },
             isPreviewImgChange: false,
+            // dialog: false,
         };
     },
     asyncData(context) {
@@ -123,10 +125,8 @@ export default {
             }
         },
     },
-    // layout: "admin",
-    created() {
-        this.$store.dispatch("user/setUserData");
-        // this.$store.dispatch("refreshToken");
+    async created() {
+        await this.$store.dispatch("user/setUserData");
     },
 };
 </script>
