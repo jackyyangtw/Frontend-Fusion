@@ -35,11 +35,11 @@
                             </p>
                         </div>
                         <h2
-                            class="font-bold text-xl mb-2 text-black dark:text-white"
+                            class="font-bold text-xl mb-2 text-black dark:text-white line-clamp-2"
                         >
                             {{ maxTitleText }}
                         </h2>
-                        <p class="text-base pb-1 text-gray-700 dark:text-white">
+                        <p class="text-base pb-1 text-gray-700 dark:text-white line-clamp-2">
                             {{ maxPreviewText }}
                         </p>
                         <div class="mt-2">
