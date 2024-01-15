@@ -1,11 +1,17 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
+      "src": "nuxt.config.js",
+      "use": "@nuxtjs/vercel-builder",
       "config": {
-        "buildCommand": "npm run build"
+        "serverFiles": ["package.json"]
       }
     }
+  ],
+  "routes": [
+    { "src": "/_nuxt/.+", "headers": { "cache-control": "s-maxage=31536000" } },
+    { "src": "/sw.js", "dest": "/_nuxt/static/sw.js" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
