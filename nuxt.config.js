@@ -2,8 +2,10 @@ const pkg = require("./package");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 
+const isDev = process.env.NODE_ENV !== "production";
+
 module.exports = {
-  target: "static",
+  target: isDev ? "server" : "static",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   // buildModules: ["@nuxt/image"],
   // image: {
