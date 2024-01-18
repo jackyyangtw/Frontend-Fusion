@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const axios = require("axios");
 
 module.exports = {
-  // target: "static",
+  target: "static",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   // buildModules: ["@nuxt/image"],
   // image: {
