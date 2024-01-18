@@ -8,7 +8,7 @@
                     class="flex flex-col justify-center items-center h-[200px]"
                 >
                     <h1
-                        class="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-sky-400 dark:from-purple-400 dark:to-pink-400"
+                        class="text-3xl font-bold mb-4 text-blue-400 dark:text-pink-400"
                     >
                         Frontend Fusion - 前端技術融合
                     </h1>
