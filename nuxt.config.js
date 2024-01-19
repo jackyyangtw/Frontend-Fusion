@@ -130,7 +130,13 @@ module.exports = {
     middleware: "log",
   },
 
-  serverMiddleware: [bodyParser.json()],
+  serverMiddleware: [
+    bodyParser.json(),
+    (req, res, next) => {
+      res.setHeader('Cache-Control', 'public, max-age=31536000');
+      next();
+    }
+  ],
   generate: {
     routes: function () {
       return axios

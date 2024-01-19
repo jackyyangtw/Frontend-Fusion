@@ -13,8 +13,10 @@
                         :provider="imgProvider"
                         :preload="index === 0"
                         class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
-                        :src="previewImg"
+                        :src="cachedPreviewImg"
+                        :key="id"
                         alt=""
+                        @load="handleLoad(previewImg)"
                     />
                 </figure>
                 <div
@@ -68,17 +70,7 @@ export default {
             isMounted: false,
         };
     },
-    methods: {
-        getBadgeClass(tagName) {
-            if (process.client) {
-                const storeTag = this.$store.getters["tag/tags"];
-                const tag = storeTag.find((tag) => tag.name === tagName);
-                if (tag) {
-                    return tag.style;
-                }
-            }
-        },
-    },
+
     props: {
         id: {
             type: String,
@@ -125,6 +117,21 @@ export default {
             required: true,
         },
     },
+    methods: {
+        getBadgeClass(tagName) {
+            if (process.client) {
+                const storeTag = this.$store.getters["tag/tags"];
+                const tag = storeTag.find((tag) => tag.name === tagName);
+                if (tag) {
+                    return tag.style;
+                }
+            }
+        },
+        handleLoad(src) {
+            // this.$store.dispatch('image/loadImage', src);
+            this.$store.dispatch('image/cacheImage', src);
+        },
+    },
     computed: {
         dateString() {
             return new Date(this.updatedDate).toLocaleString("zh-TW", {
@@ -138,10 +145,14 @@ export default {
         },
         previewImg() {
             return (
-                this.previewImgUrl ||
-                this.thumbnail ||
+                // this.previewImgUrl ||
+                // this.thumbnail ||
                 process.env.DEFAULT_PREVIEW_IMG_URL
             );
+        },
+        cachedPreviewImg() {
+            const cachedImg = this.$store.getters['image/getCachedImage'](this.previewImg);
+            return cachedImg || this.previewImg;
         },
         maxPreviewText() {
             const maxNum = 55;

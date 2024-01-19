@@ -4,12 +4,12 @@
     >
         <div
             class="w-full pt-0 lg:pt-6 p-6 flex flex-wrap items-center justify-start container mx-auto"
-            v-if="loadingPosts"
+            v-show="loadingPosts"
         >
             <PostPreviewSkeleton v-for="i in posts.length" :key="i" />
         </div>
         <post-preview
-            v-else
+            v-show="!loadingPosts"
             v-for="(post, index) in posts"
             :is-admin="isAdmin"
             :key="post.id"

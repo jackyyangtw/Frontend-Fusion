@@ -20,6 +20,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\store\\comments.js'), 'comments.js')
+  resolveStoreModules(require('..\\store\\image.js'), 'image.js')
   resolveStoreModules(require('..\\store\\post.js'), 'post.js')
   resolveStoreModules(require('..\\store\\tag.js'), 'tag.js')
   resolveStoreModules(require('..\\store\\ui.js'), 'ui.js')
@@ -31,6 +32,7 @@ let store = {};
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '..\\store\\comments.js',
+      '..\\store\\image.js',
       '..\\store\\index.js',
       '..\\store\\post.js',
       '..\\store\\tag.js',

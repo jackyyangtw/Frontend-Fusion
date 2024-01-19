@@ -9,7 +9,7 @@
             :selectedTag="selectedTag"
             @setFilter="setFilter"
         ></post-filter>
-        <post-list :posts="filteredPosts" :key="componentKey"></post-list>
+        <post-list :posts="filteredPosts"></post-list>
     </div>
 </template>
 
@@ -34,20 +34,22 @@ export default {
     data() {
         return {
             selectedTag: "全部類型",
-            componentKey: 0,
         };
     },
     computed: {
         loadedPosts() {
             return this.$store.getters["post/loadedPosts"];
         },
+        // filteredPosts() {
+        //     return this.loadedPosts.filter((post) => {
+        //         return this.selectedTag === "全部類型" || post.tags.includes(this.selectedTag);
+        //     });
+        // },
         filteredPosts() {
-            if (this.selectedTag === "全部類型") {
+            if (this.selectedTag === '全部類型') {
                 return this.loadedPosts;
             }
-            return this.loadedPosts.filter((post) => {
-                return post.tags.includes(this.selectedTag);
-            });
+            return this.loadedPosts.filter(post => post.tags.includes(this.selectedTag));
         },
         sidebarWidth() {
             return this.$store.getters["ui/sidebarWidth"];
@@ -58,8 +60,9 @@ export default {
             return (this.sidebarWidth = width);
         },
         setFilter(tag) {
-            this.selectedTag = tag;
-            this.componentKey++;
+            if (this.selectedTag !== tag) {
+                this.selectedTag = tag;
+            }
         },
         setAllTag(tag) {
             this.selectedTag = tag;
@@ -67,12 +70,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* .posts-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-</style>
-
