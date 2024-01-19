@@ -4,11 +4,12 @@
             <section class="post">
                 <figure class="pb-5">
                     <nuxt-img
-                        :provider="imgProvider"
                         preload
                         class="object-cover"
-                        :src="previewImg"
                         alt=""
+                        :provider="imgProvider"
+                        :src="previewImg"
+                        placeholder 
                     />
                 </figure>
                 <h1
@@ -130,11 +131,6 @@ export default {
                 process.env.DEFAULT_PREVIEW_IMG_URL
             );
         },
-        // imgProvider() {
-        //     return this.loadedPost.previewImgUrl || this.loadedPost.thumbnail
-        //         ? ""
-        //         : "static";
-        // },
         imgProvider() {
             const hasImg =
                 this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;

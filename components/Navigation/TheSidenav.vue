@@ -15,7 +15,7 @@
                         <nuxt-link to="/">Fronted Fusion</nuxt-link>
                     </li>
                     <li class="nav-item">
-                        <nuxt-link to="/posts">部落格</nuxt-link>
+                        <nuxt-link to="/posts">分類</nuxt-link>
                     </li>
                     <li class="nav-item">
                         <nuxt-link to="/admin">管理</nuxt-link>

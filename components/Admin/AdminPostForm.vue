@@ -6,6 +6,7 @@
             lazy-validation
             @submit.prevent="onSave"
         >
+        
             <v-text-field
                 v-model="editedPost.author"
                 :rules="nameRules"
@@ -156,6 +157,8 @@
 
 <script>
 import AppControlInput from "@/components/UI/AppControlInput.vue";
+import hljs from 'highlight.js'
+
 export default {
     name: "AdminPostForm",
     components: {
@@ -169,7 +172,11 @@ export default {
             previewImageFile: null,
             uploadedContentImages: [],
             editorOption: {
+                theme: 'snow',
                 modules: {
+                    syntax: {
+                        highlight: text => hljs.highlightAuto(text).value
+                    },
                     toolbar: {
                         container: [
                             [{ header: [1, 2, false] }],
@@ -249,9 +256,11 @@ export default {
                 clearTimeout(this.submitDebounceTimeout);
             }
             this.submitDebounceTimeout = setTimeout(() => {
+                const highlightedContent = this.processHighlighting(this.editedPost.content);
                 this.isSubmitting = true;
                 this.$emit("submit", {
                     ...this.editedPost,
+                    content: highlightedContent, // 使用高亮後的內容
                     userId: this.userData.id,
                     photoURL: this.userData.photoURL || "",
                     previewImageFile: this.previewImageFile,
@@ -328,11 +337,11 @@ export default {
             }
         },
         onEditorChange({ quill, html }) {
+            
             if (this.post && this.editorChangeTimes === 0) {
                 this.editorChangeTimes++;
                 return;
             }
-            console.log("onEditorChange");
             if (this.debounceTimeout) {
                 clearTimeout(this.debounceTimeout);
             }
@@ -343,8 +352,17 @@ export default {
                     (img) => imagesSrc.includes(img.src)
                 );
                 this.editedPost.content = html;
-                // console.log(this.editedPost.content);
+                
             }, 500);
+        },
+        processHighlighting(html) {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            const codes = div.querySelectorAll('.ql-syntax');
+            codes.forEach(code => {
+                hljs.highlightBlock(code);
+            });
+            return div.innerHTML; // 返回處理過的高亮內容
         },
         uploadContentImage(e) {
             if (!this.post) {

@@ -21,7 +21,7 @@
                         <nuxt-link
                             class="text-slate-700 dark:text-white"
                             to="/posts"
-                            >部落格</nuxt-link
+                            >分類</nuxt-link
                         >
                     </li>
                     <li class="nav-item">

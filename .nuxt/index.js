@@ -21,6 +21,7 @@ import nuxt_plugin_datefilter_f4b26092 from 'nuxt_plugin_datefilter_f4b26092' //
 import nuxt_plugin_tags_fb66e8f2 from 'nuxt_plugin_tags_fb66e8f2' // Source: ..\\plugins\\tags.js (mode: 'all')
 import nuxt_plugin_vuequilleditor_7d434d24 from 'nuxt_plugin_vuequilleditor_7d434d24' // Source: ..\\plugins\\vue-quill-editor.js (mode: 'client')
 import nuxt_plugin_firebase_087e9259 from 'nuxt_plugin_firebase_087e9259' // Source: ..\\plugins\\firebase.js (mode: 'all')
+import nuxt_plugin_highlight_54dd1b39 from 'nuxt_plugin_highlight_54dd1b39' // Source: ..\\plugins\\highlight.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -248,6 +249,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_firebase_087e9259 === 'function') {
     await nuxt_plugin_firebase_087e9259(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_highlight_54dd1b39 === 'function') {
+    await nuxt_plugin_highlight_54dd1b39(app.context, inject)
   }
 
   // Lock enablePreview in context

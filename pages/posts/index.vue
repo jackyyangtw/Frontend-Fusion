@@ -9,7 +9,7 @@
             :selectedTag="selectedTag"
             @setFilter="setFilter"
         ></post-filter>
-        <post-list :posts="filteredPosts"></post-list>
+        <post-list :posts="filteredPosts" :key="componentKey"></post-list>
     </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
     data() {
         return {
             selectedTag: "全部類型",
+            componentKey: 0,
         };
     },
     computed: {
@@ -58,6 +59,7 @@ export default {
         },
         setFilter(tag) {
             this.selectedTag = tag;
+            this.componentKey++;
         },
         setAllTag(tag) {
             this.selectedTag = tag;
@@ -68,9 +70,9 @@ export default {
 
 <style scoped>
 /* .posts-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 } */
 </style>
 

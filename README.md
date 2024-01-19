@@ -1,2 +1,2 @@
 # Frontend Fusion:
-- 調整PostPreview的樣式，需要跟同一行的元素同高
+- 開發 code highlighter 功能中 <AdminPostForm>

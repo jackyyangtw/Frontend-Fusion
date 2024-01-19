@@ -183,7 +183,6 @@ export const actions = {
     const refreshToken = async () => {
       if (!process.client) return;
       this.$authModule.onAuthStateChanged(async (user) => {
-        console.log('times up');
         if (user) {
           const token = await user.getIdToken();
           Cookie.set('jwt', token);

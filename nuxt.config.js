@@ -58,7 +58,8 @@ module.exports = {
     "~plugins/date-filter.js",
     "~plugins/tags.js",
     { src: "~plugins/vue-quill-editor.js", ssr: false },
-    "~plugins/firebase.js"
+    "~plugins/firebase.js",
+    '~/plugins/highlight.js',
   ],
 
   colorMode: {
