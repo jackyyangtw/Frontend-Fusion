@@ -145,8 +145,8 @@ export default {
         },
         previewImg() {
             return (
-                // this.previewImgUrl ||
-                // this.thumbnail ||
+                this.previewImgUrl ||
+                this.thumbnail ||
                 process.env.DEFAULT_PREVIEW_IMG_URL
             );
         },
