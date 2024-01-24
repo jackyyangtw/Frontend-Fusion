@@ -1,7 +1,7 @@
 <template>
     <transition name="vagueIn">
         <nuxt-link
-            v-if="isMounted"
+            v-if="post"
             class="mx-2 my-4 group w-full md:w-[calc(50%-16px)] 2xl:w-[calc(33.333%-24px)] ease-in duration-300 transition"
             :to="postLink"
         >
@@ -13,10 +13,10 @@
                         :provider="imgProvider"
                         :preload="index === 0"
                         class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
-                        :src="cachedPreviewImg"
+                        :src="previewImg"
                         :key="id"
                         alt=""
-                        @load="handleLoad(previewImg)"
+                        @load="handleLoad(cachedPreviewImg)"
                     />
                 </figure>
                 <div
@@ -41,7 +41,9 @@
                         >
                             {{ maxTitleText }}
                         </h2>
-                        <p class="text-base pb-1 text-gray-700 dark:text-white line-clamp-2">
+                        <p
+                            class="text-base pb-1 text-gray-700 dark:text-white line-clamp-2"
+                        >
                             {{ maxPreviewText }}
                         </p>
                         <div class="mt-2">
@@ -70,8 +72,11 @@ export default {
             isMounted: false,
         };
     },
-
     props: {
+        post: {
+            type: Object,
+            required: true,
+        },
         id: {
             type: String,
             required: true,
@@ -117,6 +122,9 @@ export default {
             required: true,
         },
     },
+    shouldUpdate(newProps, oldProps) {
+        return newProps.post !== oldProps.post;
+    },
     methods: {
         getBadgeClass(tagName) {
             if (process.client) {
@@ -129,7 +137,7 @@ export default {
         },
         handleLoad(src) {
             // this.$store.dispatch('image/loadImage', src);
-            this.$store.dispatch('image/cacheImage', src);
+            this.$store.dispatch("image/cacheImage", src);
         },
     },
     computed: {
@@ -151,9 +159,16 @@ export default {
             );
         },
         cachedPreviewImg() {
-            const cachedImg = this.$store.getters['image/getCachedImage'](this.previewImg);
-            return cachedImg || this.previewImg;
+            return this.$store.getters["image/isImageCached"](this.previewImg)
+                ? this.$store.getters["image/getCachedImage"](this.previewImg)
+                : this.previewImg ||
+                      this.thumbnail ||
+                      process.env.DEFAULT_PREVIEW_IMG_URL;
         },
+        // cachedPreviewImg() {
+        //     const cachedImg = this.$store.getters['image/getCachedImage'](this.previewImg);
+        //     return cachedImg || this.previewImg;
+        // },
         maxPreviewText() {
             const maxNum = 55;
             if (this.previewText.length >= maxNum) {
@@ -179,6 +194,7 @@ export default {
     },
     mounted() {
         this.isMounted = true;
+        console.log(this.cachedPreviewImg);
     },
 };
 </script>

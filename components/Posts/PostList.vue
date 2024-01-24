@@ -9,8 +9,9 @@
             <PostPreviewSkeleton v-for="i in posts.length" :key="i" />
         </div>
         <post-preview
-            v-show="!loadingPosts"
             v-for="(post, index) in posts"
+            :post="post"
+            v-show="!loadingPosts"
             :is-admin="isAdmin"
             :key="post.id"
             :id="post.id"
@@ -33,6 +34,11 @@ import PostPreview from "../Posts/PostPreview.vue";
 import PostPreviewSkeleton from "../UI/PostPreviewSkeleton.vue";
 export default {
     components: { PostPreview, PostPreviewSkeleton },
+    data() {
+        return {
+            localPosts: [],
+        };
+    },
     props: {
         isAdmin: {
             type: Boolean,
@@ -47,6 +53,9 @@ export default {
             type: Boolean,
             required: false,
         },
+    },
+    computed: {
+        computedPosts() {},
     },
 };
 </script>

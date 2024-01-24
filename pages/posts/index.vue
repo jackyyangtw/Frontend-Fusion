@@ -40,16 +40,13 @@ export default {
         loadedPosts() {
             return this.$store.getters["post/loadedPosts"];
         },
-        // filteredPosts() {
-        //     return this.loadedPosts.filter((post) => {
-        //         return this.selectedTag === "全部類型" || post.tags.includes(this.selectedTag);
-        //     });
-        // },
         filteredPosts() {
-            if (this.selectedTag === '全部類型') {
+            if (this.selectedTag === "全部類型") {
                 return this.loadedPosts;
             }
-            return this.loadedPosts.filter(post => post.tags.includes(this.selectedTag));
+            return this.loadedPosts.filter((post) =>
+                post.tags.includes(this.selectedTag)
+            );
         },
         sidebarWidth() {
             return this.$store.getters["ui/sidebarWidth"];
@@ -63,9 +60,6 @@ export default {
             if (this.selectedTag !== tag) {
                 this.selectedTag = tag;
             }
-        },
-        setAllTag(tag) {
-            this.selectedTag = tag;
         },
     },
 };

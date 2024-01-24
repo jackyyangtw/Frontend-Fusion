@@ -1,35 +1,35 @@
+function transformIpxUrl(url) {
+    // /_ipx/_
+    if (url.includes("/images/")) {
+        return url.replace("/images/", "/_ipx/_/images/");
+    }
+    return url;
+}
+
 export const state = () => ({
-    loadedImages: [],
-    cachedImages: {},
+    cachedImages: [],
 });
 
 export const mutations = {
-    ADD_IMAGE(state, url) {
-        state.loadedImages.push(url);
-    },
-    SET_CACHED_IMAGE(state, imgSrc) {
-        if (!state.cachedImages[imgSrc]) {
-            state.cachedImages[imgSrc] = imgSrc;
+    ADD_IMAGE_TO_CACHE(state, imageUrl) {
+        if (!state.cachedImages.includes(imageUrl)) {
+            state.cachedImages.push(imageUrl);
         }
-    },
-};
-
-export const getters = {
-    loadedImages(state) {
-        return state.loadedImages;
-    },
-    getCachedImage: (state) => (imgSrc) => {
-        return state.cachedImages[imgSrc];
     },
 };
 
 export const actions = {
-    loadImage({ commit, state }, url) {
-        if (!state.loadedImages.includes(url)) {
-            commit('ADD_IMAGE', url);
-        }
+    cacheImage({ commit }, imageUrl) {
+        // const transformedUrl = transformIpxUrl(imageUrl);
+        commit("ADD_IMAGE_TO_CACHE", imageUrl);
     },
-    cacheImage({ commit }, imgSrc) {
-        commit('SET_CACHED_IMAGE', imgSrc);
+};
+
+export const getters = {
+    isImageCached: (state) => (imageUrl) => {
+        return state.cachedImages.includes(imageUrl);
+    },
+    getCachedImage: (state) => (imageUrl) => {
+        return state.cachedImages.find((img) => img === imageUrl) || null;
     },
 };
