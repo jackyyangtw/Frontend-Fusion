@@ -21,12 +21,13 @@
             </div>
         </section>
         <div class="container mx-auto">
-            <post-list :posts="loadedPosts" admin></post-list>
+            <post-list :posts="loadedPosts" :loadingPosts="isLoadingPosts" admin></post-list>
         </div>
     </div>
 </template>
 
 <script>
+import PostPreviewSkeleton from '../components/UI/PostPreviewSkeleton.vue';
 export default {
     head() {
         return {
@@ -40,6 +41,9 @@ export default {
             ],
         };
     },
+    components: {
+        PostPreviewSkeleton,
+    },
     computed: {
         loadedPosts() {
             return this.$store.getters["post/loadedPosts"];
@@ -47,6 +51,12 @@ export default {
         isDark() {
             return this.$store.getters["ui/isDark"];
         },
+        isLoadingPosts() {
+            return this.$store.getters["post/isLoadingPosts"];
+        },
+    },
+    mounted() {
+        this.$store.commit("post/setIsLoadingPosts", false);
     },
 };
 </script>

@@ -33,7 +33,6 @@
 
 <script>
 import UserCard from "../../components/Admin/UserCard.vue";
-
 export default {
     // layout: "admin",
     head() {

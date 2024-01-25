@@ -2,8 +2,13 @@
     <div class="single-post-page container">
         <div class="w-full md:w-[60%] lg:w-[900px] mx-auto">
             <section class="post">
-                <figure class="pb-5">
+                <div class="mb-5">
+                    <BannerSkeleton
+                        v-if="isLoadingBanner"
+                        class="w-full h-[300px] md:h-[400px] lg:h-[500px]"
+                    />
                     <nuxt-img
+                        v-else
                         preload
                         class="object-cover"
                         alt=""
@@ -11,12 +16,27 @@
                         :src="previewImg"
                         placeholder 
                     />
-                </figure>
-                <h1
-                    class="post-title text-sky-500 dark:text-pink-500 text-4xl font-bold pb-2"
-                >
-                    {{ loadedPost.title }}
-                </h1>
+                </div>
+                <div class="flex justify-between">
+                    <h1
+                        class="post-title text-sky-500 dark:text-pink-500 text-4xl font-bold pb-2"
+                    >
+                        {{ loadedPost.title }}
+                    </h1>
+                    <nuxt-link v-if="isAuthor" :to="`/admin/${postId}`">
+                        <label
+                            for="photo"
+                            class="cursor-pointer w-10 h-10 p-2 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-300"
+                        >
+                                <img
+                                    :src="
+                                        require('@/static/images/edit-pen-icon.svg')
+                                    "
+                                    alt=""
+                                />
+                        </label>
+                    </nuxt-link>
+                </div>
                 <h2
                     class="post-content text-black dark:text-white text-xl font-bold pb-3"
                 >
@@ -26,7 +46,7 @@
                     <div class="text-gray-400 dark:text-gray-500 mr-3">
                         Last updated on {{ loadedPost.updatedDate | date }}
                     </div>
-                    <div class="text-gray-400 dark:text-gray-500">
+                    <div class="text-gray-400 dark:text-gray-500 mr-5">
                         Written by &nbsp;
                         <a
                             :href="'mailto:' + userEmail"
@@ -50,10 +70,11 @@
 <script>
 import CommentForm from "~/components/Posts/CommentForm.vue";
 import CommentList from "~/components/Posts/CommentList.vue";
+import BannerSkeleton from "@/components/UI/BannerSkeleton.vue";
 export default {
     components: {
         CommentForm,
-        CommentList,
+        CommentList,BannerSkeleton
     },
     head() {
         return {
@@ -112,7 +133,18 @@ export default {
             })
             .catch((err) => console.log(err));
     },
+    data() {
+        return {
+            isLoadingBanner: true,
+        };
+    },
     computed: {
+        isAuthor() {
+            return this.loadedPost.userId === this.userData.id;
+        },
+        postId() {
+            return this.$route.params.id;
+        },
         userEmail() {
             return this.userData.email || "";
         },
@@ -143,6 +175,11 @@ export default {
     },
     created() {
         this.$store.dispatch("user/setUserData");
+    },
+    mounted() {
+        setTimeout(() => {
+            this.isLoadingBanner = false;
+        }, 1000);
     },
 };
 </script>

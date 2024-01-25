@@ -40,10 +40,6 @@ html {
 }
 
 
-.vagueIn-enter-active,
-.vagueIn-leave-active {
-}
-
 .vagueIn-enter,
 .vagueIn-leave-to {
     filter: blur(20px);

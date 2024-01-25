@@ -2,12 +2,7 @@
     <section
         class="w-full pt-0 lg:pt-6 p-6 flex flex-wrap items-center justify-start container mx-auto"
     >
-        <div
-            class="w-full pt-0 lg:pt-6 p-6 flex flex-wrap items-center justify-start container mx-auto"
-            v-show="loadingPosts"
-        >
-            <PostPreviewSkeleton v-for="i in posts.length" :key="i" />
-        </div>
+        <PostPreviewSkeleton v-for="i in posts.length" :key="i" v-show="loadingPosts"/>
         <post-preview
             v-show="!loadingPosts"
             v-for="(post, index) in posts"
@@ -29,7 +24,7 @@
 </template>
 
 <script>
-import PostPreview from "../Posts/PostPreview.vue";
+import PostPreview from "../Posts/postpreview.vue";
 import PostPreviewSkeleton from "../UI/PostPreviewSkeleton.vue";
 export default {
     components: { PostPreview, PostPreviewSkeleton },

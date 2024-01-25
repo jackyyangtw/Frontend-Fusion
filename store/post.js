@@ -42,7 +42,7 @@ export const mutations = {
 export const actions = {
     setPosts({ commit }, posts) {
         commit("setPosts", posts);
-        commit('setIsLoadingPosts', false);
+        // commit('setIsLoadingPosts', false);
     },
     async addPost({ commit, rootState }, postData) {
         const createdPost = {

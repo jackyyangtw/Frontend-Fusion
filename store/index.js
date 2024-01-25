@@ -24,6 +24,7 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit(vuexContext, context) {
     try {
+      vuexContext.commit("post/setIsLoadingPosts", true);
       const data = await context.app.$axios.$get("/posts.json");
       const postArr = [];
       for (const key in data) {

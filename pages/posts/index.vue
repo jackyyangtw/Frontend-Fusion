@@ -15,6 +15,7 @@
 
 <script>
 import PostFilter from "../../components/Posts/PostFilter.vue";
+
 export default {
     head() {
         return {
@@ -29,7 +30,7 @@ export default {
         };
     },
     components: {
-        PostFilter,
+        PostFilter
     },
     data() {
         return {
