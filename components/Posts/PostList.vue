@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import PostPreview from "../Posts/postpreview.vue";
+import PostPreview from "./PostPreview.vue";
 import PostPreviewSkeleton from "../UI/PostPreviewSkeleton.vue";
 export default {
     components: { PostPreview, PostPreviewSkeleton },
