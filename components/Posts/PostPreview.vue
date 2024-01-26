@@ -57,7 +57,6 @@
                         </div>
                     </div>
                 </div>
-    
             </nuxt-link>
         </transition>
         <transition name="fade">
@@ -144,9 +143,8 @@ export default {
         },
     },
     methods: {
-        setShowButtons(show) {
+        setShowButtons() {
             this.showButtons = !this.showButtons;
-            console.log(this.showButtons);
         },
         getBadgeClass(tagName) {
             if (process.client) {

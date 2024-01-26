@@ -1,21 +1,22 @@
 <template>
     <div class="single-post-page container">
-        <div class="w-full md:w-[60%] lg:w-[900px] mx-auto">
+        <div class="w-full xl:w-[900px] mx-auto">
             <section class="post">
-                <div class="mb-5">
+                <div class="mb-5 rel lg:min-h-[514px]">
                     <BannerSkeleton
                         v-if="isLoadingBanner"
                         class="w-full h-[300px] md:h-[400px] lg:h-[500px]"
                     />
-                    <nuxt-img
-                        v-else
-                        preload
-                        class="object-cover"
-                        alt=""
-                        :provider="imgProvider"
-                        :src="previewImg"
-                        placeholder 
-                    />
+                    <transition v-else name="fade">                    
+                        <nuxt-img
+                            preload
+                            class="object-cover"
+                            alt=""
+                            :provider="imgProvider"
+                            :src="previewImg"
+                            placeholder 
+                        />
+                    </transition>
                 </div>
                 <div class="flex justify-between">
                     <h1
