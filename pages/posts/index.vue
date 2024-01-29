@@ -41,11 +41,6 @@ export default {
         loadedPosts() {
             return this.$store.getters["post/loadedPosts"];
         },
-        // filteredPosts() {
-        //     return this.loadedPosts.filter((post) => {
-        //         return this.selectedTag === "全部類型" || post.tags.includes(this.selectedTag);
-        //     });
-        // },
         filteredPosts() {
             if (this.selectedTag === '全部類型') {
                 return this.loadedPosts;

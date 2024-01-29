@@ -7,7 +7,7 @@
                         v-if="isLoadingBanner"
                         class="w-full h-[300px] md:h-[400px] lg:h-[500px]"
                     />
-                    <transition v-else name="fade">                    
+                    <!-- <transition v-else name="fade">                    
                         <nuxt-img
                             preload
                             class="object-cover"
@@ -16,7 +16,7 @@
                             :src="previewImg"
                             placeholder 
                         />
-                    </transition>
+                    </transition> -->
                 </div>
                 <div class="flex justify-between">
                     <h1
@@ -63,6 +63,8 @@
                         v-html="loadedPost.content"
                     ></div>
                 </div>
+                <CommentForm></CommentForm>
+                <CommentList :comments="comments"></CommentList>
             </section>
         </div>
     </div>
@@ -137,6 +139,9 @@ export default {
     data() {
         return {
             isLoadingBanner: true,
+            comments: [
+                {author: 'test', date: '2021-10-10', text: 'test'},
+            ],
         };
     },
     computed: {

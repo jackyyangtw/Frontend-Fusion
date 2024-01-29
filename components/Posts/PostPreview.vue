@@ -11,7 +11,7 @@
                 @mouseleave.self="setShowButtons"
                 >
                     <figure class="post-thumbnail relative h-[200px] xl:h-[250px]">
-                        <nuxt-img
+                        <!-- <nuxt-img
                             :provider="imgProvider"
                             :preload="index === 0"
                             class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
@@ -19,7 +19,7 @@
                             :key="id"
                             alt=""
                             @load="handleLoad(previewImg)"
-                        />
+                        /> -->
                     </figure>
                     <div
                         class="px-6 py-4 group-hover:bg-sky-500/[.1] dark:group-hover:bg-white/[.1] min-h-[220px] flex flex-col justify-center"
