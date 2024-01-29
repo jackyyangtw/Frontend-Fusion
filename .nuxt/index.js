@@ -13,9 +13,18 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
+import nuxt_plugin_plugin_5d9e7f44 from 'nuxt_plugin_plugin_5d9e7f44' // Source: .\\components\\plugin.js (mode: 'all')
 import nuxt_plugin_plugin_71dfef54 from 'nuxt_plugin_plugin_71dfef54' // Source: .\\vuetify\\plugin.js (mode: 'all')
-import nuxt_plugin_image_5b936308 from 'nuxt_plugin_image_5b936308' // Source: .\\image.js (mode: 'all')
+import nuxt_plugin_middleware_1c26aeb3 from 'nuxt_plugin_middleware_1c26aeb3' // Source: .\\middleware.js (mode: 'all')
+import nuxt_plugin_store_05cd8db0 from 'nuxt_plugin_store_05cd8db0' // Source: .\\store.js (mode: 'all')
+import nuxt_plugin_appplugin_27f5199f from 'nuxt_plugin_appplugin_27f5199f' // Source: ..\\node_modules\\@nuxt\\bridge\\dist\\runtime\\app.plugin.mjs (mode: 'all')
+import nuxt_plugin_configplugin_4bb9ad90 from 'nuxt_plugin_configplugin_4bb9ad90' // Source: ..\\node_modules\\@nuxt\\bridge\\dist\\runtime\\config.plugin.mjs (mode: 'all')
+import nuxt_plugin_nitrobridgeserver_1213f2e7 from 'nuxt_plugin_nitrobridgeserver_1213f2e7' // Source: .\\nitro-bridge.server.mjs (mode: 'server')
+import nuxt_plugin_nitrobridgeclient_7ec19922 from 'nuxt_plugin_nitrobridgeclient_7ec19922' // Source: .\\nitro-bridge.client.mjs (mode: 'client')
 import nuxt_plugin_axios_31a15cfe from 'nuxt_plugin_axios_31a15cfe' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_unhead_7379f140 from 'nuxt_plugin_unhead_7379f140' // Source: ..\\node_modules\\@nuxt\\bridge\\dist\\runtime\\head\\plugins\\unhead (mode: 'all')
+import nuxt_plugin_capiplugin_631698c0 from 'nuxt_plugin_capiplugin_631698c0' // Source: .\\capi.plugin.mjs (mode: 'all')
+import nuxt_plugin_errorpluginserver_62d4702e from 'nuxt_plugin_errorpluginserver_62d4702e' // Source: ..\\node_modules\\@nuxt\\bridge\\dist\\runtime\\error.plugin.server.mjs (mode: 'server')
 import nuxt_plugin_corecomponents_4963358a from 'nuxt_plugin_corecomponents_4963358a' // Source: ..\\plugins\\core-components.js (mode: 'all')
 import nuxt_plugin_datefilter_f4b26092 from 'nuxt_plugin_datefilter_f4b26092' // Source: ..\\plugins\\date-filter.js (mode: 'all')
 import nuxt_plugin_tags_fb66e8f2 from 'nuxt_plugin_tags_fb66e8f2' // Source: ..\\plugins\\tags.js (mode: 'all')
@@ -219,16 +228,52 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
+  if (typeof nuxt_plugin_plugin_5d9e7f44 === 'function') {
+    await nuxt_plugin_plugin_5d9e7f44(app.context, inject)
+  }
+
   if (typeof nuxt_plugin_plugin_71dfef54 === 'function') {
     await nuxt_plugin_plugin_71dfef54(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_image_5b936308 === 'function') {
-    await nuxt_plugin_image_5b936308(app.context, inject)
+  if (typeof nuxt_plugin_middleware_1c26aeb3 === 'function') {
+    await nuxt_plugin_middleware_1c26aeb3(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_store_05cd8db0 === 'function') {
+    await nuxt_plugin_store_05cd8db0(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_appplugin_27f5199f === 'function') {
+    await nuxt_plugin_appplugin_27f5199f(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_configplugin_4bb9ad90 === 'function') {
+    await nuxt_plugin_configplugin_4bb9ad90(app.context, inject)
+  }
+
+  if (process.server && typeof nuxt_plugin_nitrobridgeserver_1213f2e7 === 'function') {
+    await nuxt_plugin_nitrobridgeserver_1213f2e7(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_nitrobridgeclient_7ec19922 === 'function') {
+    await nuxt_plugin_nitrobridgeclient_7ec19922(app.context, inject)
   }
 
   if (typeof nuxt_plugin_axios_31a15cfe === 'function') {
     await nuxt_plugin_axios_31a15cfe(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_unhead_7379f140 === 'function') {
+    await nuxt_plugin_unhead_7379f140(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_capiplugin_631698c0 === 'function') {
+    await nuxt_plugin_capiplugin_631698c0(app.context, inject)
+  }
+
+  if (process.server && typeof nuxt_plugin_errorpluginserver_62d4702e === 'function') {
+    await nuxt_plugin_errorpluginserver_62d4702e(app.context, inject)
   }
 
   if (typeof nuxt_plugin_corecomponents_4963358a === 'function') {

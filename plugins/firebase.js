@@ -2,33 +2,67 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import "firebase/storage";
 import "firebase/database";
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
+//     authDomain: "nuxt-blog-b5610.firebaseapp.com",
+//     databaseURL: "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
+//     projectId: "nuxt-blog-b5610",
+//     storageBucket: "nuxt-blog-b5610.appspot.com",
+//     messagingSenderId: "583146395669",
+//     appId: "1:583146395669:web:a4c72fde19beecba74d61c"
+// };
+// let app = null
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
-    authDomain: "nuxt-blog-b5610.firebaseapp.com",
-    databaseURL: "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
-    projectId: "nuxt-blog-b5610",
-    storageBucket: "nuxt-blog-b5610.appspot.com",
-    messagingSenderId: "583146395669",
-    appId: "1:583146395669:web:a4c72fde19beecba74d61c"
-};
-let app = null
+// if (!firebase.apps.length) {
+//     app = firebase.initializeApp(firebaseConfig, {
+//         'X-Client-Name': 'web',
+//         'X-Client-Version': '1.0.0'
+//     })
+// }
 
-if (!firebase.apps.length) {
-    app = firebase.initializeApp(firebaseConfig, {
-        'X-Client-Name': 'web',
-        'X-Client-Version': '1.0.0'
-    })
-}
+// const db = firebase.database();
+// const storage = firebase.storage();
+// const authModule = firebase.auth();
+// const auth = firebase.auth;
 
-const db = firebase.database();
-const storage = firebase.storage();
-const authModule = firebase.auth();
-const auth = firebase.auth;
+// export default (ctx, inject) => {
+//     inject('db', db);
+//     inject('storage', storage);
+//     inject('authModule', authModule);
+//     inject('auth', auth);
+// }
 
-export default (ctx, inject) => {
-    inject('db', db);
-    inject('storage', storage);
-    inject('authModule', authModule);
-    inject('auth', auth);
-}
+export default defineNuxtPlugin(nuxtApp => {
+    const firebaseConfig = {
+        apiKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
+        authDomain: "nuxt-blog-b5610.firebaseapp.com",
+        databaseURL: "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
+        projectId: "nuxt-blog-b5610",
+        storageBucket: "nuxt-blog-b5610.appspot.com",
+        messagingSenderId: "583146395669",
+        appId: "1:583146395669:web:a4c72fde19beecba74d61c"
+    };
+    let app = null
+    
+    if (!firebase.apps.length) {
+        app = firebase.initializeApp(firebaseConfig, {
+            'X-Client-Name': 'web',
+            'X-Client-Version': '1.0.0'
+        })
+    }
+    
+    const db = firebase.database();
+    const storage = firebase.storage();
+    const authModule = firebase.auth();
+    const auth = firebase.auth;
+
+    nuxtApp.$db = db;
+    nuxtApp.$storage = storage;
+    nuxtApp.$authModule = authModule;
+    nuxtApp.$auth = auth;
+
+    // inject('db', db);
+    // inject('storage', storage);
+    // inject('authModule', authModule);
+    // inject('auth', auth);
+})

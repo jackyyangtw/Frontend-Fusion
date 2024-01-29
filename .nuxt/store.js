@@ -1,111 +1,66 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import * as $33c613ea from "D:/Users/jackyyang/Desktop/nuxt-blog/store/comments.js";
+import * as $777b2725 from "D:/Users/jackyyang/Desktop/nuxt-blog/store/image.js";
+import * as $2d2921d8 from "D:/Users/jackyyang/Desktop/nuxt-blog/store/index.js";
+import * as $2d283996 from "D:/Users/jackyyang/Desktop/nuxt-blog/store/post.js";
+import * as $1a3b27e4 from "D:/Users/jackyyang/Desktop/nuxt-blog/store/tag.js";
+import * as $6c33750a from "D:/Users/jackyyang/Desktop/nuxt-blog/store/ui.js";
+import * as $2d2a8cc1 from "D:/Users/jackyyang/Desktop/nuxt-blog/store/user.js";
 Vue.use(Vuex)
 
 const VUEX_PROPERTIES = ['state', 'getters', 'actions', 'mutations']
 
-let store = {};
+const storeModules = {
+  comments: $33c613ea,
+  image: $777b2725,
+  root: $2d2921d8,
+  post: $2d283996,
+  tag: $1a3b27e4,
+  ui: $6c33750a,
+  user: $2d2a8cc1
+}
 
-(function updateModules () {
-  store = normalizeRoot(require('..\\store\\index.js'), 'store/index.js')
-
-  // If store is an exported method = classic mode (deprecated)
-
+export function createStore() {
+  let store = normalizeRoot(storeModules.root || {})
+  for (const id in storeModules) {
+    if (id === 'root') { continue }
+    resolveStoreModules(store, storeModules[id], id)
+  }
   if (typeof store === 'function') {
-    return console.warn('Classic mode for store/ is deprecated and will be removed in Nuxt 3.')
+    return store
   }
-
-  // Enforce store modules
-  store.modules = store.modules || {}
-
-  resolveStoreModules(require('..\\store\\comments.js'), 'comments.js')
-  resolveStoreModules(require('..\\store\\image.js'), 'image.js')
-  resolveStoreModules(require('..\\store\\post.js'), 'post.js')
-  resolveStoreModules(require('..\\store\\tag.js'), 'tag.js')
-  resolveStoreModules(require('..\\store\\ui.js'), 'ui.js')
-  resolveStoreModules(require('..\\store\\user.js'), 'user.js')
-
-  // If the environment supports hot reloading...
-
-  if (process.client && module.hot) {
-    // Whenever any Vuex module is updated...
-    module.hot.accept([
-      '..\\store\\comments.js',
-      '..\\store\\image.js',
-      '..\\store\\index.js',
-      '..\\store\\post.js',
-      '..\\store\\tag.js',
-      '..\\store\\ui.js',
-      '..\\store\\user.js',
-    ], () => {
-      // Update `root.modules` with the latest definitions.
-      updateModules()
-      // Trigger a hot update in the store.
-      window.$nuxt.$store.hotUpdate(store)
-    })
-  }
-})()
-
-// createStore
-export const createStore = store instanceof Function ? store : () => {
   return new Vuex.Store(Object.assign({
     strict: (process.env.NODE_ENV !== 'production')
   }, store))
 }
 
-function normalizeRoot (moduleData, filePath) {
+function normalizeRoot (moduleData, id) {
   moduleData = moduleData.default || moduleData
-
   if (moduleData.commit) {
-    throw new Error(`[nuxt] ${filePath} should export a method that returns a Vuex instance.`)
+    throw new Error(`[nuxt] ${id} should export a method that returns a Vuex instance.`)
   }
-
   if (typeof moduleData !== 'function') {
     // Avoid TypeError: setting a property that has only a getter when overwriting top level keys
-    moduleData = Object.assign({}, moduleData)
+    moduleData = { ...moduleData }
   }
-  return normalizeModule(moduleData, filePath)
-}
-
-function normalizeModule (moduleData, filePath) {
-  if (moduleData.state && typeof moduleData.state !== 'function') {
-    console.warn(`'state' should be a method that returns an object in ${filePath}`)
-
-    const state = Object.assign({}, moduleData.state)
-    // Avoid TypeError: setting a property that has only a getter when overwriting top level keys
-    moduleData = Object.assign({}, moduleData, { state: () => state })
-  }
+  moduleData.modules = moduleData.modules || {}
   return moduleData
 }
 
-function resolveStoreModules (moduleData, filename) {
+function resolveStoreModules (store, moduleData, id) {
   moduleData = moduleData.default || moduleData
-  // Remove store src + extension (./foo/index.js -> foo/index)
-  const namespace = filename.replace(/\.(js|mjs)$/, '')
-  const namespaces = namespace.split('/')
-  let moduleName = namespaces[namespaces.length - 1]
-  const filePath = `store/${filename}`
 
-  moduleData = moduleName === 'state'
-    ? normalizeState(moduleData, filePath)
-    : normalizeModule(moduleData, filePath)
+  const namespaces = id.split('/').filter(Boolean)
+  let moduleName = namespaces[namespaces.length - 1]
 
   // If src is a known Vuex property
   if (VUEX_PROPERTIES.includes(moduleName)) {
     const property = moduleName
     const propertyStoreModule = getStoreModule(store, namespaces, { isProperty: true })
-
     // Replace state since it's a function
     mergeProperty(propertyStoreModule, moduleData, property)
     return
-  }
-
-  // If file is foo/index.js, it should be saved as foo
-  const isIndexModule = (moduleName === 'index')
-  if (isIndexModule) {
-    namespaces.pop()
-    moduleName = namespaces[namespaces.length - 1]
   }
 
   const storeModule = getStoreModule(store, namespaces)
@@ -119,14 +74,6 @@ function resolveStoreModules (moduleData, filename) {
   }
 }
 
-function normalizeState (moduleData, filePath) {
-  if (typeof moduleData !== 'function') {
-    console.warn(`${filePath} should export a method that returns an object`)
-    const state = Object.assign({}, moduleData)
-    return () => state
-  }
-  return normalizeModule(moduleData, filePath)
-}
 
 function getStoreModule (storeModule, namespaces, { isProperty = false } = {}) {
   // If ./mutations.js
@@ -147,10 +94,9 @@ function mergeProperty (storeModule, moduleData, property) {
   if (!moduleData) {
     return
   }
-
   if (property === 'state') {
     storeModule.state = moduleData || storeModule.state
   } else {
-    storeModule[property] = Object.assign({}, storeModule[property], moduleData)
+    storeModule[property] = { ...storeModule[property], ...moduleData }
   }
 }

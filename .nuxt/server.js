@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { joinURL, normalizeURL, withQuery } from 'ufo'
-import fetch from 'node-fetch-native'
+
 import middleware from './middleware.js'
 import {
    applyAsyncData,
@@ -41,8 +41,6 @@ if (!Vue.__original_use__) {
       // Component: <NuxtLink>
       Vue.component(NuxtLink.name, NuxtLink)
        Vue.component('NLink', NuxtLink)
-
-if (!global.fetch) { global.fetch = fetch }
 
 const noopApp = () => new Vue({ render: h => h('div', { domProps: { id: '__nuxt' } }) })
 
@@ -169,7 +167,7 @@ const render404Page = () => {
   /*
   ** Call global middleware (nuxt.config.js)
   */
-  let midd = ["log"]
+  let midd = []
     midd = midd.map((name) => {
       if (typeof name === 'function') {
         return name

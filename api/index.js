@@ -15,7 +15,12 @@ router.post("/track-data", (req, res) => {
   res.status(200).json({ message: "Success!" });
 });
 
-module.exports = {
+// module.exports = {
+//   path: "/api",
+//   handler: router
+// };
+
+export default {
   path: "/api",
   handler: router
 };

@@ -1,12 +1,7 @@
-const middleware = {}
-
-middleware['auth'] = require('..\\middleware\\auth.js')
-middleware['auth'] = middleware['auth'].default || middleware['auth']
-
-middleware['check-auth'] = require('..\\middleware\\check-auth.js')
-middleware['check-auth'] = middleware['check-auth'].default || middleware['check-auth']
-
-middleware['log'] = require('..\\middleware\\log.js')
-middleware['log'] = middleware['log'].default || middleware['log']
-
+import $2d217e9e from "D:/Users/jackyyang/Desktop/nuxt-blog/middleware/auth.js";
+import $034a8fc3 from "D:/Users/jackyyang/Desktop/nuxt-blog/middleware/check-auth.js";
+const middleware = {
+  auth: $2d217e9e,
+  "check-auth": $034a8fc3
+}
 export default middleware

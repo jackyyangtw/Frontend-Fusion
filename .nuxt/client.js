@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import fetch from 'unfetch'
+
 import middleware from './middleware.js'
 import {
   applyAsyncData,
@@ -31,8 +31,6 @@ if (!Vue.__nuxt__fetch__mixin__) {
 // Component: <NuxtLink>
 Vue.component(NuxtLink.name, NuxtLink)
 Vue.component('NLink', NuxtLink)
-
-if (!global.fetch) { global.fetch = fetch }
 
 // Global shared references
 let _lastPaths = []
@@ -230,7 +228,7 @@ function resolveComponents (route) {
 }
 
 function callMiddleware (Components, context, layout, renderState) {
-  let midd = ["log"]
+  let midd = []
   let unknownMiddleware = false
 
   // If layout is undefined, only call global middleware

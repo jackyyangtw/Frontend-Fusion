@@ -1,2 +1,2 @@
 # Frontend Fusion:
-- 開發圖片緩存
+- upgrade vuetify: https://vuetifyjs.com/en/getting-started/upgrade-guide/

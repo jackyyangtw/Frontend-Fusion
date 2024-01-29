@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 
 const months = [
   "January",
@@ -15,9 +15,9 @@ const months = [
   "December"
 ];
 
-const dateFilter = value => {
-  return formatDate(value);
-};
+// const dateFilter = value => {
+//   return formatDate(value);
+// };
 
 function formatDate(inputDate) {
   const date = new Date(inputDate);
@@ -28,4 +28,13 @@ function formatDate(inputDate) {
   return formattedDate;
 }
 
-Vue.filter('date', dateFilter)
+// Vue.filter('date', dateFilter)
+export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.component('date', {
+    filters: {
+      dateFilter: value => {
+        return formatDate(value);
+      }
+    }
+  })
+})
