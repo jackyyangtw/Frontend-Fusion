@@ -1,8 +1,9 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
+// import Vue from 'vue'
+// import Vuetify from 'vuetify/lib'
 
 // Vue.use(Vuetify)
 
+import { createVuetify } from "vuetify/lib/framework.mjs"
 const vuetify = createVuetify({
   theme: {
     dark: true,

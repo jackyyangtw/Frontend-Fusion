@@ -1,7 +1,9 @@
 <template>
+  <ClientOnly>
     <div v-show="loading" class="fixed inset-0 flex justify-center items-center bg-black/30 dark:bg-white/30 z-30" ref="loadingSpinner">
         <div class="loader"></div>
     </div>
+  </ClientOnly>
 </template>
 
 <script>
@@ -12,7 +14,7 @@
             }, 
         },
         mounted() {
-            if (process.client) {
+            if (process.client && document) {
                 const modal = this.$refs.loadingSpinner;
                 const modalContainer = document.querySelector('body');
                 modalContainer.appendChild(modal);

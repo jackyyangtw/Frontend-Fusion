@@ -8,7 +8,8 @@
             @close="displaySideNav = false"
         ></the-sidenav>
         <div class="placeholder" :style="placeHolderHeight"></div>
-        <nuxt />
+        <!-- <nuxt /> -->
+        <slot />
         <LoadingSpinner></LoadingSpinner>
     </div>
 </template>

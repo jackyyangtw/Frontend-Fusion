@@ -3,11 +3,11 @@
 //     context.redirect("/admin/auth");
 //   }
 // }
-import { useContext } from 'nuxt3'
+// import { useContext } from 'nuxt3'
 
-export default function () {
-  const context = useContext()
+export default defineNuxtRouteMiddleware(() => {
+  const context = useNuxt()
   if (!context.store.getters.isAuthenicated) {
     context.redirect("/admin/auth")
   }
-}
+})

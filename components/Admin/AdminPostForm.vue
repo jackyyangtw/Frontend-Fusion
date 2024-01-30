@@ -75,14 +75,21 @@
             <p class="error--text" v-if="checkboxRules">
                 {{ checkboxErrMsg }}
             </p>
-
-            <div
-                class="quill-editor mb-5 !h-[400px] !text-base"
-                :content="editedPost.content"
-                v-quill:myQuillEditor="editorOption"
-                @change="onEditorChange($event)"
-            ></div>
-
+            <ClientOnly>
+                <!-- <div
+                    class="quill-editor mb-5 !h-[400px] !text-base"
+                    :content="editedPost.content"
+                    v-quill:myQuillEditor="editorOption"
+                    @change="onEditorChange($event)"
+                ></div> -->
+                <QuillEditor 
+                    class="quill-editor mb-5 !h-[400px] !text-base"
+                    :content="editedPost.content"
+                    @change="onEditorChange($event)"
+                    :options="editorOption"
+                >
+                </QuillEditor>
+            </ClientOnly>
             <input
                 type="file"
                 id="getFile"
@@ -153,12 +160,13 @@
             :type="toast.type"
         ></AppToast>
     </v-app>
+
 </template>
 
 <script>
 import AppControlInput from "@/components/UI/AppControlInput.vue";
 import hljs from 'highlight.js'
-
+import { QuillEditor,Quill } from '@vueup/vue-quill'
 export default {
     name: "AdminPostForm",
     components: {
@@ -307,12 +315,13 @@ export default {
             this.$refs.form.resetValidation();
         },
         handleQuillImage() {
+            if(!document) return;
             if (this.post) {
                 // 取得上傳的圖檔
                 const input = document.getElementById("getFile");
                 input.click();
             } else {
-                const quill = this.myQuillEditor;
+                // const quill = this.myQuillEditor;
                 const input = document.createElement("input");
                 input.setAttribute("type", "file");
                 input.setAttribute("accept", "image/*");
@@ -322,7 +331,7 @@ export default {
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
                     reader.onload = () => {
-                        const range = quill.getSelection();
+                        const range = Quill.getSelection();
                         const position = range ? range.index : 0;
                         // 插入圖片，圖片元素的ID設為file name
                         quill.insertEmbed(position, "image", reader.result);
@@ -404,8 +413,8 @@ export default {
                         uploadTask.snapshot.ref
                             .getDownloadURL()
                             .then((downloadURL) => {
-                                this.myQuillEditor.insertEmbed(
-                                    this.myQuillEditor.getSelection().index,
+                                QuillEditor.insertEmbed(
+                                    QuillEditor.getSelection().index,
                                     "image",
                                     downloadURL
                                 );

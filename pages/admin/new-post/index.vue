@@ -1,10 +1,10 @@
 <template>
     <div class="my-10">
         <AppToast
+            @closeToast="toast.showToast = false"
             :showToast="toast.showToast"
             :message="toast.message"
             :type="toast.type"
-            @closeToast="toast.showToast = false"
         ></AppToast>
         <admin-post-form
             @submit="submitForm"
@@ -44,7 +44,6 @@ export default {
         };
     },
     middleware: ["check-auth", "auth"],
-    // layout: "admin",
     methods: {
         async submitForm(postData) {
             try {
@@ -132,7 +131,6 @@ export default {
             return this.userData.name || "";
         },
     },
-    // layout: "admin",
     created() {
         this.$store.dispatch("user/setUserData");
         // this.$store.dispatch("refreshToken");

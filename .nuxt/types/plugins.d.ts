@@ -21,6 +21,7 @@ type NuxtAppInjections =
   InjectionType<typeof import("../../plugins/date-filter").default> &
   InjectionType<typeof import("../../plugins/firebase").default> &
   InjectionType<typeof import("../../plugins/highlight").default> &
+  InjectionType<typeof import("../../plugins/init").default> &
   InjectionType<typeof import("../../plugins/tags").default> &
   InjectionType<typeof import("../../plugins/vue-quill-editor").default> &
   InjectionType<typeof import("../../plugins/vuetify").default>

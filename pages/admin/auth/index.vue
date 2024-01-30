@@ -86,7 +86,6 @@
 <script>
 export default {
     name: "AdminAuthPage",
-    // layout: "admin",
     head() {
         return {
             title: "登入/註冊",

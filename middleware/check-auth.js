@@ -3,9 +3,9 @@
 //   context.store.dispatch("initAuth", context.req);
 // }
 
-import { useContext } from 'nuxt3'
+// import { useContext } from 'nuxt3'
 
-export default function () {
-  const context = useContext()
+export default defineNuxtRouteMiddleware(() => {
+  const context = useNuxt()
   context.store.dispatch("initAuth", context.req);
-}
+})
