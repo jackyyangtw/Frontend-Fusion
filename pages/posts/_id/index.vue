@@ -15,13 +15,14 @@
                             :provider="imgProvider"
                             :src="previewImg"
                             placeholder
-                            sizes="100vw"
+                            sizes="100%"
                         />
                     </transition>
                 </div>
                 <div class="flex justify-between">
                     <h1
                         class="post-title text-sky-600 dark:text-pink-400 text-4xl font-bold pb-2"
+                        v-if="loadedPost"
                     >
                         {{ loadedPost.title }}
                     </h1>
@@ -41,11 +42,12 @@
                 </div>
                 <h2
                     class="post-content text-black dark:text-white text-xl font-bold pb-3"
+                    v-if="loadedPost"
                 >
                     {{ loadedPost.previewText }}
                 </h2>
                 <div class="post-details mb-5">
-                    <div class="text-gray-400 dark:text-gray-500 mr-3">
+                    <div class="text-gray-400 dark:text-gray-500 mr-3" v-if="loadedPost">
                         Last updated on {{ loadedPost.updatedDate | date }}
                     </div>
                     <div class="text-gray-400 dark:text-gray-500 mr-5">
@@ -53,14 +55,16 @@
                         <a
                             :href="'mailto:' + userEmail"
                             class="italic text-gray-500 dark:text-gray-400 hover:text-gray-600"
+                            v-if="loadedPost"
                         >
                             {{ loadedPost.author }}@{{ userEmailMain }}</a
                         >
                     </div>
                 </div>
-                <div class="ql-snow">
+                <div class="ql-snow" v-if="loadedPost">
                     <div
                         class="post-content text-slate-950 dark:text-white ql-editor !p-0 !leading-8"
+
                         v-html="loadedPost.content"
                     ></div>
                 </div>
@@ -79,30 +83,54 @@ export default {
         CommentList,BannerSkeleton
     },
     head() {
+        if(this.loadedPost) {
+            return {
+                title: this.loadedPost.title,
+                meta: [
+                    {
+                        hid: "description",
+                        name: "description",
+                        content: this.loadedPost.previewText,
+                    },
+                    {
+                        hid: "author",
+                        name: "author",
+                        content: this.loadedPost.author,
+                    },
+                ],
+                script: [
+                    {
+                        type: "application/ld+json",
+                        json: this.structuredData,
+                    },
+                ],
+            };
+        }
         return {
-            title: this.loadedPost.title,
+            title: "Loading...",
             meta: [
-                {
-                    hid: "description",
-                    name: "description",
-                    content: this.loadedPost.previewText,
-                },
-                {
-                    hid: "author",
-                    name: "author",
-                    content: this.loadedPost.author,
-                },
-            ],
-            script: [
-                {
-                    type: "application/ld+json",
-                    json: this.structuredData,
-                },
-            ],
+                    {
+                        hid: "description",
+                        name: "description",
+                        content: "Loading...",
+                    },
+                    {
+                        hid: "author",
+                        name: "author",
+                        content: "Loading...",
+                    },
+                ],
+                script: [
+                    {
+                        type: "application/ld+json",
+                        json: this.structuredData,
+                    },
+                ],
         };
     },
     asyncData(context) {
         const getStructuredData = (postData) => {
+            if (!postData) return {};
             return {
                 "@context": "http://schema.org",
                 "@type": "Article",
@@ -138,10 +166,12 @@ export default {
     data() {
         return {
             isLoadingBanner: true,
+            loadedPost: null,
         };
     },
     computed: {
         isAuthor() {
+            if(!this.loadedPost) return false;
             return this.loadedPost.userId === this.userData.id;
         },
         postId() {
@@ -159,6 +189,7 @@ export default {
             return this.$store.getters["user/userData"] || "";
         },
         previewImg() {
+            if(!this.loadedPost) return "";
             return (
                 this.loadedPost.previewImgUrl ||
                 this.loadedPost.thumbnail ||
@@ -166,6 +197,7 @@ export default {
             );
         },
         imgProvider() {
+            if(!this.loadedPost) return "";
             const hasImg =
                 this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;
             if (process.env.NODE_ENV === "production") {
