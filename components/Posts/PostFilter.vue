@@ -64,7 +64,7 @@
                             <span class="ml-3"
                                 >全部類型
                                 <span
-                                    class="font-bold text-sky-500 dark:text-pink-500"
+                                    class="font-bold text-sky-600 dark:text-pink-400"
                                     >({{ posts.length }})</span
                                 >
                             </span>
@@ -83,7 +83,7 @@
                             <span class="ml-3"
                                 >{{ tag }}
                                 <span
-                                    class="font-bold text-sky-500 dark:text-pink-500"
+                                    class="font-bold text-sky-600 dark:text-pink-400"
                                     >({{ getPostCount(tag) }})</span
                                 >
                             </span>

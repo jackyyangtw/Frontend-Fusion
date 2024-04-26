@@ -9,6 +9,7 @@
                             provider="static"
                             class="max-w-[60px]"
                             src="/images/site-icon.svg"
+                            alt="logo"
                         />
                     </li>
                     <li class="nav-item">
@@ -95,6 +96,6 @@ export default {
 
 .nav-item a:hover,
 .nav-item a:active {
-    @apply text-sky-500 dark:text-pink-500;
+    @apply text-sky-600 dark:text-pink-400;
 }
 </style>

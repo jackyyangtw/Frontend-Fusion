@@ -10,6 +10,7 @@
                     provider="static"
                     class="max-w-[30px] mr-3"
                     src="/images/site-icon.svg"
+                    alt="logo"
                 />
                 Frontend Fusion
             </nuxt-link>
@@ -115,6 +116,6 @@ export default {
 .nav-item a:hover,
 .nav-item a:active,
 .nav-item a.nuxt-link-active {
-    @apply font-bold text-sky-500 dark:text-pink-500;
+    @apply font-bold text-sky-600 dark:text-pink-400;
 }
 </style>

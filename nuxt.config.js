@@ -36,6 +36,9 @@ module.exports = {
         href: "https://fonts.googleapis.com/css?family=Open+Sans",
       },
     ],
+    htmlAttrs: {
+      lang: 'zh-Hant',
+    },
   },
 
 

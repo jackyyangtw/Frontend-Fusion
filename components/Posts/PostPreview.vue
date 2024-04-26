@@ -32,6 +32,7 @@
                                         photoURL ||
                                         require('/static/images/no-user-image.gif')
                                     "
+                                    alt="user icon"
                                 />
                                 <p class="text-sm text-gray-700 dark:text-white">
                                     {{ author }} •

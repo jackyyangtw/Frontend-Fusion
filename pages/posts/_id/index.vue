@@ -14,17 +14,18 @@
                             alt=""
                             :provider="imgProvider"
                             :src="previewImg"
-                            placeholder 
+                            placeholder
+                            sizes="100vw"
                         />
                     </transition>
                 </div>
                 <div class="flex justify-between">
                     <h1
-                        class="post-title text-sky-500 dark:text-pink-500 text-4xl font-bold pb-2"
+                        class="post-title text-sky-600 dark:text-pink-400 text-4xl font-bold pb-2"
                     >
                         {{ loadedPost.title }}
                     </h1>
-                    <nuxt-link v-if="isAuthor" :to="`/admin/${postId}`">
+                    <nuxt-link v-if="isAuthor" :to="`/admin/${postId}`" aria-label="edit icon">
                         <label
                             for="photo"
                             class="cursor-pointer w-10 h-10 p-2 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-300"
@@ -178,9 +179,7 @@ export default {
         this.$store.dispatch("user/setUserData");
     },
     mounted() {
-        setTimeout(() => {
-            this.isLoadingBanner = false;
-        }, 1000);
+        this.isLoadingBanner = false;
     },
 };
 </script>

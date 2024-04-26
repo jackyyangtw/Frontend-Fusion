@@ -3,7 +3,7 @@
         <div class="container mx-auto" v-if="hasPosts">
             <p class="text-style">
                 關鍵字:
-                <span class="text-sky-500 dark:text-pink-500">{{
+                <span class="text-sky-600 dark:text-pink-400">{{
                     this.searchText
                 }}</span>
             </p>
