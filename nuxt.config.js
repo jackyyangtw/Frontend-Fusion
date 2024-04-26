@@ -161,5 +161,6 @@ module.exports = {
           return routes;
         });
     },
+    fallback: true
   },
 };
