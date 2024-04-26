@@ -90,13 +90,13 @@ module.exports = {
   },
   axios: {
     baseURL:
-      process.env.BASE_URL ||
+      // process.env.BASE_URL ||
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
     credentials: false,
   },
   env: {
     baseUrl:
-      process.env.BASE_URL ||
+      // process.env.BASE_URL ||
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
     fbAPIKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
     DEFAULT_PREVIEW_IMG_URL: "/images/post-preview-picture.png",
