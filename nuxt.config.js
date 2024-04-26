@@ -8,7 +8,7 @@ require('dotenv').config()
 
 module.exports = {
   target: isDev ? "server" : "static",
-  target: "server",
+  // target: "server",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   // buildModules: ["@nuxt/image"],
   // image: {
