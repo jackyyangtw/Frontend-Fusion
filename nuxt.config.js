@@ -4,8 +4,11 @@ const axios = require("axios");
 
 const isDev = process.env.NODE_ENV !== "production";
 
+require('dotenv').config()
+
 module.exports = {
-  target: isDev ? "server" : "static",
+  // target: isDev ? "server" : "static",
+  target: "server",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   // buildModules: ["@nuxt/image"],
   // image: {
@@ -98,7 +101,7 @@ module.exports = {
     baseUrl:
       // process.env.BASE_URL ||
       "https://nuxt-blog-b5610-default-rtdb.firebaseio.com",
-    fbAPIKey: "AIzaSyBY_GSIZmBRcvwqbA6ZXJzFlV3UYoO88os",
+    fbAPIKey: process.env.fbAPIKey,
     DEFAULT_PREVIEW_IMG_URL: "/images/post-preview-picture.png",
   },
   build: {
@@ -154,6 +157,7 @@ module.exports = {
               },
             });
           }
+          console.log(routes)
           return routes;
         });
     },
