@@ -14,7 +14,7 @@
                         <nuxt-img
                             class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
                             :provider="imgProvider"
-                            :preload="index === 0"
+                            :preload="index === 0 || index === 1"
                             :src="cachedPreviewImg"
                             :key="id"
                             fit="cover"
