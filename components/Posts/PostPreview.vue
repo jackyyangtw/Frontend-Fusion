@@ -12,11 +12,12 @@
                 >
                     <figure class="post-thumbnail relative h-[200px] xl:h-[250px]">
                         <nuxt-img
+                            class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
                             :provider="imgProvider"
                             :preload="index === 0"
-                            class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
                             :src="cachedPreviewImg"
                             :key="id"
+                            :ratio="7/4"
                             alt=""
                             @load="handleLoad(previewImg)"
                         />

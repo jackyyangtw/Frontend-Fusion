@@ -16,6 +16,7 @@
                             :src="previewImg"
                             placeholder
                             sizes="100%"
+                            :ratio="7/4"
                         />
                     </transition>
                 </div>
