@@ -1,6 +1,6 @@
 <template>
     <div class="single-post-page container">
-        <div class="w-full xl:w-[900px] mx-auto">
+        <div class="w-full xl:w-[900px] mx-auto backdrop-blur-lg bg-slate-50/[0.8] dark:bg-slate-950/[0.8] rounded overflow-hidden">
             <section class="post">
                 <div class="mb-5 rel lg:min-h-[514px]">
                     <BannerSkeleton
@@ -19,54 +19,56 @@
                         />
                     </transition>
                 </div>
-                <div class="flex justify-between">
-                    <h1
-                        class="post-title text-sky-600 dark:text-pink-400 text-3xl md:text-4xl font-bold pb-2"
-                        v-if="loadedPost"
-                    >
-                        {{ loadedPost.title }}
-                    </h1>
-                    <nuxt-link v-if="isAuthor" :to="`/admin/${postId}`" aria-label="edit icon">
-                        <label
-                            for="photo"
-                            class="cursor-pointer w-10 h-10 p-2 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-300"
-                        >
-                                <img
-                                    :src="
-                                        require('@/static/images/edit-pen-icon.svg')
-                                    "
-                                    alt=""
-                                />
-                        </label>
-                    </nuxt-link>
-                </div>
-                <h2
-                    class="post-content text-black dark:text-white text-xl font-bold pb-3"
-                    v-if="loadedPost"
-                >
-                    {{ loadedPost.previewText }}
-                </h2>
-                <div class="post-details mb-5">
-                    <div class="text-gray-400 dark:text-gray-500 mr-3" v-if="loadedPost">
-                        Last updated on {{ loadedPost.updatedDate | date }}
-                    </div>
-                    <div class="text-gray-400 dark:text-gray-500 mr-5">
-                        Written by &nbsp;
-                        <a
-                            :href="'mailto:' + userEmail"
-                            class="italic text-gray-500 dark:text-gray-400 hover:text-gray-600"
+                <div class="px-10 py-5">
+                    <div class="flex justify-between">
+                        <h1
+                            class="post-title text-sky-600 dark:text-pink-400 text-3xl md:text-4xl font-bold pb-2"
                             v-if="loadedPost"
                         >
-                            {{ loadedPost.author }}@{{ userEmailMain }}</a
-                        >
+                            {{ loadedPost.title }}
+                        </h1>
+                        <nuxt-link v-if="isAuthor" :to="`/admin/${postId}`" aria-label="edit icon">
+                            <label
+                                for="photo"
+                                class="cursor-pointer w-10 h-10 p-2 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-300"
+                            >
+                                    <img
+                                        :src="
+                                            require('@/static/images/edit-pen-icon.svg')
+                                        "
+                                        alt=""
+                                    />
+                            </label>
+                        </nuxt-link>
                     </div>
-                </div>
-                <div class="ql-snow" v-if="loadedPost">
-                    <div
-                        class="post-content text-slate-950 dark:text-white ql-editor !p-0 !leading-8"
-
-                        v-html="loadedPost.content"
-                    ></div>
+                    <h2
+                        class="post-content text-black dark:text-white text-xl font-bold pb-3"
+                        v-if="loadedPost"
+                    >
+                        {{ loadedPost.previewText }}
+                    </h2>
+                    <div class="post-details mb-5">
+                        <div class="text-gray-400 dark:text-gray-500 mr-3" v-if="loadedPost">
+                            Last updated on {{ loadedPost.updatedDate | date }}
+                        </div>
+                        <div class="text-gray-400 dark:text-gray-500 mr-5">
+                            Written by &nbsp;
+                            <a
+                                :href="'mailto:' + userEmail"
+                                class="italic text-gray-500 dark:text-gray-400 hover:text-gray-600"
+                                v-if="loadedPost"
+                            >
+                                {{ loadedPost.author }}@{{ userEmailMain }}</a
+                            >
+                        </div>
+                    </div>
+                    <div class="ql-snow" v-if="loadedPost">
+                        <div
+                            class="post-content text-slate-950 dark:text-white ql-editor !p-0 !leading-8"
+    
+                            v-html="loadedPost.content"
+                        ></div>
+                    </div>
                 </div>
             </section>
         </div>

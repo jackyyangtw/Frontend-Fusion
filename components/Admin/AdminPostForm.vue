@@ -476,6 +476,6 @@ export default {
 }
 .theme--dark.v-application {
     /* background: #141B2A !important; */
-    @apply bg-gray-800/[0.6];
+    @apply bg-gray-800/[0.7];
 }
 </style>

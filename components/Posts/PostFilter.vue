@@ -45,7 +45,7 @@
             aria-label="Sidebar"
         >
             <div
-                class="h-full px-3 py-4 overflow-y-auto bg-slate-200 dark:bg-gray-900 xl:dark:bg-gray-900/[0.5] z-10"
+                class="h-full px-3 py-4 overflow-y-auto bg-slate-200/[0.5] dark:bg-gray-900 xl:dark:bg-gray-900/[0.5] z-10"
             >
                 <div
                     class="placeholder"

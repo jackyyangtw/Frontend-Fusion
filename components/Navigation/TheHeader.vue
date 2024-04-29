@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[60px] fixed z-10 w-full">
+    <div class="h-[60px] fixed z-20 w-full">
         <div class="glass" ref="glassRef"></div>
         <header class="the-header" ref="theHeader">
             <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
@@ -76,14 +76,19 @@ export default {
     right: 0;
     bottom: 0;
     z-index: -1;
+    border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+html.dark .glass {
     border-bottom: solid 1px rgba(255,255,255, 0.1);
 }
 html .glass.active {
     background: rgba(255, 255, 255, 0.8);
+    /* border-bottom: solid 1px rgba(0,0,0,0.3); */
 }
 
 html.dark .glass.active {
     background: rgba(2, 6, 23, 0.8);
+    /* border-bottom: solid 1px rgba(255,255,255, 0.1); */
 }
 
 .header-container {

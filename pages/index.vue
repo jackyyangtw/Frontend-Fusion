@@ -1,9 +1,9 @@
 <template>
     <div class="home-page">
         <section
-            class="banner relative intro bg-slate-100 dark:bg-slate-950"
+            class="banner relative intro bg-slate-100/[0.8] dark:bg-slate-950/[0.4]"
         >
-            <AuroraBg />
+            <!-- <AuroraBg /> -->
             <div class="w-full" :style="placeHolderHeight"></div>
             <div class="rounded-md p-6 min-w-[360px] min-h-[200px] mx-auto" style="z-index: 3;">
                 <div
@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 .intro {
-    height: 400px;
+    height: 480px;
     position: relative;
     padding: 30px;
     box-sizing: border-box;

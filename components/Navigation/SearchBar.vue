@@ -18,7 +18,7 @@
             class="flex-auto max-w-full search-bar text-slate-700 md:max-w-[350px] dark:text-white"
         >
             <input
-                class="text-slate-700 border border-indigo-600 placeholder-slate-700 dark:placeholder-white dark:border-white dark:text-white dark:focus:text-slate-950"
+                class="shadow-md text-slate-700 border border-indigo-600 placeholder-slate-700 dark:placeholder-white dark:border-white dark:text-white dark:focus:text-white"
                 type="text"
                 placeholder="搜尋"
                 v-model="searchText"
@@ -83,7 +83,7 @@ export default {
     width: 100%;
     height: 100%;
     outline: none;
-    background-color: #F1F5F9;
+    background-color: white;
     font-size: 1.2rem;
     transition: all 0.2s ease-in-out;
     border-radius: 30px;
@@ -93,7 +93,7 @@ export default {
 
 /* dark mode */
 html.dark .search-bar input{
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .search-bar input::placeholder {

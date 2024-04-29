@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen" :class="isDark ? 'dark' : 'light'">
+    <div class="min-h-screen bg-slate-100 dark:bg-slate-950" :class="isDark ? 'dark' : 'light'">
         <the-header
             @sidenavToggle="displaySideNav = !displaySideNav"
         ></the-header>
@@ -8,7 +8,7 @@
             @close="displaySideNav = false"
         ></the-sidenav>
         <div class="placeholder" :style="placeHolderHeight" v-show="notAtHome"></div>
-        <nuxt class="relative" style="z-index: 3;"/>
+        <nuxt class="relative z-10"/>
         <aurora-bg></aurora-bg>
         <LoadingSpinner></LoadingSpinner>
     </div>
