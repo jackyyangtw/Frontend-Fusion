@@ -1,9 +1,11 @@
 <template>
     <div class="home-page">
         <section
-            class="intro bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-950 dark:to-slate-800"
+            class="banner relative intro bg-slate-100 dark:bg-slate-950"
         >
-            <div class="rounded-md p-6 min-w-[360px] min-h-[200px] mx-auto">
+            <AuroraBg />
+            <div class="w-full" :style="placeHolderHeight"></div>
+            <div class="rounded-md p-6 min-w-[360px] min-h-[200px] mx-auto" style="z-index: 3;">
                 <div
                     class="flex flex-col justify-center items-center h-[200px]"
                 >
@@ -28,6 +30,7 @@
 
 <script>
 import PostPreviewSkeleton from '../components/UI/PostPreviewSkeleton.vue';
+import AuroraBg from '../components/UI/AuroraBg.vue';
 export default {
     head() {
         return {
@@ -42,7 +45,7 @@ export default {
         };
     },
     components: {
-        PostPreviewSkeleton,
+        PostPreviewSkeleton,AuroraBg
     },
     computed: {
         loadedPosts() {
@@ -54,6 +57,10 @@ export default {
         isLoadingPosts() {
             return this.$store.getters["post/isLoadingPosts"];
         },
+        placeHolderHeight() {
+            const headerHeight = this.$store.getters["ui/headerHeight"];
+            return `height: ${headerHeight}px`;
+        },
     },
     mounted() {
         this.$store.commit("post/setIsLoadingPosts", false);
@@ -63,7 +70,7 @@ export default {
 
 <style scoped>
 .intro {
-    height: 320px;
+    height: 400px;
     position: relative;
     padding: 30px;
     box-sizing: border-box;
@@ -73,6 +80,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 @media (min-width: 768px) {
@@ -80,4 +88,6 @@ export default {
         font-size: 2rem;
     }
 }
+
+
 </style>

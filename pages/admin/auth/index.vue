@@ -6,7 +6,7 @@
             :type="toast.messageType"
             :message="toast.message"
         />
-        <section class="bg-slate-100 dark:bg-slate-950">
+        <section>
             <div
                 class="flex flex-col items-center justify-center px-6 mx-auto h-screen lg:py-0"
             >

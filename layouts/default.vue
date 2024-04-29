@@ -1,5 +1,5 @@
 <template>
-    <div :class="isDark ? 'dark' : 'light'">
+    <div class="min-h-screen" :class="isDark ? 'dark' : 'light'">
         <the-header
             @sidenavToggle="displaySideNav = !displaySideNav"
         ></the-header>
@@ -7,8 +7,9 @@
             :show="displaySideNav"
             @close="displaySideNav = false"
         ></the-sidenav>
-        <div class="placeholder" :style="placeHolderHeight"></div>
-        <nuxt />
+        <div class="placeholder" :style="placeHolderHeight" v-show="notAtHome"></div>
+        <nuxt class="relative" style="z-index: 3;"/>
+        <aurora-bg></aurora-bg>
         <LoadingSpinner></LoadingSpinner>
     </div>
 </template>
@@ -17,11 +18,13 @@
 import TheHeader from "../components/Navigation/TheHeader.vue";
 import TheSidenav from "../components/Navigation/TheSidenav.vue";
 import LoadingSpinner from "../components/UI/LoadingSpinner.vue";
+import AuroraBg from '../components/UI/AuroraBg.vue';
 export default {
     components: {
         TheHeader,
         TheSidenav,
         LoadingSpinner,
+        AuroraBg
     },
     data() {
         return {
@@ -35,6 +38,9 @@ export default {
         placeHolderHeight() {
             const headerHeight = this.$store.getters["ui/headerHeight"];
             return `height: ${headerHeight}px`;
+        },
+        notAtHome() {
+            return this.$route.path !== "/";
         },
     },
     created() {

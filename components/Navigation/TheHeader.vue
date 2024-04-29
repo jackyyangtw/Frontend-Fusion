@@ -1,5 +1,6 @@
 <template>
-    <div class="h-[60px] fixed z-10 w-full bg-white dark:bg-gray-900">
+    <div class="h-[60px] fixed z-10 w-full">
+        <div class="glass" ref="glassRef"></div>
         <header class="the-header" ref="theHeader">
             <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
             <nuxt-link
@@ -54,12 +55,37 @@ export default {
             "ui/setHeaderHeight",
             this.$refs.theHeader.clientHeight
         );
+        window.addEventListener("scroll", () => {
+            this.$refs.glassRef.classList.toggle(
+                "active",
+                window.scrollY > 0
+            );
+        });
     },
 };
 </script>
 
 
 <style scoped>
+.glass {
+    background: transparent;
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    border-bottom: solid 1px rgba(255,255,255, 0.1);
+}
+html .glass.active {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+html.dark .glass.active {
+    background: rgba(2, 6, 23, 0.8);
+}
+
 .header-container {
     height: 60px;
 }

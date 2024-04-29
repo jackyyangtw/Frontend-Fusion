@@ -83,12 +83,17 @@ export default {
     width: 100%;
     height: 100%;
     outline: none;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #F1F5F9;
     font-size: 1.2rem;
     transition: all 0.2s ease-in-out;
     border-radius: 30px;
     padding: 3px;
     padding-left: 20px;
+}
+
+/* dark mode */
+html.dark .search-bar input{
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .search-bar input::placeholder {
@@ -98,7 +103,4 @@ export default {
     padding: 5px;
 }
 
-.search-bar input:focus {
-    background-color: white;
-}
 </style>
