@@ -15,8 +15,9 @@
                             :provider="imgProvider"
                             :src="previewImg"
                             placeholder
-                            sizes="100%"
-                            :ratio="7/4"
+                            fit="cover"
+                            width="1792"
+                            height="1024"
                         />
                     </transition>
                 </div>

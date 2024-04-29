@@ -17,7 +17,9 @@
                             :preload="index === 0"
                             :src="cachedPreviewImg"
                             :key="id"
-                            :ratio="7/4"
+                            fit="cover"
+                            width="1792"
+                            height="1024"
                             alt=""
                             @load="handleLoad(previewImg)"
                         />
