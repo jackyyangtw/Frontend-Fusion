@@ -1,6 +1,6 @@
 <template>
     <div class="single-post-page container">
-        <div class="w-full xl:w-[900px] mx-auto backdrop-blur-lg bg-slate-50/[0.8] dark:bg-slate-950/[0.8] rounded overflow-hidden">
+        <div class="w-full xl:w-[900px] mx-auto backdrop-blur-lg bg-slate-50 dark:bg-slate-950/[0.8] rounded overflow-hidden">
             <section class="post">
                 <div class="mb-5 rel lg:min-h-[514px]">
                     <BannerSkeleton

@@ -10,12 +10,12 @@
                     class="flex flex-col justify-center items-center h-[200px]"
                 >
                     <h1
-                        class="text-3xl font-bold mb-4 text-blue-400 dark:text-pink-400"
+                        class="text-center text-3xl xl:text-5xl font-bold mb-4"
                     >
                         Frontend Fusion - 前端技術融合
                     </h1>
                     <h2
-                        class="text-lg font-medium mb-2 text-slate-950 dark:text-slate-50"
+                        class="text-lg xl:text-2xl font-medium mb-2 text-slate-950 dark:text-slate-50"
                     >
                         探索最新的前端技術和工具
                     </h2>
@@ -83,10 +83,23 @@ export default {
     flex-direction: column;
 }
 
-@media (min-width: 768px) {
-    .intro h1 {
-        font-size: 2rem;
-    }
+h1 {
+    /* color: #f35626; */
+	background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-animation: hue 10s infinite linear;
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    background-position: 0% 50%;
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    background-position: 100% 50%;
+  }
 }
 
 

@@ -40,19 +40,13 @@ export const actions = {
             localStorage.setItem('isDark', localIsDark);
             if (localIsDark === 'true') {
                 commit('setDark', true);
-            } else {
-                commit('setDark', false);
-            }
-            if (localIsDark === 'true') {
                 document.documentElement.classList.add('dark');
                 document.documentElement.classList.remove('light');
-                // document.body.classList.add('bg-slate-950');
             } else {
+                commit('setDark', false);
                 document.documentElement.classList.add('light');
                 document.documentElement.classList.remove('dark');
-                // document.body.classList.add('bg-slate-100');
             }
-            // document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
             Nuxt.$vuetify.theme.dark = state.isDark;
         }
     },
@@ -67,7 +61,6 @@ export const actions = {
             document.documentElement.classList.add('light');
             document.documentElement.classList.remove('dark')
         }
-        // document.body.classList.add('bg-slate-100', 'dark:bg-slate-950');
         Nuxt.$vuetify.theme.dark = state.isDark;
     },
     setLoading(vuexContext, loading) {

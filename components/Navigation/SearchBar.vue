@@ -1,5 +1,10 @@
 <template>
-    <div class="flex flex-auto max-w-full justify-center items-center px-3">
+    <div class="flex flex-auto max-w-full justify-center items-center px-3"
+    :class="{
+        'scale-110': isFocus,
+        'scale-100': !isFocus,
+    }"
+    >
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -16,6 +21,7 @@
         </svg>
         <div
             class="flex-auto max-w-full search-bar text-slate-700 md:max-w-[350px] dark:text-white"
+
         >
             <input
                 class="shadow-md text-slate-700 border border-indigo-600 placeholder-slate-700 dark:placeholder-white dark:border-white dark:text-white dark:focus:text-white"
@@ -23,8 +29,9 @@
                 placeholder="搜尋"
                 v-model="searchText"
                 @keyup.enter="search"
+                @focus="handleFocus"
+                @blur="handleblur"
                 ref="searchInput"
-                @focus="searchText = ''"
             />
         </div>
     </div>
@@ -37,6 +44,7 @@ export default {
     data() {
         return {
             searchText: "",
+            isFocus: false,
         };
     },
     methods: {
@@ -59,6 +67,13 @@ export default {
                     this.$refs.searchInput.blur();
                 }
             }, 1000);
+        },
+        handleFocus() {
+            this.isFocus = true;
+            // this.searchText = '';
+        },
+        handleblur() {
+            this.isFocus = false;
         },
     },
 };

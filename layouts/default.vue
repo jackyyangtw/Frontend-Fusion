@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-slate-100 dark:bg-slate-950" :class="isDark ? 'dark' : 'light'">
+    <div class="min-h-screen bg-slate-100 dark:bg-slate-800" :class="isDark ? 'dark' : 'light'">
         <the-header
             @sidenavToggle="displaySideNav = !displaySideNav"
         ></the-header>
