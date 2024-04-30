@@ -21,10 +21,10 @@
                         />
                     </transition>
                 </div>
-                <div class="px-10 py-5">
+                <div class="px-5 py-5 lg:px-10">
                     <div class="flex justify-between">
                         <h1
-                            class="post-title text-sky-600 dark:text-pink-400 text-3xl md:text-4xl font-bold pb-2"
+                            class="post-title text-sky-600 dark:text-pink-400 text-2xl md:text-4xl font-bold pb-2"
                             v-if="loadedPost"
                         >
                             {{ loadedPost.title }}
@@ -44,7 +44,7 @@
                         </nuxt-link>
                     </div>
                     <h2
-                        class="post-content text-black dark:text-white text-xl font-bold pb-3"
+                        class="post-content text-black dark:text-white text-md md:text-xl font-bold pb-3"
                         v-if="loadedPost"
                     >
                         {{ loadedPost.previewText }}
@@ -222,8 +222,8 @@ export default {
 
 <style scoped lang="postcss">
 .single-post-page {
-    padding: 30px;
     box-sizing: border-box;
+    padding: 30px;
 }
 
 .post-title {
