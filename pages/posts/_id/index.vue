@@ -205,7 +205,8 @@ export default {
             const hasImg =
                 this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;
             if (process.env.NODE_ENV === "production") {
-                return hasImg ? "" : "static";
+                // return hasImg ? "" : "static";
+                return "static";
             } else {
                 return hasImg ? "ipx" : "static";
             }
