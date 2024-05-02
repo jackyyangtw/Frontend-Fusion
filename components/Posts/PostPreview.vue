@@ -206,7 +206,7 @@ export default {
         imgProvider() {
             const hasImg = this.previewImgUrl || this.thumbnail;
             if (process.env.NODE_ENV === "production") {
-                return "static";
+                return hasImg ? "netlify" : "static";
             } else {
                 return hasImg ? "ipx" : "static";
             }
