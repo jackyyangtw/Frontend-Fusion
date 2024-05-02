@@ -10,12 +10,12 @@ module.exports = {
   // target: isDev ? "server" : "static",
   target: "server",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
-  image: isDev ? {} : {
-    provider: 'netlify',
-    domains: [
-      'firebasestorage.googleapis.com'
-    ]
-  },
+  // image: isDev ? {} : {
+  //   provider: 'netlify',
+  //   domains: [
+  //     'firebasestorage.googleapis.com'
+  //   ]
+  // },
 
   head: {
     title: pkg.name,
