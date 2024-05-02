@@ -223,9 +223,12 @@ export default {
 <style scoped lang="postcss">
 .single-post-page {
     box-sizing: border-box;
-    padding: 30px;
 }
-
+@media (min-width: 768px) {
+    .single-post-page {
+        padding: 30px;
+    }
+}
 .post-title {
     margin: 0;
 }
