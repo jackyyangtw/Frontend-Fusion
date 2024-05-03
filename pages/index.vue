@@ -40,6 +40,11 @@ export default {
                     content: "Frontend Fusion",
                 },
             ],
+            link: this.loadedPosts.slice(0, 2).map(post => ({
+                rel: "preload",
+                href: post?.previewImgUrl,
+                as: "image",
+            })),
         };
     },
     components: {
@@ -84,9 +89,10 @@ export default {
 h1 {
     /* color: #f35626; */
 	background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	-webkit-animation: hue 10s infinite linear;
+	animation: hue 10s infinite linear;
 }
 
 @keyframes hue {

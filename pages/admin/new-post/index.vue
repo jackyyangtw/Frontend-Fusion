@@ -1,5 +1,5 @@
 <template>
-    <div class="my-10">
+    <div class="py-10">
         <AppToast
             :showToast="toast.showToast"
             :message="toast.message"

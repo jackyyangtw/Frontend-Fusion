@@ -1,6 +1,7 @@
 <template>
     <div class="h-[60px] fixed z-20 w-full">
-        <div class="glass" ref="glassRef"></div>
+        <div class="glass" ref="glassRef"
+        ></div>
         <header class="the-header" ref="theHeader">
             <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
             <nuxt-link
@@ -18,20 +19,21 @@
             <ModeSwitcher></ModeSwitcher>
             <div class="navigation-items">
                 <ul class="nav-list">
-                    <li class="nav-item">
+                    
+                    <li class="nav-item" v-for="nav in navLinks" :key="nav">
                         <nuxt-link
                             class="text-slate-700 dark:text-white"
-                            to="/posts"
-                            >分類</nuxt-link
+                            :to="nav.to"
+                            >{{nav.title}}</nuxt-link
                         >
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <nuxt-link
                             class="text-slate-700 dark:text-white"
                             to="/admin"
                             >管理</nuxt-link
                         >
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </header>
@@ -49,13 +51,36 @@ export default {
         SearchBar,
         ModeSwitcher,
     },
+    computed: {
+        isPostsPage() {
+            return this.$route.name === "posts";
+        },
+        isDark() {
+            return this.$store.getters["ui/isDark"];
+        },
+        navLinks() {
+            return this.$store.getters.navLinks
+        },
+    },
+    watch: {
+        isPostsPage(newValue) {
+            const glassRef = this.$refs.glassRef;
+            if (newValue === true) {
+                glassRef.classList.add("active");
+            } else {
+                glassRef.classList.remove("active");
+            }
+        },
+    },
     mounted() {
         this.$store.commit(
             "ui/setHeaderHeight",
             this.$refs.theHeader.clientHeight
         );
         window.addEventListener("scroll", () => {
-            this.$refs.glassRef.classList.toggle(
+            const glassRef = this.$refs.glassRef;
+            if(this.isPostsPage) return;
+            glassRef.classList.toggle(
                 "active",
                 window.scrollY > 0
             );
@@ -82,12 +107,10 @@ html.dark .glass {
 }
 html .glass.active {
     background: rgba(255, 255, 255, 0.8);
-    /* border-bottom: solid 1px rgba(0,0,0,0.3); */
 }
 
 html.dark .glass.active {
     background: rgba(2, 6, 23, 0.8);
-    /* border-bottom: solid 1px rgba(255,255,255, 0.1); */
 }
 
 .header-container {

@@ -14,11 +14,8 @@
                     <li class="nav-item">
                         <nuxt-link to="/">Fronted Fusion</nuxt-link>
                     </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/posts">分類</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <nuxt-link to="/admin">管理</nuxt-link>
+                    <li class="nav-item" v-for="nav in navLinks">
+                        <nuxt-link :to="nav.to">{{ nav.title }}</nuxt-link>
                     </li>
                 </ul>
             </div>
@@ -29,6 +26,11 @@
 <script>
 export default {
     name: "TheSidenav",
+    computed: {
+        navLinks() {
+            return this.$store.getters.navLinks;
+        },
+    },
     props: {
         show: {
             type: Boolean,

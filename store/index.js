@@ -4,6 +4,10 @@ export const state = () => ({
   token: null,
   searchText: '',
   signinWithGoogle: false,
+  navLinks: [
+    { title: '分類', to: '/posts' },
+    { title: '管理', to: '/admin' },
+  ]
 })
 
 export const mutations = {
@@ -224,5 +228,8 @@ export const getters = {
   signinWithGoogle(state) {
     const signinWithGoogle = Boolean(Cookie.get("signinWithGoogle"));
     return signinWithGoogle && state.signinWithGoogle;
-  }
+  },
+  navLinks(state) {
+    return state.navLinks;
+}
 }

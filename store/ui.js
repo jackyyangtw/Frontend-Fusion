@@ -87,5 +87,4 @@ export const getters = {
     errorMsg(state) {
         return state.errorMsg;
     }
-
 }
