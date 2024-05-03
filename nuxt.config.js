@@ -11,10 +11,21 @@ module.exports = {
   target: "server",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   // image: isDev ? {} : {
-  //   provider: 'netlify',
-  //   domains: [
-  //     'firebasestorage.googleapis.com'
-  //   ]
+  //   providers: {
+  //       firebase: {
+  //         name: 'firebase',
+  //         domains: [
+  //           'firebasestorage.googleapis.com'
+  //         ]
+  //       },
+  //       static: {
+  //         name: 'static',
+  //         provider: '~/providers/static',
+  //         options: {
+  //           baseURL: '/images/'
+  //         }
+  //     }
+  //   }
   // },
 
   head: {

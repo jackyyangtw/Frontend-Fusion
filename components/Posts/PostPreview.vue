@@ -11,13 +11,10 @@
                 @mouseleave.self="setShowButtons"
                 >
                     <figure class="post-thumbnail relative h-[200px] xl:h-[250px]">
-                        <nuxt-img
+                        <img
                             class="object-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
-                            :provider="imgProvider"
-                            :preload="index === 0 || index === 1"
                             :src="cachedPreviewImg"
                             :key="id"
-                            fit="cover"
                             width="1792"
                             height="1024"
                             alt=""
@@ -203,15 +200,15 @@ export default {
             }
             return this.title;
         },
-imgProvider() {
-    const hasImg = this.previewImgUrl || this.thumbnail;
-    if (process.env.NODE_ENV === "production") {
-        return hasImg ? "netlify" : "static";
-        // return "static";
-    } else {
-        return hasImg ? "ipx" : "static";
-    }
-},
+        // imgProvider() {
+        //     const hasImg = this.previewImgUrl || this.thumbnail;
+        //     if (process.env.NODE_ENV === "production") {
+        //         return hasImg ? "firebase" : "static";
+        //         // return "static";
+        //     } else {
+        //         return hasImg ? "ipx" : "static";
+        //     }
+        // },
     },
     mounted() {
         this.isMounted = true;

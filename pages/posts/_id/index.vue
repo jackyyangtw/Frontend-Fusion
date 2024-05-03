@@ -8,11 +8,9 @@
                         class="w-full h-[300px] md:h-[400px] lg:h-[500px]"
                     />
                     <transition v-else name="fade">                    
-                        <nuxt-img
-                            preload
+                        <img
                             class="object-cover"
                             alt=""
-                            :provider="imgProvider"
                             :src="previewImg"
                             placeholder
                             fit="cover"
@@ -200,17 +198,17 @@ export default {
                 process.env.DEFAULT_PREVIEW_IMG_URL
             );
         },
-        imgProvider() {
-            if(!this.loadedPost) return "";
-            const hasImg =
-                this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;
-            if (process.env.NODE_ENV === "production") {
-                return hasImg ? "netlify" : "static";
-                // return "static";
-            } else {
-                return hasImg ? "ipx" : "static";
-            }
-        },
+        // imgProvider() {
+        //     if(!this.loadedPost) return "";
+        //     const hasImg =
+        //         this.loadedPost.previewImgUrl || this.loadedPost.thumbnail;
+        //     if (process.env.NODE_ENV === "production") {
+        //         return hasImg ? "firebase" : "static";
+        //         // return "static";
+        //     } else {
+        //         return hasImg ? "ipx" : "static";
+        //     }
+        // },
     },
     created() {
         this.$store.dispatch("user/setUserData");
