@@ -7,8 +7,8 @@ const isDev = process.env.NODE_ENV !== "production";
 require('dotenv').config()
 
 module.exports = {
-  target: isDev ? "server" : "static",
-  // target: "server",
+  // target: isDev ? "server" : "static",
+  target: "server",
   modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
   // image: isDev ? {} : {
   //   provider: 'netlify',
