@@ -9,7 +9,7 @@ require('dotenv').config()
 module.exports = {
   // target: isDev ? "server" : "static",
   target: "server",
-  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify", "@nuxt/image"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/vuetify"],
   // image: isDev ? {} : {
   //   providers: {
   //       firebase: {

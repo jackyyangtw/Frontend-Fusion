@@ -5,8 +5,7 @@
             <div v-if="show" class="sidenav">
                 <ul class="nav-list" @click="$emit('close')">
                     <li>
-                        <nuxt-img
-                            provider="static"
+                        <img
                             class="max-w-[60px]"
                             src="/images/site-icon.svg"
                             alt="logo"

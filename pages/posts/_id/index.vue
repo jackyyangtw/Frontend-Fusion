@@ -100,6 +100,13 @@ export default {
                         content: this.loadedPost.author,
                     },
                 ],
+                link: [
+                    {
+                        rel: "preload",
+                        href: this.previewImg,
+                        as: "image",
+                    },
+                ],
                 script: [
                     {
                         type: "application/ld+json",
