@@ -15,7 +15,9 @@ export const mutations = {
         state.isLoadingPosts = isLoadingPosts;
     },
     addPost(state, post) {
-        state.loadedPosts.push(post);
+        // state.loadedPosts.push(post);
+        // 加入到第一個
+        state.loadedPosts.unshift(post);
     },
     editPost(state, editedPost) {
         const postIndex = state.loadedPosts.findIndex(
